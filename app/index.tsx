@@ -11,7 +11,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { GoogleAuthProvider, onAuthStateChanged, signInWithCredential } from 'firebase/auth';
 import Head from 'expo-router/head'
 import * as WebBrowser from 'expo-web-browser';
-
+import { GoogleLogin } from '@react-oauth/google';
 
 
 
@@ -106,7 +106,18 @@ const navigation = useNavigation<any>();
       
 
 
-           <View style={open?{display:'none'}:{}}>{<Login promptAsync={promptAsync} />}</View>
+          {Platform.OS==='web'?
+          <GoogleLogin
+          onSuccess={credentialResponse => {
+            console.log(credentialResponse);
+          }}
+          onError={() => {
+            console.log('Login Failed');
+          }}
+        />
+
+          : <View style={open?{display:'none'}:{}}>{<Login promptAsync={promptAsync} />}</View>
+           }
         
          </View>
      

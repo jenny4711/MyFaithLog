@@ -1,4 +1,5 @@
 import React,{useState,useEffect,useRef} from 'react';
+
 import { Text,TouchableOpacity ,Platform,View} from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import CustomBottomSheet,{Ref} from '~/components/form/CustomBottomSheet';
@@ -8,6 +9,7 @@ import { QueryClientProvider ,QueryClient} from '@tanstack/react-query';
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { StorageProvider } from '~/context/StorageContext';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 //npm run export -build dist
 export const unstable_settings = {
   initialRouteName:"index",
@@ -75,6 +77,21 @@ useEffect(()=>{
   }
   loadFonts();
 },[])
+if(Platform.OS==='web'){
+  const webClientId:any=process.env.EXPO_PUBLIC_WEB_CLIENT_ID
+  return(
+    <GoogleOAuthProvider clientId={webClientId}>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+    <StorageProvider>
+  <QueryClientProvider client={queryClient}>
+    <Layout />
+    {/* <CustomBottomSheet ref={bottomSheetRef} title="Bottom Sheet Title" /> */}
+  </QueryClientProvider>
+  </StorageProvider>
+</GestureHandlerRootView>
+</GoogleOAuthProvider>
+  )
+}
 
 
   return(
