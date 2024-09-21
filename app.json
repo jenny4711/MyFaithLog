@@ -3,7 +3,6 @@
     "name": "MyFaithLog",
     "slug": "MyFaithLog",
     "version": "1.0.0",
-
     "scheme": "MyFaithLog",
     "web": {
       "bundler": "metro",
@@ -17,32 +16,41 @@
         {
           "launchMode": "most-recent"
         }
-      ]
+      ],
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true,
-
       "tsconfigPaths": true
     },
-
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-
     "userInterfaceStyle": "light",
-
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.jjenny4711.MyFaithLog"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
+      },
+      "package": "com.jjenny4711.MyFaithLog"
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "bce1bfc6-31e3-4ba1-bf7e-7e83240dae55"
       }
     }
   }
