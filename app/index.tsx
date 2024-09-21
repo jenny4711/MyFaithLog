@@ -110,6 +110,7 @@ const navigation = useNavigation<any>();
           <GoogleLogin
           onSuccess={credentialResponse => {
             console.log(credentialResponse);
+            return  ( navigation as any).navigate('home')
           }}
           onError={() => {
             console.log('Login Failed');
