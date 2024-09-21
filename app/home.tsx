@@ -3,11 +3,16 @@ import React,{useState,useEffect} from 'react'
 import MenuBtns from '~/components/home/MenuBtns'
 import Fontisto from '@expo/vector-icons/Fontisto';
 import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import Head from 'expo-router/head';
 const {width,height} = Dimensions.get('window')
 const Home = () => {
   const navigation = useNavigation()
   return (
+    <>
+    <Head>
+      <title>My Faith Log</title>
+      <meta name="description" content="My Faith Log" />
+   </Head>
     <SafeAreaView style={styles.container}>
       <View>
       <MenuBtns title="묵상일지" address="dailyqt"/>
@@ -21,6 +26,7 @@ const Home = () => {
 </TouchableOpacity>
     </View>
     </SafeAreaView>
+    </>
   )
 }
 

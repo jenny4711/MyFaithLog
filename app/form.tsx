@@ -19,7 +19,7 @@ import Animated, { FadeIn, FadeOut, SlideInDown, SlideOutDown, useAnimatedStyle,
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import CustomBottomSheet, { Ref } from '~/components/form/CustomBottomSheet';
 import BottomSheet from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet';
-
+import Head from 'expo-router/head';
 const { width, height } = Dimensions.get('window');
 
 const Form = () => {
@@ -198,6 +198,11 @@ const Form = () => {
   }, [lang]);
 
   return (
+    <>
+     <Head>
+      <title>My Faith Log</title>
+      <meta name="description" content="My Faith Log" />
+   </Head>
     <View style={[keyboardVisible ? styles.containerWithKeyboard : styles.container]}>
       <View>
         <FirstView category={category} setCategory={setCategory} lang={lang} setLang={setLang} setTheBible={setTheBible} theBible={theBible} />
@@ -286,6 +291,7 @@ const Form = () => {
 
       {showList && <CustomBottomSheet showContent={showContent} name={name} setChange={setName} setInit={setInit} title="Bottom Sheet" ref={bottomSheetRef} />}
     </View>
+    </>
   );
 };
 

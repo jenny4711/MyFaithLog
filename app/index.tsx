@@ -9,7 +9,7 @@ import { useNavigation } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { GoogleAuthProvider, onAuthStateChanged, signInWithCredential } from 'firebase/auth';
-import Head from 'expo-router/Head'
+import Head from 'expo-router/head'
 import * as WebBrowser from 'expo-web-browser';
 
 

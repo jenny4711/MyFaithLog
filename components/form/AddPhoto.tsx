@@ -1,12 +1,14 @@
 import { View, Text, Dimensions, Image, TouchableOpacity, StyleSheet,ScrollView } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import * as ImagePicker from 'expo-image-picker';
-import { uploadImage } from '../../utils/cloudinary';
+
 import Animated, { Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { FadeInRight } from 'react-native-reanimated';
+
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import {uploadImageStorage} from '~/utils/fireStoreFn'
 const { width, height } = Dimensions.get('window');
 const AddPhoto = ({showDone,photo,setPhoto}:any) => {
   const opacity = useSharedValue(0);
@@ -40,12 +42,19 @@ const AddPhoto = ({showDone,photo,setPhoto}:any) => {
     if (!result.canceled) {
       const selectedImageUri = result.assets[0].uri;
       setImg(selectedImageUri)
+
  
-     
-      const res = await uploadImage(selectedImageUri);
-      setPhoto(res.secure_url)
+     const res= await uploadImageStorage(selectedImageUri,'image')
+      // const res = await uploadImage(selectedImageUri);
+      const newImageUri = res
+      // const newImageUri = `${res.secure_url}?time=${Date.now()}`; // URI에 고유한 타임스탬프 추가
+      setPhoto(newImageUri);
+      setImg(newImageUri);
+      console.log(newImageUri,'newImageUri')
+      // await AsyncStorage.setItem('photoURL', newImageUri);
    
-      await AsyncStorage.setItem('photoURL', res.secure_url);
+      // await AsyncStorage.setItem('photoURL', res.secure_url);
+  
  
     }
   };
