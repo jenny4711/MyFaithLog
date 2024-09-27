@@ -1,4 +1,4 @@
-import { View, Text ,ScrollView,Dimensions,StyleSheet} from 'react-native'
+import { View, Text ,ScrollView,Dimensions,StyleSheet,Platform} from 'react-native'
 import React,{useState,useEffect} from 'react'
 import { useData } from '~/hooks/useFormData'
 import DailyQtList from '~/components/list/DailyQtList'
@@ -49,7 +49,7 @@ useEffect(() => {
    </Head>
     <View style={{flex:1,backgroundColor:'#E8751A',justifyContent:'center',alignItems:'center',paddingTop:16}}>
       <Text>Faith Log List!</Text>
-    <ScrollView >
+   {Platform.OS !== "web"? <ScrollView >
       {
         formData?.map((item:any,index:any)=>(
           <Animated.View entering={FadeInLeft.duration(500).easing(Easing.ease)} style={styles.itemView} key={index}>
@@ -58,6 +58,17 @@ useEffect(() => {
         ))
       }
     </ScrollView>
+    :
+    <ScrollView>
+      {
+        formData?.map((item:any,index:any)=>(
+          <View style={styles.itemView} key={index}>
+          <DailyQtList key={item.id} item={item} />
+          </View>
+        ))
+      }
+    </ScrollView>
+    }
     </View>
     </>
   )
