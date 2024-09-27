@@ -9,6 +9,7 @@ const DailyQt = () => {
   const [category,setCategory]=useState('dailyQt')
   const [formData,setFormData]=useState([])
 const {data}=useData(category)
+console.log(Platform.OS,'platform')
 
 useEffect(() => {
   if (data) {
