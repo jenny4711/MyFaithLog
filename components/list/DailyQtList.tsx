@@ -2,6 +2,7 @@ import { View, Text ,Dimensions,TouchableOpacity} from 'react-native'
 import React ,{useState,useEffect}from 'react'
 import Animated,{Easing,FadeInLeft} from 'react-native-reanimated'
 import { useNavigation } from '@react-navigation/native'
+import Head from 'expo-router/head';
 const {width,height} = Dimensions.get('window')
 const DailyQtList = ({item,key}:any) => {
   const navigation = useNavigation()
@@ -35,6 +36,11 @@ const goToDetail=()=>{
 }
 
   return (
+    <>
+    <Head>
+      <title>My Faith Log</title>
+      <meta name="description" content="My Faith Log" />
+   </Head>
     <View >
 <TouchableOpacity onPress={goToDetail}>
 <Text style={{fontSize:16,fontFamily:"LineSeedKr-Bd"}}>{item.title}</Text>
@@ -44,6 +50,7 @@ const goToDetail=()=>{
       
      
     </View>
+    </>
   )
 }
 
