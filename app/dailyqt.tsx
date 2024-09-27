@@ -3,6 +3,7 @@ import React,{useState,useEffect} from 'react'
 import { useData } from '~/hooks/useFormData'
 import DailyQtList from '~/components/list/DailyQtList'
 import Animated,{Easing,FadeInLeft} from 'react-native-reanimated'
+import Head from 'expo-router/head';
 const {width} = Dimensions.get('window')
 const DailyQt = () => {
   const [category,setCategory]=useState('dailyQt')
@@ -41,6 +42,11 @@ useEffect(() => {
 
 
   return (
+    <>
+    <Head>
+      <title>My Faith Log</title>
+      <meta name="description" content="My Faith Log" />
+   </Head>
     <View style={{flex:1,backgroundColor:'#E8751A',justifyContent:'center',alignItems:'center',paddingTop:16}}>
     <ScrollView >
       {
@@ -52,6 +58,7 @@ useEffect(() => {
       }
     </ScrollView>
     </View>
+    </>
   )
 }
 
