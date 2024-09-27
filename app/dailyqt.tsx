@@ -48,6 +48,7 @@ useEffect(() => {
       <meta name="description" content="My Faith Log" />
    </Head>
     <View style={{flex:1,backgroundColor:'#E8751A',justifyContent:'center',alignItems:'center',paddingTop:16}}>
+      <Text>Faith Log List!</Text>
     <ScrollView >
       {
         formData?.map((item:any,index:any)=>(
