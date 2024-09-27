@@ -391,7 +391,9 @@ export const bibleKrBc=[
     title:"갈라디아서",
     value:"갈라디아서",
     pg:6,
-    bible:"신약"
+    bible:"신약",
+    init:"gal"
+    
   },
   {
     title:"에베소서",

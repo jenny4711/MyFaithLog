@@ -107,6 +107,7 @@ const navigation = useNavigation<any>();
 
 
           {Platform.OS==='web'?
+          <View>
           <GoogleLogin
           onSuccess={credentialResponse => {
             console.log(credentialResponse);
@@ -115,8 +116,9 @@ const navigation = useNavigation<any>();
           onError={() => {
             console.log('Login Failed');
           }}
+          
         />
-
+</View>
           : <View style={open?{display:'none'}:{}}>{<Login promptAsync={promptAsync} />}</View>
            }
         

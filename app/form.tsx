@@ -18,7 +18,7 @@ import { useSaveData } from '~/hooks/useFormData';
 import Animated, { FadeIn, FadeOut, SlideInDown, SlideOutDown, useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import CustomBottomSheet, { Ref } from '~/components/form/CustomBottomSheet';
-import BottomSheet from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheet/BottomSheet';
+import BottomSheet from '@gorhom/bottom-sheet';
 import Head from 'expo-router/head';
 const { width, height } = Dimensions.get('window');
 

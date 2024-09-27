@@ -11,6 +11,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StorageProvider } from '~/context/StorageContext';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 //npm run export -build dist
+//https://chatgpt.com/share/66ee6506-72ac-8013-900e-c31abeaa3391
 export const unstable_settings = {
   initialRouteName:"index",
 }

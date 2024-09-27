@@ -6,20 +6,20 @@ import FirstView from '~/components/detail/FirstView'
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useQueryClient } from '@tanstack/react-query';
 import { useDeletedData } from '~/hooks/useFormData';
-import { useSaveData } from '~/hooks/useFormData';
+import { useSaveData,useData} from '~/hooks/useFormData';
 import { QueryClient } from '@tanstack/react-query'
 import { TextInput } from 'react-native-gesture-handler'
 import DetailWithEdit from '~/components/detail/DetailWithEdit'
 const {width} = Dimensions.get('window')
 
-export async function generateStaticParams():Promise<Record<string,string>[]>{
-  return [
-    {date:'2022-01-01'},
-    {date:'2022-01-02'},
-    {date:'2022-01-03'},
-    {date:'2022-01-04'},
-  ]
-  }
+export async function generateStaticParams(item: any): Promise<Record<string, string>[]> {
+  const dateArray = Array.isArray(item) ? item : [];
+
+  dateArray.push({ date: '2022-01-01' });
+
+  console.log(dateArray, 'dateArray');
+  return dateArray;
+}
 
 
 
@@ -30,19 +30,43 @@ const deletedMutation=useDeletedData({category:'dailyQt',date})
 const saveMutation=useSaveData({date:orgDate,category:'dailyQt'}) as any
 const queryClient=useQueryClient()
 const navigation = useNavigation()
+const [dateArray,setDateArray]=useState<any>([])
 const [edTitle,setEdTitle]=useState<any>(title)
 const [edContent,setEdContent]=useState<any>(content)
 const [edMeditation,setEdMeditation]=useState<any>(meditation)
 const [edApplication,setEdApplication]=useState<any>(application)
 const [keyboardVisible, setKeyboardVisible] = useState<boolean>(false);
 const [edPray,setEdPray]=useState<any>(pray)
+const {data}=useData('dailyQt')
 const titleRef=useRef(null)
 const conRef=useRef(null)
 const medRef=useRef(null)
 const appRef=useRef(null)
 const prayRef=useRef(null)
 
-console.log(edContent[0],'title')
+
+useEffect(() => {
+  if (data) {
+    const generatedDateArray = data.map((item: any) => {
+      const [month, day, year] = item.date.split('-');
+      const formattedDate = `${year}-${month}-${day}`;
+      return { date: formattedDate };
+    });
+    setDateArray(generatedDateArray);
+  }
+}, [data]);
+
+useEffect(() => {
+  async function fetchData() {
+    // item이 배열인지 확인 후 generateStaticParams 호출
+    const params = await generateStaticParams(dateArray);
+    console.log(params);
+  }
+  fetchData();
+}, [dateArray]);
+
+
+
 
 useEffect(() => {
   const keyboardDidShowListener = Keyboard.addListener(
