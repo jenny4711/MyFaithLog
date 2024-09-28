@@ -1,13 +1,15 @@
 import { View, Text } from 'react-native'
 import React,{useState,useEffect} from 'react'
 import DatePicker from "react-datepicker";
+import { DayPicker } from "react-day-picker";
+import "react-day-picker/style.css";
 import Head from 'expo-router/head';
 const DataPickerW = () => {
-  const [startDate, setStartDate] = useState(new Date());
+  const [selected, setSelected] = useState<Date>();
 
 useEffect(()=>{
-  console.log(startDate,'startDate')
-},[startDate])
+  console.log(selected,'startDate')
+},[selected])
 
 
 
@@ -17,7 +19,14 @@ useEffect(()=>{
       <title>My Faith Log</title>
       <meta name="description" content="My Faith Log" />
    </Head>
-         <DatePicker selected={startDate} onChange={(date:any) => setStartDate(date)} />
+   <DayPicker
+      mode="single"
+      selected={selected}
+      onSelect={setSelected}
+      footer={
+        selected ? `Selected: ${selected.toLocaleDateString()}` : "Pick a day."
+      }
+    />
     </>
   )
 }
