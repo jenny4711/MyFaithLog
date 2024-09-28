@@ -20,6 +20,7 @@ import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import CustomBottomSheet, { Ref } from '~/components/form/CustomBottomSheet';
 import BottomSheet from '@gorhom/bottom-sheet';
 import Head from 'expo-router/head';
+import DataPickerW from '~/components/web/DataPickerW';
 const { width, height } = Dimensions.get('window');
 
 const Form = () => {
@@ -210,7 +211,7 @@ const Form = () => {
       <ScrollView ref={scrollViewRef} style={{ height: height, paddingVertical: 10 }}>
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={Platform.select({ ios: -500, android: 80 })}>
           <View style={{ width: width - 48 }}>
-            <DatePicker
+           {Platform.OS=== "ios"? <DatePicker
               date={date}
               setDate={setDate}
               month={month}
@@ -222,7 +223,8 @@ const Form = () => {
               title={lang === 'Kr' ? '날짜 선택' : 'Select Date'}
               isDatePickerVisible={isDatePickerVisible}
               setDatePickerVisibility={setDatePickerVisibility}
-            />
+            />: 
+            <DataPickerW/>}
           </View>
 
           <View>

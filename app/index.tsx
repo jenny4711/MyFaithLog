@@ -212,7 +212,7 @@ const Page = () => {
         // 네이티브 환경에서는 AsyncStorage에 사용자 정보 저장
         if (Platform.OS !== 'web') {
           const token = user.stsTokenManager?.accessToken;
-          const displayName = user?.displayName || user.email.split('@')[0];
+          const displayName = user?.displayName || user?.email.split('@')[0];
           const photoURL = user?.photoURL;
           const email = user?.email;
           const uid = user?.uid;
