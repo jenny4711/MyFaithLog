@@ -230,25 +230,55 @@ const Page = () => {
 
   // 웹 환경에서 Google 로그인 성공 시 처리
   const handleGoogleLoginSuccess = async (credentialResponse: any) => {
-    // credentialResponse에서 토큰 및 사용자 정보 추출
+    console.log(credentialResponse, 'credentialResponse'); // 전체 응답 내용을 확인
+    
+    // 만약 profileObj가 제대로 반환되지 않는다면, id_token을 해독해 사용자 정보를 추출해야 할 수 있습니다.
     const { credential } = credentialResponse;
-    const token = credential.accessToken;
-    const profile = credentialResponse?.profileObj || {}; // Google OAuth 로그인에서 프로필 정보 추출
-
-    const email = profile.email;
-    const displayName = profile.name;
-    const photoURL = profile.picture;
-console.log('web',email)
+    const token = credentialResponse.credential;
+  
+    // id_token을 해독하여 사용자 정보 추출
+    const userInfo = parseJwt(token);
+  
+    // 추출된 사용자 정보
+    const email = userInfo?.email;
+    const displayName = userInfo?.name;
+    const photoURL = userInfo?.picture;
+  
+    console.log(userInfo, 'userInfo'); // 해독된 사용자 정보 로그
+  
     // 웹 환경에서는 localStorage에 사용자 정보 저장
-    localStorage.setItem('token', token);
-    localStorage.setItem('displayName', displayName);
-    localStorage.setItem('email', email);
-    localStorage.setItem('profileImg', photoURL);
-    setEmail(email);
-
+    if (email) {
+      localStorage.setItem('token', token);
+      localStorage.setItem('displayName', displayName);
+      localStorage.setItem('email', email);
+      localStorage.setItem('profileImg', photoURL);
+      setEmail(email);
+    }
+  
     // 로그인 후 페이지 이동
     return (navigation as any).navigate('home');
   };
+  
+  // JWT를 해독하는 함수 (id_token을 해독하여 사용자 정보 추출)
+  function parseJwt(token: string) {
+    try {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(
+        atob(base64)
+          .split('')
+          .map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+          })
+          .join('')
+      );
+  
+      return JSON.parse(jsonPayload);
+    } catch (error) {
+      console.log('Error decoding token', error);
+      return null;
+    }
+  }
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, async (user: any) => {
