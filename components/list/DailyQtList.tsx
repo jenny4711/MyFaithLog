@@ -1,4 +1,4 @@
-import { View, Text ,Dimensions,TouchableOpacity} from 'react-native'
+import { View, Text ,Dimensions,TouchableOpacity,Platform} from 'react-native'
 import React ,{useState,useEffect}from 'react'
 import Animated,{Easing,FadeInLeft} from 'react-native-reanimated'
 import { useNavigation } from '@react-navigation/native'
@@ -42,11 +42,27 @@ const goToDetail=()=>{
       <meta name="description" content="My Faith Log" />
    </Head>
     <View >
-<TouchableOpacity onPress={goToDetail}>
-<Text style={{fontSize:16,fontFamily:"LineSeedKr-Bd"}}>{item.title}</Text>
+      {Platform.OS==='web'?
+      <TouchableOpacity onPress={goToDetail}>
+
+      <Text style={{fontSize:16,fontWeight:'bold'}}>{item.title}</Text>
+          <Text style={{color:'gray',opacity:0.9}}>{date}</Text>
+    
+    </TouchableOpacity>
+      
+      
+      
+      :
+      <TouchableOpacity onPress={goToDetail}>
+
+  <Text style={{fontSize:16,fontFamily:"LineSeedKr-Bd"}}>{item.title}</Text>
       <Text style={{color:'gray',opacity:0.9,fontFamily:"LineSeedKr-Th"}}>{date}</Text>
 
 </TouchableOpacity>
+      
+      
+      }
+
       
      
     </View>

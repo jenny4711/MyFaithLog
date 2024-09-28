@@ -9,7 +9,7 @@ const { width } = Dimensions.get('window');
 
 const DailyQt = () => {
   const [category, setCategory] = useState('dailyQt');
-  const [formData, setFormData] = useState([]);
+  const [formData, setFormData] = useState<any>([]);
   const { data } = useData(category); // 데이터 가져오기
   console.log('Loaded data:', data); // 데이터 로드 확인
 
