@@ -170,7 +170,7 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Platform } from 'react-native';
+import { StyleSheet, Text, View, Platform ,Button} from 'react-native';
 import Login from '~/components/auth/Login';
 import { FIREBASE_AUTH } from '../config/firebase';
 import * as Google from 'expo-auth-session/providers/google';
@@ -330,12 +330,13 @@ const Page = () => {
 
             {Platform.OS === 'web' ? (
               <View>
-                <GoogleLogin
+                <Button title={'TEST BTN'} onPress={()=>(navigation as any).navigate('home')}/>
+                {/* <GoogleLogin
                   onSuccess={handleGoogleLoginSuccess} // 웹에서 로그인 성공 시 호출
                   onError={() => {
                     console.log('Login Failed');
                   }}
-                />
+                /> */}
               </View>
             ) : (
               <View style={open ? { display: 'none' } : {}}>

@@ -1,4 +1,4 @@
-import { View, Text ,Dimensions,SafeAreaView, StyleSheet,TouchableOpacity} from 'react-native'
+import { View, Text ,Dimensions,SafeAreaView, StyleSheet,TouchableOpacity,Platform} from 'react-native'
 import React,{useState,useEffect} from 'react'
 import MenuBtns from '~/components/home/MenuBtns'
 import Fontisto from '@expo/vector-icons/Fontisto';
@@ -37,7 +37,7 @@ const styles=StyleSheet.create({
     justifyContent:'center',
     alignItems:'center',
     backgroundColor:'#E8751A',
-   
+   width:Platform.OS === 'web'?width:width,
     height:height
   },
   btnView:{
