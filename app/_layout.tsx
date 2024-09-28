@@ -76,7 +76,12 @@ useEffect(()=>{
     }
    
   }
-  loadFonts();
+  if(Platform.OS==='web'){
+    return;
+  }else{
+    loadFonts();
+  }
+  
 },[])
 if(Platform.OS==='web'){
   const webClientId:any=process.env.EXPO_PUBLIC_WEB_CLIENT_ID
