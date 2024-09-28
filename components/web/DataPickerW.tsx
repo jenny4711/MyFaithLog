@@ -2,7 +2,7 @@ import { View, Text } from 'react-native'
 import React,{useState,useEffect} from 'react'
 
 import { DayPicker } from "react-day-picker";
-import "react-day-picker/style.css";
+
 import Head from 'expo-router/head';
 const DataPickerW = () => {
   const [selected, setSelected] = useState<Date>();
