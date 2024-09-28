@@ -474,134 +474,134 @@ export const bibleKrBc=[
 
 
 
-export const bibleKrAc=[
-  {
-    title:"마태복음",
-    value:"마태복음",
-    pg:28,
-    bible:"신약"
-  },
-  {
-    title:"마가복음",
-    value:"마가복음",
-    pg:16,
-    bible:"신약"
-  },
-  {
-    title:"누가복음",
-    value:"누가복음",
-    pg:24,
-    bible:"신약"
-  },
-  {
-    title:"요한복음",
-    value:"요한복음",
-    pg:21,
-    bible:"신약"
-  },
-  {
-    title:"사도행전",
-    value:"사도행전",
-    pg:28,
-    bible:"신약"
-  },
-  {
-    title:"로마서",
-    value:"로마서",
-    pg:16,
-    bible:"신약"
-  },
-  {
-    title:"고린도전서",
-    value:"고린도전서",
-    pg:16,
-    bible:"신약"
-  },
-  {
-    title:"고린도후서",
-    value:"고린도후서",
-    pg:13,
-    bible:"신약"
-  },
-  {
-    title:"갈라디아서",
-    value:"갈라디아서",
-    pg:6,
-    bible:"신약"
-  },
-  {
-    title:"에베소서",
-    value:"에베소서",
-    pg:6,
-    bible:"신약"
-  },
-  {
-    title:"빌립보서",
-    value:"빌립보서",
-    pg:4,
-    bible:"신약"
-  },
-  {
-    title:"골로새서",
-    value:"골로새서",
-    pg:4,
-    bible:"신약"
-  },
-  {
-    title:"데살로니가전서",
-    value:"데살로니가전서",
-    pg:5,
-    bible:"신약"
-  },
-  {
-    title:"데살로니가후서",
-    value:"데살로니가후서",
-    pg:3,
-    bible:"신약"
-  },
-  {
-    title:"디모데전서",
-    value:"디모데전서",
-    pg:6,
-    bible:"신약"
-  },
-  {
-    title:"디모데후서",
-    value:"디모데후서",
-    pg:4,
-    bible:"신약"
-  },
-  {
-    title:"디도서",
-    value:"디도서",
-    pg:3,
-    bible:"신약"
-  },
-  {
-    title:"빌레몬서",
-    value:"빌레몬서",
-    pg:1,
-    bible:"신약"
-  },
-  {
-    title:"히브리서",
-    value:"히브리서",
-    pg:13,
-    bible:"신약"
-  },
-  {
-    title:"야고보서",
-    value:"야고보서",
-    pg:5,
-    bible:"신약"
-  },
-  {
-    title:"베드로전서",
-    value:"베드로전서",
-    pg:5,
-    bible:"신약"
-  }
-]
+// export const bibleKrAc=[
+//   {
+//     title:"마태복음",
+//     value:"마태복음",
+//     pg:28,
+//     bible:"신약"
+//   },
+//   {
+//     title:"마가복음",
+//     value:"마가복음",
+//     pg:16,
+//     bible:"신약"
+//   },
+//   {
+//     title:"누가복음",
+//     value:"누가복음",
+//     pg:24,
+//     bible:"신약"
+//   },
+//   {
+//     title:"요한복음",
+//     value:"요한복음",
+//     pg:21,
+//     bible:"신약"
+//   },
+//   {
+//     title:"사도행전",
+//     value:"사도행전",
+//     pg:28,
+//     bible:"신약"
+//   },
+//   {
+//     title:"로마서",
+//     value:"로마서",
+//     pg:16,
+//     bible:"신약"
+//   },
+//   {
+//     title:"고린도전서",
+//     value:"고린도전서",
+//     pg:16,
+//     bible:"신약"
+//   },
+//   {
+//     title:"고린도후서",
+//     value:"고린도후서",
+//     pg:13,
+//     bible:"신약"
+//   },
+//   {
+//     title:"갈라디아서",
+//     value:"갈라디아서",
+//     pg:6,
+//     bible:"신약"
+//   },
+//   {
+//     title:"에베소서",
+//     value:"에베소서",
+//     pg:6,
+//     bible:"신약"
+//   },
+//   {
+//     title:"빌립보서",
+//     value:"빌립보서",
+//     pg:4,
+//     bible:"신약"
+//   },
+//   {
+//     title:"골로새서",
+//     value:"골로새서",
+//     pg:4,
+//     bible:"신약"
+//   },
+//   {
+//     title:"데살로니가전서",
+//     value:"데살로니가전서",
+//     pg:5,
+//     bible:"신약"
+//   },
+//   {
+//     title:"데살로니가후서",
+//     value:"데살로니가후서",
+//     pg:3,
+//     bible:"신약"
+//   },
+//   {
+//     title:"디모데전서",
+//     value:"디모데전서",
+//     pg:6,
+//     bible:"신약"
+//   },
+//   {
+//     title:"디모데후서",
+//     value:"디모데후서",
+//     pg:4,
+//     bible:"신약"
+//   },
+//   {
+//     title:"디도서",
+//     value:"디도서",
+//     pg:3,
+//     bible:"신약"
+//   },
+//   {
+//     title:"빌레몬서",
+//     value:"빌레몬서",
+//     pg:1,
+//     bible:"신약"
+//   },
+//   {
+//     title:"히브리서",
+//     value:"히브리서",
+//     pg:13,
+//     bible:"신약"
+//   },
+//   {
+//     title:"야고보서",
+//     value:"야고보서",
+//     pg:5,
+//     bible:"신약"
+//   },
+//   {
+//     title:"베드로전서",
+//     value:"베드로전서",
+//     pg:5,
+//     bible:"신약"
+//   }
+// ]
 export const bibleEnBc=[
   {
     title:"Genesis",
@@ -1170,10 +1170,87 @@ export const bibleEnAc=[
       bible:"new"
   }
 
+]
 
 
+export const monthList=[
+  { value: 1, label: 'January' },
+  { value: 2, label: 'February' },
+  { value: 3, label: 'March' },
+  { value: 4, label: 'April' },
+  { value: 5, label: 'May' },
+  { value: 6, label: 'June' },
+  { value: 7, label: 'July' },
+  { value: 8, label: 'August' },
+  { value: 9, label: 'September' },
+  { value: 10, label: 'October' },
+  { value: 11, label: 'November' },
+  { value: 12, label: 'December' },
+
+]
+
+export const yearList=[
+
+  { value: 2024, label: '2024' },
+  { value: 2025, label: '2025' },
+  { value: 2026, label: '2026' },
+  { value: 2027, label: '2027' },
+  { value: 2028, label: '2028' },
+  { value: 2029, label: '2029' },
+  { value: 2030, label: '2030' },
+  { value: 2031, label: '2031' },
+  { value: 2032, label: '2032' },
+  { value: 2033, label: '2033' },
+  { value: 2034, label: '2034' },
 
 
+]
+
+export const dayList=[
+  { value: 1, label: '1' }, 
+  { value: 2, label: '2' },
+  { value: 3, label: '3' },
+  { value: 4, label: '4' },
+  { value: 5, label: '5' },
+  { value: 6, label: '6' },
+  { value: 7, label: '7' },
+  { value: 8, label: '8' },
+  { value: 9, label: '9' },
+  { value: 10, label:'10'},
+
+  { value: 1, label: '1' }, 
+  { value: 2, label: '2' },
+  { value: 3, label: '3' },
+  { value: 4, label: '4' },
+  { value: 5, label: '5' },
+  { value: 6, label: '6' },
+  { value: 7, label: '7' },
+  { value: 8, label: '8' },
+  { value: 9, label: '9' },
+  { value: 10, label: '10' },
+
+  { value: 11, label: '11' }, 
+  { value: 12, label: '12' },
+  { value: 13, label: '13' },
+  { value: 14, label: '14' },
+  { value: 15, label: '15' },
+  { value: 16, label: '16' },
+  { value: 17, label: '17' },
+  { value: 18, label: '18' },
+  { value: 19, label: '19' },
+  { value: 20, label: '20' },
+
+  { value: 21, label: '21' }, 
+  { value: 22, label: '22' },
+  { value: 23, label: '23' },
+  { value: 24, label: '24' },
+  { value: 25, label: '25' },
+  { value: 26, label: '26' },
+  { value: 27, label: '27' },
+  { value: 28, label: '28' },
+  { value: 29, label: '29' },
+  { value: 30, label: '30' },
+  { value: 31, label: '31' }, 
 
 
 
@@ -1187,3 +1264,4 @@ export const bibleEnAc=[
 
 
 ]
+

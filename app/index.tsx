@@ -330,13 +330,13 @@ const Page = () => {
 
             {Platform.OS === 'web' ? (
               <View>
-                <Button title={'TEST BTN'} onPress={()=>(navigation as any).navigate('home')}/>
-                {/* <GoogleLogin
+                {/* <Button title={'TEST BTN'} onPress={()=>(navigation as any).navigate('home')}/> */}
+                <GoogleLogin
                   onSuccess={handleGoogleLoginSuccess} // 웹에서 로그인 성공 시 호출
                   onError={() => {
                     console.log('Login Failed');
                   }}
-                /> */}
+                />
               </View>
             ) : (
               <View style={open ? { display: 'none' } : {}}>

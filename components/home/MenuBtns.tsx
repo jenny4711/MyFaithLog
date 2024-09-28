@@ -22,7 +22,7 @@ const styles=StyleSheet.create({
     alignItems:'center',
     backgroundColor:'white',
     height:height/12,
-    width:Platform.OS ==='web'?(width/2)-48:width-48,
+    width:width-48,
     marginBottom:10,
     borderRadius:10,
   },

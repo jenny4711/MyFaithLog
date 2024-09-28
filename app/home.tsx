@@ -37,7 +37,7 @@ const styles=StyleSheet.create({
     justifyContent:'center',
     alignItems:'center',
     backgroundColor:'#E8751A',
-   width:Platform.OS === 'web'?width:width,
+   width:width,
     height:height
   },
   btnView:{

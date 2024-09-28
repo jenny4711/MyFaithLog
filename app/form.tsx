@@ -7,8 +7,9 @@ import DatePicker from '~/components/form/DatePicker';
 import SelectionGroup from '~/components/form/SelectionGroup';
 import Selection from '~/components/form/Selection';
 import { getAIResponse } from '~/utils/ai';
+import { dayList,monthList,yearList } from '~/utils/selectionArray';
 import FirstView from '~/components/form/FirstView';
-import { bibleEnAc, bibleEnBc, bibleKrAc, bibleKrBc, langArr, bibleArrEn, bibleArrKr } from '~/utils/selectionArray';
+import { bibleEnAc, bibleEnBc,  bibleKrBc, langArr, bibleArrEn, bibleArrKr } from '~/utils/selectionArray';
 import DailyForm from '~/components/form/DailyForm';
 import SundayForm from '~/components/form/SundayForm';
 import ShowBible from '~/components/form/ShowBible';
@@ -62,7 +63,7 @@ const Form = () => {
   const navigation = useNavigation();
   const addMutation = useSaveData({ date, category });
   const bottomSheetRef = useRef<BottomSheet>(null);
-
+const [showDate,setShowDate]=useState(false)
   const [visible, setVisible] = useState(false);
   const offset = useSharedValue(0);
   const translateY = useAnimatedStyle(() => ({
@@ -70,6 +71,19 @@ const Form = () => {
   }));
 
   const { data }: any = useBibleFromChToCh(visible ? { title: name, bible: init, fromCh: page, fromVs: verse, toCh: toPage, toVs: toVerse } : []);
+
+useEffect(()=>{
+ async function saveDate(){
+  if(date!==''&&month!==''&&year!==''){
+    setFullDate(`${month}-${date}-${year}`)
+    setShowDate(false)
+    await AsyncStorage.setItem('date',`${month}-${date}-${year}`)
+  }
+
+ }
+saveDate()
+},[date,month,year])
+
 
   useEffect(() => {
     if (visible) {
@@ -211,7 +225,7 @@ const Form = () => {
       <ScrollView ref={scrollViewRef} style={{ height: height, paddingVertical: 10 }}>
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={Platform.select({ ios: -500, android: 80 })}>
           <View style={{ width: width - 48 }}>
-            <DatePicker
+           {Platform.OS=== "ios"? <DatePicker
               date={date}
               setDate={setDate}
               month={month}
@@ -223,8 +237,14 @@ const Form = () => {
               title={lang === 'Kr' ? '날짜 선택' : 'Select Date'}
               isDatePickerVisible={isDatePickerVisible}
               setDatePickerVisibility={setDatePickerVisibility}
-            />
-          
+            />: 
+            <TouchableOpacity onPress={()=>setShowDate(!showDate)}>
+              <Text>{date !== ''&& month !=="" && year !==""?fullDate:"날짜 선택"}</Text>
+            </TouchableOpacity>
+            
+            
+            
+            }
           </View>
 
           <View>
@@ -270,6 +290,7 @@ const Form = () => {
           <TouchableOpacity onPress={handleSaveBtn} style={styles.saveBtn}>
             <Text>Save</Text>
           </TouchableOpacity>
+         
         </KeyboardAvoidingView>
       </ScrollView>
 
@@ -290,6 +311,57 @@ const Form = () => {
           </Animated.ScrollView>
         </>
       )}
+
+{showDate && (
+       <>
+       <Animated.View entering={SlideInDown.springify().damping(15)} exiting={SlideOutDown} style={[styles.sheet, translateY]}>
+         <View style={{ flexDirection: 'row' }}>
+           {/* 첫 번째 ScrollView */}
+           <ScrollView style={{ height: 300 }}>
+             {monthList?.map((item: any, index: any) => (
+               <View key={index} style={{ marginBottom: 10 }}>
+                 <TouchableOpacity onPress={()=>setMonth(item.value)} style={styles.dateSeleBox} key={index}>
+                   <Text style={{  fontSize: 20, lineHeight: 34, color: 'black' }} key={index}>
+                     {item.label}
+                   </Text>
+                 </TouchableOpacity>
+               </View>
+             ))}
+           </ScrollView>
+   
+           {/* 두 번째 ScrollView */}
+           <ScrollView style={{ height: 300 }}>
+             {dayList?.map((item: any, index: any) => (
+               <View key={index} style={{ marginBottom: 10 }}>
+                 <TouchableOpacity onPress={()=>setDate(item.value)} style={styles.dateSeleBox} key={index}>
+                   <Text style={{  fontSize: 20, lineHeight: 34, color: 'black' }} key={index}>
+                     {item.label}
+                   </Text>
+                 </TouchableOpacity>
+               </View>
+             ))}
+           </ScrollView>
+
+             {/* 첫 번째 ScrollView */}
+             <ScrollView  style={{ height: 300 }}>
+             {yearList?.map((item: any, index: any) => (
+               <View key={index} style={{ marginBottom: 10 }}>
+                 <TouchableOpacity onPress={()=>setYear(item.value)} style={styles.dateSeleBox} key={index}>
+                   <Text style={{  fontSize: 20, lineHeight: 34, color: 'black' }} key={index}>
+                     {item.label}
+                   </Text>
+                 </TouchableOpacity>
+               </View>
+             ))}
+           </ScrollView>
+         </View>
+         <View style={{ marginBottom: 50 }} />
+       </Animated.View>
+     </>
+      )}
+
+
+
 
       {showList && <CustomBottomSheet showContent={showContent} name={name} setChange={setName} setInit={setInit} title="Bottom Sheet" ref={bottomSheetRef} />}
     </View>
@@ -348,11 +420,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     zIndex: 1,
     padding: 20,
-    height: 450,
+    height: 350,
     width: '100%',
     position: 'absolute',
     bottom: -1 * 4.0,
     borderTopRightRadius: 20,
     borderTopLeftRadius: 20
+  },
+  dateSeleBox: {
+ borderBottomWidth:0.5,borderBottomColor:'gray', width: width / 4 ,justifyContent:'center',alignItems:'center'
   }
 });
