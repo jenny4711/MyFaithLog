@@ -170,7 +170,7 @@
 
 
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Platform ,Button} from 'react-native';
+import { StyleSheet, Text, View, Platform ,Button,Image} from 'react-native';
 import Login from '~/components/auth/Login';
 import { FIREBASE_AUTH } from '../config/firebase';
 import * as Google from 'expo-auth-session/providers/google';
@@ -191,6 +191,7 @@ const Page = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [userInfo, setUserInfo] = useState<any>();
   const { email, setEmail } = useStorageContext();
+  const logo = require('../assets/logo.png');
   const clientID =
     Platform.OS === 'ios'
       ? process.env.EXPO_PUBLIC_IOS_CLIENT_ID
@@ -323,8 +324,10 @@ const Page = () => {
       <GestureHandlerRootView style={{ flex: 1 }}>
         <View style={[styles.container, { backgroundColor: '#E8751A' }]}>
           <View style={[styles.loginContainer, { backgroundColor: '#E8751A' }]}>
-            <View>
-              <View style={{ width: 40, height: 40, borderRadius: 100 }} />
+          
+            <View style={{flexDirection:'column',alignItems:'center',justifyContent:'center'}}>
+            
+            <Image source={logo} style={{height:100,marginBottom:20}}/>
               <Text style={[styles.title]}>Faith Log</Text>
             </View>
 
@@ -363,6 +366,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontWeight: 'bold',
+   color:'white',
+   fontFamily:'Nunito-Bold'
   },
 });
 

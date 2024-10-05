@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient ,useMutation} from '@tanstack/react-query';
 import { useNavigation } from 'expo-router';
 import { useState } from 'react';
-import { saveDiaryEntry ,getData ,deleteItem} from '~/utils/fireStoreFn';
+import { saveDiaryEntry ,getData ,deleteItem,getGroupData,getGroupDataByGroupName} from '~/utils/fireStoreFn';
 import { getBibleFromTo ,findFromChToCh} from '~/utils/ai';
 
 export const useBibleFromTo = ({ title, bible, chapter, to, from }: any) => {
@@ -99,5 +99,39 @@ export const useDeletedData=({category,date}:any)=>{
 }
 
 
+export const useGroupListData=()=>{
+  return useQuery({
+    queryKey:['dataGroup'],
+    queryFn:async()=>{
+      const groupData=await getGroupData();
+    
+      return groupData??[];
+      
+    },
+   enabled:true ,
+    staleTime:1000,
+    select:(data)=>{
+      console.log(data,'data')
+      return data || undefined;
+    }
+  })
+}
 
 
+export const useGroupDataByGroupName=(groupName:any)=>{
+  return useQuery({
+    queryKey:['dataGroup',groupName],
+    queryFn:async()=>{
+      const groupData=await getGroupDataByGroupName(groupName);
+    
+      return groupData??[];
+      
+    },
+   enabled:true ,
+    staleTime:1000,
+    select:(data)=>{
+      console.log(data,'data-useGroupDataByGroupName')
+      return data || undefined;
+    }
+  })
+}

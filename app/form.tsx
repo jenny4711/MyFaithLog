@@ -15,13 +15,14 @@ import SundayForm from '~/components/form/SundayForm';
 import ShowBible from '~/components/form/ShowBible';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useQueryClient } from '@tanstack/react-query';
-import { useSaveData } from '~/hooks/useFormData';
+import { useSaveData ,useGroupListData} from '~/hooks/useFormData';
 import Animated, { FadeIn, FadeOut, SlideInDown, SlideOutDown, useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import CustomBottomSheet, { Ref } from '~/components/form/CustomBottomSheet';
 import BottomSheet from '@gorhom/bottom-sheet';
 import Head from 'expo-router/head';
 import DataPickerW from '~/components/web/DataPickerW';
+import StatusCheck from '~/components/form/StatusCheck';
 const { width, height } = Dimensions.get('window');
 
 const Form = () => {
@@ -49,6 +50,7 @@ const Form = () => {
   const [init, setInit] = useState('exo') as any;
   const [showContent, setShowContent] = useState([]) as any || [];
   const [note, setNote] = useState('');
+  const [checkStatus,setCheckStatus]=useState([])
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [keyboardVisible, setKeyboardVisible] = useState<boolean>(false);
   const [showList, setShowList] = useState(false);
@@ -180,6 +182,7 @@ saveDate()
 
   const handleSaveBtn = async () => {
     try {
+      console.log(checkStatus,'checkStatus')
       const date = await AsyncStorage.getItem('date');
       const address = `${name}-${page}-${verse} `;
       addMutation.mutate({ category, note, photo, date, title, content, meditation, application, pray, name, address });
@@ -219,12 +222,12 @@ saveDate()
       <meta name="description" content="My Faith Log" />
    </Head>
     <View style={[keyboardVisible ? styles.containerWithKeyboard : styles.container]}>
-      <View>
+      <View style={{width:width}}>
         <FirstView category={category} setCategory={setCategory} lang={lang} setLang={setLang} setTheBible={setTheBible} theBible={theBible} />
       </View>
       <ScrollView ref={scrollViewRef} style={{ height: height, paddingVertical: 10 }}>
-        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={Platform.select({ ios: -500, android: 80 })}>
-          <View style={{ width: width - 48 }}>
+        <KeyboardAvoidingView style={{justifyContent:'center'}} behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={Platform.select({ ios: -500, android: 80 })}>
+          <View style={{ width:width,alignItems:'center'  }}>
            {Platform.OS=== "ios"? <DatePicker
               date={date}
               setDate={setDate}
@@ -247,7 +250,7 @@ saveDate()
             }
           </View>
 
-          <View>
+          <View style={{width:width,alignItems:'center'}}>
             <TextInput
               style={{ width: width - 48, height: 60, backgroundColor: 'white', padding: 10, borderRadius: 10, marginVertical: 10 }}
               placeholder="Title"
@@ -257,40 +260,44 @@ saveDate()
             />
           </View>
 
-          <View style={category === 'thanks' || category === 'source' ? { display: 'none' } : { width: width - 48, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{ borderBottomWidth: 1, borderBottomColor: 'black', flexDirection: 'row', backgroundColor: '#E8751A', width: 80, height: 60, justifyContent: 'center', marginLeft: 5, alignItems: 'center', borderRadius: 10 }}>
+          <View style={category === 'thanks' || category === 'source' ? { display: 'none' } : { width: width , flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+            <View style={{  flexDirection: 'row', backgroundColor: '#E8751A', width: 80, height: 60, justifyContent: 'center', marginLeft: 5, alignItems: 'center', borderRadius: 10 }}>
               <ShowBible ref={fromPageRef} Ref2={fromVerseRef} setChange={setPage} value={page} lang={lang} theBible={theBible} />
               <Text style={{ fontSize: 16 }}>{lang === 'Kr' ? '장' : 'ch'}</Text>
             </View>
-            <View style={{ borderBottomWidth: 1, borderBottomColor: 'black', flexDirection: 'row', backgroundColor: '#E8751A', width: 80, height: 60, justifyContent: 'center', marginLeft: 3, alignItems: 'center', borderRadius: 10 }}>
+            <View style={{ flexDirection: 'row', backgroundColor: '#E8751A', width: 80, height: 60, justifyContent: 'center', marginLeft: 3, alignItems: 'center', borderRadius: 10 }}>
               <ShowBible ref={fromVerseRef} Ref2={toPageRef} setChange={setVerse} value={verse} lang={lang} theBible={theBible} />
               <Text style={{ fontSize: 16 }}>{lang === 'Kr' ? '절' : 'vs'}</Text>
             </View>
             <Text> ~</Text>
-            <View style={lang === 'En' ? { display: 'none' } : { borderBottomWidth: 1, borderBottomColor: 'black', flexDirection: 'row', backgroundColor: '#E8751A', width: 80, height: 60, justifyContent: 'center', marginLeft: 3, alignItems: 'center', borderRadius: 10 }}>
+            <View style={lang === 'En' ? { display: 'none' } : {  flexDirection: 'row', backgroundColor: '#E8751A', width: 80, height: 60, justifyContent: 'center', marginLeft: 3, alignItems: 'center', borderRadius: 10 }}>
               <ShowBible ref={toPageRef} Ref2={toVerseRef} setChange={setToPage} value={toPage} lang={lang} theBible={theBible} />
               <Text style={{ fontSize: 16 }}>{lang === 'Kr' ? '장' : 'ch'}</Text>
             </View>
-            <View style={lang === 'En' ? { display: 'none' } : { borderBottomWidth: 1, borderBottomColor: 'black', flexDirection: 'row', backgroundColor: '#E8751A', width: 80, height: 60, justifyContent: 'center', marginLeft: 3, alignItems: 'center', borderRadius: 10 }}>
+            <View style={lang === 'En' ? { display: 'none' } : {  flexDirection: 'row', backgroundColor: '#E8751A', width: 80, height: 60, justifyContent: 'center', marginLeft: 3, alignItems: 'center', borderRadius: 10 }}>
               <ShowBible ref={toVerseRef} Ref2={null} setChange={setToVerse} value={toVerse} lang={lang} theBible={theBible} />
               <Text style={{ fontSize: 16 }}>{lang === 'Kr' ? '절' : 'vs'}</Text>
             </View>
           </View>
-
+<View style={{width:width,justifyContent:'center',alignItems:'center'}}>
           <TouchableOpacity style={category === 'thanks' || category === 'source' ? { display: 'none' } : { width: width - 48, marginBottom: 10, backgroundColor: 'white', height: 40, borderRadius: 10, justifyContent: 'center', alignItems: 'center', marginLeft: 3 }} onPress={name === "목록" ? handleShowListener :handleShowContent}>
             <Text style={{ fontFamily: 'LineSeedKr-Bd', fontSize: 16 }}>{lang === 'En' ? 'Show Bible' : !visible ? `${name} 보기` : '말씀 닫기'}</Text>
           </TouchableOpacity>
+          </View>
 
           {category === 'sundayQt' || category === 'thanks' || category === 'source' ? (
             <SundayForm note={note} setNote={setNote} photo={photo} setPhoto={setPhoto} showDone={showDone} category={category} />
           ) : (
             <DailyForm setMeditation={setMeditation} setApplication={setApplication} setPray={setPray} meditation={meditation} application={application} pray={pray} lang={lang} medRef={medRef} appRef={appRef} prayRef={prayRef} scrollToInput={scrollToInput} />
           )}
-
+         <View>
+          <StatusCheck checkStatus={checkStatus} setCheckStatus={setCheckStatus} />
+         </View>
+          <View style={{width:width,alignItems:'center'}}>
           <TouchableOpacity onPress={handleSaveBtn} style={styles.saveBtn}>
             <Text>Save</Text>
           </TouchableOpacity>
-         
+          </View>
         </KeyboardAvoidingView>
       </ScrollView>
 
@@ -374,7 +381,7 @@ export default Form;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#E8751A',
     flexDirection: 'column',
@@ -383,7 +390,7 @@ const styles = StyleSheet.create({
   },
   containerWithKeyboard: {
     flex: 1,
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#E8751A',
     flexDirection: 'column',

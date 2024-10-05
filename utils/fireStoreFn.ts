@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
 import {useStorageContext} from '~/context/StorageContext'
 import {ref,uploadBytesResumable,getDownloadURL} from 'firebase/storage'
-export   const saveDiaryEntry = async ({category,note,photo,date,title,content,meditation,application,pray,name,address}:any) => {
+export   const saveDiaryEntry = async ({category,note,photo,date,title,content,meditation,application,pray,name,address,group}:any) => {
   try {
     // const email=await AsyncStorage.getItem('email')
     let email;
@@ -22,7 +22,8 @@ console.log(email,'email')
         photo,
         date,
         note,
-        address
+        address,
+        group,
       }
 
     }else if(category === 'dailyQt'){
@@ -33,7 +34,8 @@ console.log(email,'email')
         meditation,
         application,
         pray,
-        address
+        address,
+        group,
     }
     }else if(category ==='thanks'){
       data={
@@ -114,6 +116,138 @@ if(Platform.OS==='web'){
     console.log(error,'error-deleteItem')
   }
 }
+
+// my group section
+export const saveGroup=async({groupName,creator,memo,member,blockMember,list,password}:any)=>{
+  try{
+    const email=await AsyncStorage.getItem('email')
+    const data={
+      groupName,
+      creator,
+      memo,
+      member,
+      blockMember,
+      password,
+      list,
+
+    }
+
+    let docRef;
+    docRef = doc(FIRESTORE_DB, `groups/qt/list/${groupName}`);
+    await setDoc(docRef, data);
+  }catch(err){
+    console.log(err,'error-saveGroup')
+  }
+}
+
+
+export const getGroupData = async () => {
+  try {
+    const email = await AsyncStorage.getItem('email');
+    if (!email) return;
+
+    // Get all documents in the collection
+    const groupCollection = collection(FIRESTORE_DB, 'groups/qt/list');
+    const groupSnapshot = await getDocs(groupCollection);
+
+    // Create an array to store group data
+    const groupData:any = [];
+    groupSnapshot.forEach((doc) => {
+      groupData.push({ id: doc.id, ...doc.data() });
+    });
+
+    console.log(groupData, 'groupData');
+    return groupData;
+  } catch (error) {
+    console.log(error, 'error-getGroupData');
+  }
+};
+
+export const getGroupDataByGroupName=async(groupName:any)=>{
+  try{
+    const email=AsyncStorage.getItem('email')
+    if(!email)return;
+    const groupCollection=collection(FIRESTORE_DB,`groups/qt/list/`)
+    const groupSnapshot= await getDocs(groupCollection)
+    const groupData:any=[]
+    groupSnapshot.forEach((doc)=>{
+      if(doc.id===groupName){
+        groupData.push({id:doc.id,...doc.data()})
+      }
+    })
+ console.log(groupData,'groupData')
+    return groupData
+   
+}catch(error){
+  console.log(error,'error-getGroupDataByGroupName')
+}
+
+
+}
+
+export const addDailyQtToGroup = async (date: string, groupName: string) => {
+  try {
+    // 이메일 가져오기 (웹 또는 앱에 따라)
+    let email;
+    if (Platform.OS === 'web') {
+      email = localStorage.getItem('email');
+    } else {
+      email = await AsyncStorage.getItem('email');
+    }
+
+    if (!email || !date || !groupName || groupName ==='none') return;
+
+    // dailyQt 카테고리에서 특정 항목을 가져옴
+    const dailyQtDocRef = doc(FIRESTORE_DB, `users/${email}/dailyQt/${date}`);
+    const dailyQtDocSnap = await getDoc(dailyQtDocRef);
+
+    if (!dailyQtDocSnap.exists()) {
+      console.log('No such document in dailyQt!');
+      return;
+    }
+
+    const dailyQtData = dailyQtDocSnap.data();
+
+    // groupName에 해당하는 그룹 데이터를 가져옴
+    const groupDocRef = doc(FIRESTORE_DB, `groups/qt/${email}/${groupName}`);
+    const groupDocSnap = await getDoc(groupDocRef);
+
+    if (!groupDocSnap.exists()) {
+      console.log('No such group!');
+      return;
+    }
+
+    const groupData = groupDocSnap.data();
+    
+    // 기존의 list가 있으면 그 리스트에 새로운 dailyQt를 추가, 없으면 새로 만듦
+    const updatedList = groupData.list ? [...groupData.list, dailyQtData] : [dailyQtData];
+
+    // 그룹 데이터를 업데이트
+    await updateDoc(groupDocRef, {
+      list: updatedList
+    });
+
+    console.log('DailyQt entry added to group list successfully!');
+  } catch (error) {
+    console.log('Error adding DailyQt to group list: ', error);
+  }
+};
+
+
+
+
+
+// ----------------------------------------------
+
+
+
+
+
+
+
+
+
+
 
 //image uploading
 export const uploadImageStorage = async (uri: any, fileType: any) => {

@@ -1,7 +1,8 @@
-import { View, Text ,TouchableOpacity} from 'react-native'
+import { View, Text ,TouchableOpacity,Dimensions} from 'react-native'
 import React,{useState} from 'react'
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+const {width} = Dimensions.get('window')
 const DatePicker = ({
   month,
   setMonth,
@@ -39,7 +40,7 @@ const DatePicker = ({
   };
 
   return (
-    <View>
+    <View style={{width:width-48}}>
       
      <TouchableOpacity style={{backgroundColor:'white',paddingVertical:10,paddingHorizontal:10,borderRadius:10,alignItems:'center'}} onPress={showDatePicker}>
       <Text style={{fontFamily:"LineSeedKr-Bd",fontSize:16}}>{fullDate !==""?dateKr : title}</Text>

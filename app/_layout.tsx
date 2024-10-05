@@ -32,10 +32,11 @@ const Layout = () => {
      <Stack.Screen name="source" options={{headerShown:false,presentation:'modal'}} />
      <Stack.Screen name="thanks" options={{headerShown:false,presentation:'modal'}} />
      <Stack.Screen name="form" options={{headerShown:false,presentation:'modal'}} />
+      <Stack.Screen name="myGroup" options={{headerShown:false,presentation:'modal'}} />
      <Stack.Screen name="dailyqtDetail/[date]" options={{headerShown:false,presentation:'modal'}} />
      <Stack.Screen name="sundayDetail/[date]" options={{headerShown:false,presentation:'modal'}} />
      <Stack.Screen name="sourceDetail/[date]" options={{headerShown:false,presentation:'modal'}} />
-   
+     <Stack.Screen name="groupDetail/[groupName]" options={{headerShown:false,presentation:'modal'}} />
  
      </Stack>
  

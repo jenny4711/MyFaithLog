@@ -268,9 +268,24 @@ export const bibleKrBc=[
   },
   {
     title:"호세아서",
-    value:"호세아서",
+    value:"호세아",
     pg:14,
-    bible:"구약"
+    init:"hos",
+    bible:"구약",
+    1:11,
+    2:23,
+    3:5,
+    4:19,
+    5:15,
+    6:11,
+    7:16,
+    8:14,
+    9:17,
+    10:15,
+    11:12,
+    12:14,
+    13:16,
+    14:9,
   },
   {
     title:"요엘서",
@@ -391,9 +406,7 @@ export const bibleKrBc=[
     title:"갈라디아서",
     value:"갈라디아서",
     pg:6,
-    bible:"신약",
-    init:"gal"
-    
+    bible:"신약"
   },
   {
     title:"에베소서",
@@ -470,8 +483,6 @@ export const bibleKrBc=[
  
 
 ]
-
-
 
 
 // export const bibleKrAc=[

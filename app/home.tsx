@@ -17,8 +17,9 @@ const Home = () => {
       <View>
       <MenuBtns title="묵상일지" address="dailyqt"/>
       <MenuBtns title="주일말씀" address="sunday"/>
-      <MenuBtns title="자료실" address="source"/>
-      <MenuBtns title="감사일기" address="thanks"/>
+      <MenuBtns title="나의 그룹" address="myGroup"/>
+      {/* <MenuBtns title="자료실" address="source"/>
+      <MenuBtns title="감사일기" address="thanks"/> */}
       </View>
     <View style={styles.btnView}>
 <TouchableOpacity style={styles.btn} onPress={()=>(navigation as any).navigate('form')}>

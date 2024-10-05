@@ -58,8 +58,8 @@ const styles=StyleSheet.create({
     // paddingHorizontal:14,
     borderRadius:5,
     height:30,
-    borderBottomWidth:0.2,
-    borderBottomColor:'gray',
+    // borderBottomWidth:0.2,
+    // borderBottomColor:'gray',
     marginVertical:12
   },
   
