@@ -24,6 +24,8 @@ const GroupListItemBtn = ({group,index}:any) => {
           onPress:()=>{console.log('cancel')}
         }
       ])
+      }else{
+        ( navigation as any).navigate('groupDetail/[groupName]',{groupName:group.groupName})
       }
 
 
