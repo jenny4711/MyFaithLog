@@ -33,7 +33,7 @@ const GroupListItemBtn = ({group,index}:any) => {
   }
 
   return (
-    <TouchableOpacity onPress={goToDetail} key={index} style={{width:width-48,backgroundColor:'white',marginTop:8,borderRadius:10,paddingHorizontal:16,paddingVertical:16}}>
+    <TouchableOpacity  onPress={goToDetail} key={index} style={{width:width-48,backgroundColor:'white',marginTop:8,borderRadius:10,paddingHorizontal:16,paddingVertical:16}}>
     <Text style={{fontSize:20,fontFamily:"LineSeedKr-Bd"}}>{group.groupName}</Text>
  <Text style={{fontSize:16,fontFamily:'LineSeedKR-Rg'}}>{group.memo}</Text>
     <Text style={{fontSize:16,fontFamily:'LineSeedKR-Rg'}}>{group.creator}</Text>

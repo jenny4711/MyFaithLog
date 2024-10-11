@@ -5,6 +5,7 @@ import FirstGroupView from '~/components/myGroup/FirstGroupView'
 import { useGroupListData } from '~/hooks/useFormData'
 import CreateGroupForm from '~/components/myGroup/CreateGroupForm'
 import GroupListItemBtn from '~/components/myGroup/GroupListItemBtn'
+import Head from 'expo-router/head';
 const {width,height} = Dimensions.get('window')
 
 const exampleGroup=[
@@ -77,10 +78,15 @@ if (isError) {
 
 
   return (
+    <>
+     <Head>
+      <title>My Faith Log</title>
+      <meta name="description" content="My Faith Log" />
+   </Head>
     <View style={{flex:1,backgroundColor:'#E8751A',alignItems:'center'}}>
-      <FirstGroupView isCreateGp={isCreateGp} setIsCreateGp={setIsCreateGp}/>
+      <FirstGroupView onChange={isCreateGp} setOnChange={setIsCreateGp} title={'그룹만들기'}/>
 
-     {isCreateGp && <CreateGroupForm blockMember={blockMember} groupName={groupName} creator={creator} memo={memo} password={password} setGroupName={setGroupName} setBlockMember={setBlockMember}setMember={setMember}/>}
+     {isCreateGp && <CreateGroupForm blockMember={blockMember} groupName={groupName} creator={creator} memo={memo} member={member} setMemo={setMemo} password={password} setPassword={setPassword} setGroupName={setGroupName} setBlockMember={setBlockMember}setMember={setMember} setCreator={setCreator}/>}
 
 
 <View style={[styles.eachView,{backgroundColor:'#E8751A'}]}>
@@ -97,6 +103,7 @@ if (isError) {
 </View>
 
     </View>
+    </>
   )
 }
 

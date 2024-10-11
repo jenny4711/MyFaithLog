@@ -3,7 +3,7 @@ import React from 'react'
 import AntDesign from '@expo/vector-icons/AntDesign';
 import { useNavigation ,useRouter} from 'expo-router';
 const {width} = Dimensions.get('window')  
-const FirstGroupView = ({setIsCreateGp,isCreateGp}:any) => {
+const FirstGroupView = ({setOnChange,onChange,title}:any) => {
   const router = useRouter();
   const goToSetting=()=>{
     router.back(); // 모달 닫기
@@ -11,12 +11,12 @@ const FirstGroupView = ({setIsCreateGp,isCreateGp}:any) => {
   }
   return (
     <View style={{flexDirection:'row',width:width-48,paddingVertical:16,justifyContent:'space-between'}}>
-<TouchableOpacity onPress={()=>setIsCreateGp(!isCreateGp)}>
-  <Text style={{fontSize:16,fontFamily:"LineSeedKr-Bd"}}>그룹 만들기</Text>
+<TouchableOpacity onPress={()=>setOnChange(!onChange)}>
+  <Text style={{fontSize:16,fontFamily:"LineSeedKr-Bd"}}>{title}</Text>
 </TouchableOpacity>
 
       <TouchableOpacity onPress={goToSetting}>
-     <AntDesign name="setting" size={16} color="black" />
+     <AntDesign name="setting" size={20} color="black" />
      </TouchableOpacity>
     </View>
   )

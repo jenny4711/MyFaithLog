@@ -21,19 +21,31 @@ const Setting = () => {
     getLang()
   },[lang])
   return (
-    <SafeAreaView style={{backgroundColor:'#E8751A',height:height}}>
-<View>
-  <TouchableOpacity onPress={()=>navigation.goBack()}>
+    <SafeAreaView style={{alignItems:'center',backgroundColor:'#E8751A',height:height}}>
+<View style={{width:width-48}}>
+  <TouchableOpacity  onPress={()=>navigation.goBack()}>
     <MaterialIcons name="arrow-back" size={24} color="black"/>
   </TouchableOpacity>
 </View>
 
-    <View style={{flex:1, backgroundColor:'#E8751A'}}>
-    <Selection arr={langArr} setChange={setLang} placeHolder={<MaterialIcons name="language" size={24} color="black" />} btnWidth={width-360}/>
+<View style={{justifyContent:'center',alignItems:'center',marginVertical:16}}>
+  <Text style={{fontSize:16,fontFamily:'LineSeedKr-Bd',color:'white'}}>Setting</Text>
+</View>
+<View style={{width:width-48}}>
+  <Text style={{fontSize:14,fontFamily:'LineSeedKr-Bd',color:'white'}}>Style</Text>
+</View>
 
-    </View>
+   
     </SafeAreaView>
   )
 }
 
 export default Setting
+
+
+
+
+{/* <View style={{flex:1, backgroundColor:'#E8751A'}}>
+<Selection arr={langArr} setChange={setLang} placeHolder={<MaterialIcons name="language" size={24} color="black" />} btnWidth={width-360}/>
+
+</View> */}

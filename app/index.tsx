@@ -333,7 +333,7 @@ const Page = () => {
 
             {Platform.OS === 'web' ? (
               <View>
-                {/* <Button title={'TEST BTN'} onPress={()=>(navigation as any).navigate('home')}/> */}
+                <Button title={'TEST BTN'} onPress={()=>(navigation as any).navigate('home')}/>
                 <GoogleLogin
                   onSuccess={handleGoogleLoginSuccess} // 웹에서 로그인 성공 시 호출
                   onError={() => {

@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient ,useMutation} from '@tanstack/react-query';
 import { useNavigation } from 'expo-router';
 import { useState } from 'react';
-import { saveDiaryEntry ,getData ,deleteItem,getGroupData,getGroupDataByGroupName} from '~/utils/fireStoreFn';
+import { getMyGroupListByEmail,saveDiaryEntry ,getData ,deleteItem,getGroupData,getGroupDataByGroupName} from '~/utils/fireStoreFn';
 import { getBibleFromTo ,findFromChToCh} from '~/utils/ai';
 
 export const useBibleFromTo = ({ title, bible, chapter, to, from }: any) => {
@@ -48,12 +48,12 @@ export const useBibleFromChToCh=({title,bible,fromCh,fromVs,toCh,toVs}:any)=>{
 
 
 
-export const useSaveData=({category,note,photo,date,title,content,meditation,application,pray,name,address}:any)=>{
+export const useSaveData=({category,note,photo,date,title,content,meditation,application,pray,name,address,group}:any)=>{
   const queryClient=useQueryClient()
 
   return useMutation({
-    mutationFn: ({category,note,photo,date,title,content,meditation,application,pray,name,address}: { category: any; note: any; photo: any; date: any; title: any; content: any;meditation:any,application:any,pray:any;name:any,address:any }) => {
-      return saveDiaryEntry({category,note,photo,date,title,content,meditation,application,pray,name,address});
+    mutationFn: ({category,note,photo,date,title,content,meditation,application,pray,name,address,group}: { category: any; note: any; photo: any; date: any; title: any; content: any;meditation:any,application:any,pray:any;name:any,address:any ,group:any}) => {
+      return saveDiaryEntry({category,note,photo,date,title,content,meditation,application,pray,name,address,group});
     },
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey:['data',category]});
@@ -66,11 +66,11 @@ export const useSaveData=({category,note,photo,date,title,content,meditation,app
 export const useData=(category:any) => {
   return useQuery({
     queryKey: ['data',category],
-    queryFn: () => {
+    queryFn: async() => {
       if(!category){
         return '' || [];
       }
-      return getData(category);
+      return await getData(category);
     },
     enabled: !!category,
     staleTime:0,
@@ -131,6 +131,24 @@ export const useGroupDataByGroupName=(groupName:any)=>{
     staleTime:1000,
     select:(data)=>{
       console.log(data,'data-useGroupDataByGroupName')
+      return data || undefined;
+    }
+  })
+}
+
+export const useGetMyGroupList=()=>{
+  return useQuery({
+    queryKey:['myGroup'],
+    queryFn:async()=>{
+      const groupData=await getMyGroupListByEmail();
+    
+      return groupData??[];
+      
+    },
+   enabled:true ,
+    staleTime:1000,
+    select:(data)=>{
+      console.log(data,'data-getMyGroupList')
       return data || undefined;
     }
   })

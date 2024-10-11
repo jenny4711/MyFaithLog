@@ -8,6 +8,7 @@ import SelectionGroup from '~/components/form/SelectionGroup';
 import Selection from '~/components/form/Selection';
 import { getAIResponse } from '~/utils/ai';
 import { dayList,monthList,yearList } from '~/utils/selectionArray';
+import { useStorageContext } from '~/context/StorageContext';
 import FirstView from '~/components/form/FirstView';
 import { bibleEnAc, bibleEnBc,  bibleKrBc, langArr, bibleArrEn, bibleArrKr } from '~/utils/selectionArray';
 import DailyForm from '~/components/form/DailyForm';
@@ -20,6 +21,7 @@ import Animated, { FadeIn, FadeOut, SlideInDown, SlideOutDown, useAnimatedStyle,
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import CustomBottomSheet, { Ref } from '~/components/form/CustomBottomSheet';
 import BottomSheet from '@gorhom/bottom-sheet';
+import { addDailyQtToGroup } from '~/utils/fireStoreFn';
 import Head from 'expo-router/head';
 import DataPickerW from '~/components/web/DataPickerW';
 import StatusCheck from '~/components/form/StatusCheck';
@@ -54,6 +56,7 @@ const Form = () => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [keyboardVisible, setKeyboardVisible] = useState<boolean>(false);
   const [showList, setShowList] = useState(false);
+  const [saved,setSaved]=useState(false)
   const scrollViewRef = useRef(null) as any;
   const medRef = useRef<TextInput>(null);
   const appRef = useRef<TextInput>(null);
@@ -73,6 +76,28 @@ const [showDate,setShowDate]=useState(false)
   }));
 
   const { data }: any = useBibleFromChToCh(visible ? { title: name, bible: init, fromCh: page, fromVs: verse, toCh: toPage, toVs: toVerse } : []);
+
+
+useEffect(()=>{
+  if(saved && checkStatus.length>0){
+    checkStatus.map(async(item:any)=>{
+      await addDailyQtToGroup({groupName:item,date:fullDate,category:category})
+    })
+    setSaved(false)
+    setCategory('');
+    setCheckStatus([])
+    setFullDate('');
+  }else if(saved){
+    setSaved(false)
+    setCategory('');
+    setCheckStatus([])
+    setFullDate('');
+
+  }
+},[checkStatus,saved])
+
+
+
 
 useEffect(()=>{
  async function saveDate(){
@@ -182,10 +207,16 @@ saveDate()
 
   const handleSaveBtn = async () => {
     try {
-      console.log(checkStatus,'checkStatus')
+      if (category === '') {
+        Alert.alert('Please select the category');
+        return;
+      }
+      setSaved(true)
       const date = await AsyncStorage.getItem('date');
       const address = `${name}-${page}-${verse} `;
-      addMutation.mutate({ category, note, photo, date, title, content, meditation, application, pray, name, address });
+      addMutation.mutate({ category, note, photo, date:fullDate, title, content, meditation, application, pray, name, address,group:checkStatus });
+    
+      
       setVerse('');
       setPage('');
       setToVerse('');
@@ -197,14 +228,15 @@ saveDate()
       setPhoto('');
       setNote('');
       setContent([]);
-      setFullDate('');
+     
       setMonth('');
       setYear('');
       setLang('');
       setTheBible('');
       setName('');
-      setCategory('');
+      
       setDatePickerVisibility(false);
+      
       return (navigation as any).navigate('home');
     } catch (error) {
       console.log(error, 'error-handleSaveBtn');
@@ -214,7 +246,7 @@ saveDate()
   useEffect(() => {
     console.log(lang, 'lang');
   }, [lang]);
-
+console.log(checkStatus,'checkStatus')
   return (
     <>
      <Head>
@@ -279,7 +311,7 @@ saveDate()
               <Text style={{ fontSize: 16 }}>{lang === 'Kr' ? '절' : 'vs'}</Text>
             </View>
           </View>
-<View style={{width:width,justifyContent:'center',alignItems:'center'}}>
+         <View style={{width:width,justifyContent:'center',alignItems:'center'}}>
           <TouchableOpacity style={category === 'thanks' || category === 'source' ? { display: 'none' } : { width: width - 48, marginBottom: 10, backgroundColor: 'white', height: 40, borderRadius: 10, justifyContent: 'center', alignItems: 'center', marginLeft: 3 }} onPress={name === "목록" ? handleShowListener :handleShowContent}>
             <Text style={{ fontFamily: 'LineSeedKr-Bd', fontSize: 16 }}>{lang === 'En' ? 'Show Bible' : !visible ? `${name} 보기` : '말씀 닫기'}</Text>
           </TouchableOpacity>

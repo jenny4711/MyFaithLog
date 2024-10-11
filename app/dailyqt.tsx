@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Dimensions, StyleSheet, Platform } from 'react-native';
+import { View, Text, ScrollView, Dimensions, StyleSheet, Platform ,ActivityIndicator} from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { useData } from '~/hooks/useFormData';
 import DailyQtList from '~/components/list/DailyQtList';
@@ -67,7 +67,9 @@ const DailyQt = () => {
             }
           </ScrollView>
         ) : (
-          <Text style={{ color: 'white' }}>Loading or no data available</Text> // 데이터가 없을 경우 기본 메시지
+          <View>
+            <ActivityIndicator size="large" color="white" />
+          </View>// 데이터가 없을 경우 기본 메시지
         )}
       </View>
     </>

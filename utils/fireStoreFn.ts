@@ -28,6 +28,7 @@ console.log(email,'email')
 
     }else if(category === 'dailyQt'){
       data = {
+        email,
         title,
         content,
         date,
@@ -39,6 +40,7 @@ console.log(email,'email')
     }
     }else if(category ==='thanks'){
       data={
+        email,
         date,
         title,
         note,
@@ -46,6 +48,7 @@ console.log(email,'email')
       }
     }else{
       data={
+        email,
         date,
         title,
         photo,
@@ -124,6 +127,7 @@ export const saveGroup=async({groupName,creator,memo,member,blockMember,list,pas
     const data={
       groupName,
       creator,
+      creatorEmail:email,
       memo,
       member,
       blockMember,
@@ -185,7 +189,7 @@ export const getGroupDataByGroupName=async(groupName:any)=>{
 
 }
 
-export const addDailyQtToGroup = async (date: string, groupName: string) => {
+export const addDailyQtToGroup = async ({groupName,date,category}:any) => {
   try {
     // 이메일 가져오기 (웹 또는 앱에 따라)
     let email;
@@ -198,7 +202,7 @@ export const addDailyQtToGroup = async (date: string, groupName: string) => {
     if (!email || !date || !groupName || groupName ==='none') return;
 
     // dailyQt 카테고리에서 특정 항목을 가져옴
-    const dailyQtDocRef = doc(FIRESTORE_DB, `users/${email}/dailyQt/${date}`);
+    const dailyQtDocRef = doc(FIRESTORE_DB, `users/${email}/${category}/${date}`);
     const dailyQtDocSnap = await getDoc(dailyQtDocRef);
 
     if (!dailyQtDocSnap.exists()) {
@@ -209,7 +213,7 @@ export const addDailyQtToGroup = async (date: string, groupName: string) => {
     const dailyQtData = dailyQtDocSnap.data();
 
     // groupName에 해당하는 그룹 데이터를 가져옴
-    const groupDocRef = doc(FIRESTORE_DB, `groups/qt/${email}/${groupName}`);
+    const groupDocRef = doc(FIRESTORE_DB, `groups/qt/list/${groupName}`);
     const groupDocSnap = await getDoc(groupDocRef);
 
     if (!groupDocSnap.exists()) {
@@ -221,7 +225,7 @@ export const addDailyQtToGroup = async (date: string, groupName: string) => {
     
     // 기존의 list가 있으면 그 리스트에 새로운 dailyQt를 추가, 없으면 새로 만듦
     const updatedList = groupData.list ? [...groupData.list, dailyQtData] : [dailyQtData];
-
+console.log(updatedList,'updatedList')
     // 그룹 데이터를 업데이트
     await updateDoc(groupDocRef, {
       list: updatedList
@@ -232,6 +236,65 @@ export const addDailyQtToGroup = async (date: string, groupName: string) => {
     console.log('Error adding DailyQt to group list: ', error);
   }
 };
+
+
+// 이메일 그룹 member 에 추가하기
+export const addUserToGroup=async(groupName:string)=>{
+  try{
+    let email;
+    if(Platform.OS==='web'){
+      email=localStorage.getItem('email')
+    }else{
+      email=await AsyncStorage.getItem('email')
+    }
+
+    if(!email || !groupName)return;
+    const groupDocRef=doc(FIRESTORE_DB,`groups/qt/list/${groupName}`)
+    const groupDocSnap= await getDoc(groupDocRef)
+    if(!groupDocSnap.exists()){
+      console.log('No such group')
+      return
+    }
+
+    const groupData=groupDocSnap.data()
+    const updatedList = groupData.member?[...groupData.member,email]:[email]
+
+    await updateDoc(groupDocRef,{
+      member:updatedList
+    })
+    console.log('User added to group successfully!')
+
+  }catch(error){
+    console.log('Error adding user to group: ', error);
+  }
+}
+
+export const getMyGroupListByEmail=async()=>{
+  try{
+    let email;
+    if(Platform.OS==='web'){
+      email=localStorage.getItem('email')
+    }else{
+      email=await AsyncStorage.getItem('email')
+    }
+
+    if(!email)return;
+    const groupCollection=collection(FIRESTORE_DB,`groups/qt/list`)
+    const groupQuery=query(groupCollection,where('member','array-contains',email))
+    const groupSnapshot=await getDocs(groupQuery)
+    const groupData = groupSnapshot.docs.map((doc)=>({id:doc.id,...doc.data()}))
+    console.log(groupData,'groupData')
+    return groupData
+
+
+
+
+
+
+  }catch(error){
+    console.log('Error getting my group list: ', error);
+  }
+}
 
 
 

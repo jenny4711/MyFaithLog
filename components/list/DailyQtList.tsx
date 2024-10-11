@@ -41,7 +41,7 @@ const goToDetail=()=>{
       <title>My Faith Log</title>
       <meta name="description" content="My Faith Log" />
    </Head>
-    <View >
+    <View key={key} >
       {Platform.OS==='web'?
       <TouchableOpacity onPress={goToDetail}>
 
