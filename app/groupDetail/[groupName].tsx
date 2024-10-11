@@ -3,7 +3,7 @@ import React ,{useEffect,useState}from 'react'
 import { useLocalSearchParams } from 'expo-router'
 import { useGroupDataByGroupName } from '~/hooks/useFormData'
 import { useNavigation } from 'expo-router'
-import { addUserToGroup } from '../../utils/fireStoreFn';
+import { addUserToGroup, removeUserFromGroup } from '../../utils/fireStoreFn';
 import { useGroupListData } from '../../hooks/useFormData';
 import { useStorageContext } from '~/context/StorageContext'
 import FirstGroupView from '~/components/myGroup/FirstGroupView'
@@ -30,7 +30,7 @@ const {email}=useStorageContext()
 const [groupData,setGroupData]=useState<any>(null)
 const [addMyGroup,setAddMyGroup]=useState(false)
 const [gpNameArray,setGpNameArray]=useState<any>([])
-console.log(gpData,'gpData')
+
 
 
 useEffect(()=>{
@@ -51,7 +51,7 @@ useEffect(() => {
   fetchData();
 }, [gpNameArray]);
 
-
+console.log(email,'email')
  useEffect(()=>{
     if(data){
       setGroupData(data[0])
@@ -61,6 +61,9 @@ useEffect(() => {
  useEffect(()=>{
   async function addGroup(groupName:any){
     try{
+      if(data.member.includes(email)){
+        await removeUserFromGroup(groupName)
+      }
       await addUserToGroup(groupName)
     }catch(error){
       console.log('Error adding user to group: ', error);
@@ -77,7 +80,7 @@ if(addMyGroup){
 
   return (
     <View style={{flex:1,alignItems:'center',backgroundColor:'#E8751A'}}>
-      <FirstGroupView setOnChange={setAddMyGroup} onChange={addMyGroup} title={addMyGroup?'탈퇴하기':'리스트넣기'}/>
+      <FirstGroupView setOnChange={setAddMyGroup} onChange={addMyGroup} title={addMyGroup?'탈퇴하기':'나의그룹에넣기'}/>
       <Text> {groupData?.groupName}</Text>
 
       <ScrollView>

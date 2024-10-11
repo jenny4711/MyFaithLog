@@ -297,6 +297,44 @@ export const getMyGroupListByEmail=async()=>{
 }
 
 
+// 이메일 그룹 member 에서 제거하기
+export const removeUserFromGroup = async (groupName: string) => {
+  try {
+    let email;
+    if (Platform.OS === 'web') {
+      email = localStorage.getItem('email');
+    } else {
+      email = await AsyncStorage.getItem('email');
+    }
+
+    if (!email || !groupName) return;
+
+    // Firestore에서 그룹 문서 참조를 가져옵니다.
+    const groupDocRef = doc(FIRESTORE_DB, `groups/qt/list/${groupName}`);
+    const groupDocSnap = await getDoc(groupDocRef);
+
+    if (!groupDocSnap.exists()) {
+      console.log('No such group');
+      return;
+    }
+
+    const groupData = groupDocSnap.data();
+    
+    // 멤버 리스트에서 이메일을 제거합니다.
+    const updatedList = groupData.member
+      ? groupData.member.filter((memberEmail: string) => memberEmail !== email)
+      : [];
+
+    // Firestore에 멤버 리스트 업데이트
+    await updateDoc(groupDocRef, {
+      member: updatedList,
+    });
+
+    console.log('User removed from group successfully!');
+  } catch (error) {
+    console.log('Error removing user from group: ', error);
+  }
+};
 
 
 
