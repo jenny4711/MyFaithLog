@@ -206,6 +206,13 @@ saveDate()
         Alert.alert('Please select the category');
         return;
       }
+
+      if (date === '') {
+        Alert.alert('Please select the date');
+        return;
+      }
+
+
       setSaved(true)
       // const date = await AsyncStorage.getItem('date');
       const address = `${name}-${page}-${verse} `;
@@ -291,30 +298,7 @@ saveDate()
             <Text style={{ fontFamily: 'LineSeedKr-Bd', fontSize: 18 }}>{lang === 'En' ? 'Show Bible' : !visible ? `${name} 보기` : '말씀 닫기'}</Text>
           </TouchableOpacity>
           </View>
-          {/* <BibleForm 
-          category={category}
-          fromPageRef={fromPageRef}
-          fromVerseRef={fromVerseRef}
-          toPageRef={toPageRef}
-          toVerseRef={toVerseRef}
-          name={name}
-          setPage={setPage}
-          lang={lang}
-          page={page}
-          theBible={theBible}
-          setVerse={setVerse}
-          verse={verse}
-          setToPage={setToPage}
-          toPage={toPage}
-          setToVerse={setToVerse}
-          toVerse={toVerse}
-          handleShowListener={handleShowListener}
-          handleShowContent={handleShowContent}
-          visible={visible}
-          setVisible={setVisible}
-          showContent={showContent}
-          
-          /> */}
+        
 
         
 
@@ -334,7 +318,7 @@ saveDate()
         </KeyboardAvoidingView>
       </ScrollView>
 
-      {/* {visible && (
+      {visible && Platform.OS === 'web' &&(
         <>
           <Animated.ScrollView entering={SlideInDown.springify().damping(15)} exiting={SlideOutDown} style={[styles.sheet, translateY]}>
             <TouchableOpacity onPress={() => setVisible(false)}>
@@ -350,7 +334,7 @@ saveDate()
             <View style={{ marginBottom: 50 }} />
           </Animated.ScrollView>
         </>
-      )} */}
+      )}
 
 {showDate && (
        <>
@@ -403,7 +387,7 @@ saveDate()
 
 
 
-      {visible&& <CustomBottomSheet  showContent={showContent} name={name} setChange={setName} setInit={setInit} title="Bottom Sheet" ref={bottomSheetRef} />}
+      {visible&&Platform.OS ==='ios'&& <CustomBottomSheet  showContent={showContent} name={name} setChange={setName} setInit={setInit} title="Bottom Sheet" ref={bottomSheetRef} />}
     </View>
     </>
   );
