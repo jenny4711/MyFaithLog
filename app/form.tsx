@@ -39,18 +39,13 @@ const Form = () => {
   const [pray, setPray] = useState('');
   const [application, setApplication] = useState('');
   const [lang, setLang] = useState('');
-  // const [name, setName] = useState('목록');
+ 
   const [toName, setToName] = useState('');
   const [theBible, setTheBible] = useState('The New Testament');
-  // const [verse, setVerse] = useState<any>('');
-  // const [toVerse, setToVerse] = useState<any>('');
-  // const [page, setPage] = useState<any>('');
-  // const [toPage, setToPage] = useState<any>('');
+ 
   const [category, setCategory] = useState<any>('');
   const [photo, setPhoto] = useState('');
   const [showDone, setShowDone] = useState(true);
-  // const [init, setInit] = useState('exo') as any;
-  // const [showContent, setShowContent] = useState([]) as any || [];
   const [note, setNote] = useState('');
   const [checkStatus,setCheckStatus]=useState([])
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -104,7 +99,7 @@ useEffect(()=>{
   if(date!==''&&month!==''&&year!==''){
     setFullDate(`${month}-${date}-${year}`)
     setShowDate(false)
-    await AsyncStorage.setItem('date',`${month}-${date}-${year}`)
+    // await AsyncStorage.setItem('date',`${month}-${date}-${year}`)
   }
 
  }
@@ -212,7 +207,7 @@ saveDate()
         return;
       }
       setSaved(true)
-      const date = await AsyncStorage.getItem('date');
+      // const date = await AsyncStorage.getItem('date');
       const address = `${name}-${page}-${verse} `;
       addMutation.mutate({ category, note, photo, date:fullDate, title, content, meditation, application, pray, name, address,group:checkStatus });
     

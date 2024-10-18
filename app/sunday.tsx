@@ -3,6 +3,7 @@ import React,{useState,useEffect} from 'react'
 import { useData } from '~/hooks/useFormData'
 import Animated,{Easing,FadeInLeft} from 'react-native-reanimated'
 import SundayListItem from '~/components/list/SundayListItem'
+import ListFirstView from '~/components/list/ListFirstView'
 const {width} = Dimensions.get('window')
 
 const Sunday = () => {
@@ -12,6 +13,7 @@ const {data}=useData(category)
 console.log(data,'data')
   return (
     <View style={{flex:1,backgroundColor:'#E8751A',justifyContent:'center',alignItems:'center',paddingTop:16}}>
+      <ListFirstView title={'주일말씀'} />
      <ScrollView>
       {
         data?.map((item:any,index:any) => (

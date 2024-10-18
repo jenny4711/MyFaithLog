@@ -5,6 +5,7 @@ import DailyQtList from '~/components/list/DailyQtList';
 import Animated, { Easing, FadeInLeft } from 'react-native-reanimated';
 import Head from 'expo-router/head';
 import { useRouter } from 'expo-router';
+import ListFirstView from '~/components/list/ListFirstView';
 const { width } = Dimensions.get('window');
 
 const DailyQt = () => {
@@ -51,7 +52,9 @@ const DailyQt = () => {
         <meta name="description" content="My Faith Log" />
       </Head>
       <View style={{ flex: 1, backgroundColor: '#E8751A', justifyContent: 'center', alignItems: 'center', paddingTop: 16 }}>
-        <Text style={{fontSize:20,fontFamily: 'LotteBd'}}>묵상 리스트</Text>
+
+        <ListFirstView title={'묵상 리스트'} />
+        {/* <Text style={{fontSize:20,fontFamily: 'LotteBd'}}>묵상 리스트</Text> */}
         {formData.length > 0 ? (
           <ScrollView 
           showsVerticalScrollIndicator={false}
