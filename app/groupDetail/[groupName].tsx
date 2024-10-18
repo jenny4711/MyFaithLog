@@ -14,7 +14,6 @@ export async function generateStaticParams(item: any): Promise<Record<string, st
 
   dateArray.push({ groupName: '테스트' });
 
-  console.log(dateArray, 'dateArray');
   return dateArray;
 }
 
@@ -30,6 +29,18 @@ const {email}=useStorageContext()
 const [groupData,setGroupData]=useState<any>(null)
 const [addMyGroup,setAddMyGroup]=useState(false)
 const [gpNameArray,setGpNameArray]=useState<any>([])
+const [myStatus,setMyStatus]=useState(false)
+
+useEffect(()=>{
+  console.log(groupData,'groupData')
+  if(groupData){
+    if(groupData.member.includes(email)){
+      setMyStatus(true)
+    }else{
+      setMyStatus(false)
+    }
+  }
+},[groupData])
 
 
 
@@ -58,35 +69,35 @@ console.log(email,'email')
     }
  },[data])
 
- useEffect(()=>{
-  async function addGroup(groupName:any){
-    try{
-      if(data.member.includes(email)){
-        await removeUserFromGroup(groupName)
-      }
-      await addUserToGroup(groupName)
-    }catch(error){
-      console.log('Error adding user to group: ', error);
-    }
-   
-    
-  }
-  
-if(addMyGroup){
-  addGroup(groupName)
-}
- },[addMyGroup])
 
+
+const handleRemoveGroup=async(groupName:any)=>{
+  try{
+    await removeUserFromGroup(groupName)
+    setMyStatus(false)
+  }catch(error){
+    console.log('Error removing user from group: ', error);
+  }
+}
+
+const handleAddGroup=async(groupName:any)=>{
+  try{
+    await addUserToGroup(groupName)
+    setMyStatus(true)
+  }catch(error){
+    console.log('Error adding user to group: ', error);
+  }
+}
 
   return (
     <View style={{flex:1,alignItems:'center',backgroundColor:'#E8751A'}}>
-      <FirstGroupView setOnChange={setAddMyGroup} onChange={addMyGroup} title={addMyGroup?'탈퇴하기':'나의그룹에넣기'}/>
+      <FirstGroupView setAddOnChange={handleAddGroup} myStatus={myStatus} groupName={groupData?.groupName}  setOnChange={handleRemoveGroup} onChange={addMyGroup} title={myStatus?'탈퇴하기':'나의그룹에넣기'}/>
       <Text> {groupData?.groupName}</Text>
 
       <ScrollView>
         {
         groupData?.list.map((item:any,index:any)=>(
-          <TouchableOpacity style={{backgroundColor:'white',width:width-48,padding:16,borderRadius:24}} key={index}>
+          <TouchableOpacity style={{backgroundColor:'white',width:width-48,padding:16,borderRadius:24,marginVertical:8}} key={index}>
              <Text>{item.title}</Text>
              <Text>{item.address}</Text>
              <Text>{item.date}</Text>

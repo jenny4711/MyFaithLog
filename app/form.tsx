@@ -1,30 +1,30 @@
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions, KeyboardAvoidingView, Keyboard, TextInput, Platform, ScrollView, Alert, Pressable, Button } from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigation } from 'expo-router';
-import app from '../app.json';
+
 import { useBibleFromTo, useBibleFromChToCh } from '~/hooks/useFormData';
 import DatePicker from '~/components/form/DatePicker';
-import SelectionGroup from '~/components/form/SelectionGroup';
-import Selection from '~/components/form/Selection';
-import { getAIResponse } from '~/utils/ai';
-import { dayList,monthList,yearList } from '~/utils/selectionArray';
-import { useStorageContext } from '~/context/StorageContext';
+import BibleForm from '~/components/form/BibleForm';
+
+import { dayList,monthList,yearList ,currentAvailableBible} from '~/utils/selectionArray';
+
 import FirstView from '~/components/form/FirstView';
-import { bibleEnAc, bibleEnBc,  bibleKrBc, langArr, bibleArrEn, bibleArrKr } from '~/utils/selectionArray';
+
 import DailyForm from '~/components/form/DailyForm';
 import SundayForm from '~/components/form/SundayForm';
 import ShowBible from '~/components/form/ShowBible';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useQueryClient } from '@tanstack/react-query';
+
 import { useSaveData ,useGroupListData} from '~/hooks/useFormData';
 import Animated, { FadeIn, FadeOut, SlideInDown, SlideOutDown, useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
+
 import CustomBottomSheet, { Ref } from '~/components/form/CustomBottomSheet';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { addDailyQtToGroup } from '~/utils/fireStoreFn';
 import Head from 'expo-router/head';
 import DataPickerW from '~/components/web/DataPickerW';
 import StatusCheck from '~/components/form/StatusCheck';
+import { useStorageContext } from '~/context/StorageContext';
 const { width, height } = Dimensions.get('window');
 
 const Form = () => {
@@ -39,18 +39,18 @@ const Form = () => {
   const [pray, setPray] = useState('');
   const [application, setApplication] = useState('');
   const [lang, setLang] = useState('');
-  const [name, setName] = useState('목록');
+  // const [name, setName] = useState('목록');
   const [toName, setToName] = useState('');
   const [theBible, setTheBible] = useState('The New Testament');
-  const [verse, setVerse] = useState<any>('');
-  const [toVerse, setToVerse] = useState<any>('');
-  const [page, setPage] = useState<any>('');
-  const [toPage, setToPage] = useState<any>('');
+  // const [verse, setVerse] = useState<any>('');
+  // const [toVerse, setToVerse] = useState<any>('');
+  // const [page, setPage] = useState<any>('');
+  // const [toPage, setToPage] = useState<any>('');
   const [category, setCategory] = useState<any>('');
   const [photo, setPhoto] = useState('');
   const [showDone, setShowDone] = useState(true);
-  const [init, setInit] = useState('exo') as any;
-  const [showContent, setShowContent] = useState([]) as any || [];
+  // const [init, setInit] = useState('exo') as any;
+  // const [showContent, setShowContent] = useState([]) as any || [];
   const [note, setNote] = useState('');
   const [checkStatus,setCheckStatus]=useState([])
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -74,7 +74,7 @@ const [showDate,setShowDate]=useState(false)
   const translateY = useAnimatedStyle(() => ({
     transform: [{ translateY: offset.value }]
   }));
-
+  const {init,setInit,name,setName,verse,setVerse,toVerse,setToVerse,page,setPage,toPage,setToPage,showContent,setShowContent}=useStorageContext()
   const { data }: any = useBibleFromChToCh(visible ? { title: name, bible: init, fromCh: page, fromVs: verse, toCh: toPage, toVs: toVerse } : []);
 
 
@@ -146,10 +146,10 @@ saveDate()
     getLang();
   }, []);
 
-  useEffect(() => {
-    console.log(photo, 'photo');
-    console.log(content, 'content');
-  }, [photo, content]);
+  // useEffect(() => {
+  //   console.log(photo, 'photo');
+  //   console.log(content, 'content');
+  // }, [photo, content]);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
@@ -246,7 +246,7 @@ saveDate()
   useEffect(() => {
     console.log(lang, 'lang');
   }, [lang]);
-console.log(checkStatus,'checkStatus')
+
   return (
     <>
      <Head>
@@ -258,7 +258,7 @@ console.log(checkStatus,'checkStatus')
         <FirstView category={category} setCategory={setCategory} lang={lang} setLang={setLang} setTheBible={setTheBible} theBible={theBible} />
       </View>
       <ScrollView ref={scrollViewRef} style={{ height: height, paddingVertical: 10 }}>
-        <KeyboardAvoidingView style={{justifyContent:'center'}} behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={Platform.select({ ios: -500, android: 80 })}>
+        <KeyboardAvoidingView style={{justifyContent:'center',alignItems:'center'}} behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={Platform.select({ ios: -500, android: 80 })}>
           <View style={{ width:width,alignItems:'center'  }}>
            {Platform.OS=== "ios"? <DatePicker
               date={date}
@@ -274,7 +274,7 @@ console.log(checkStatus,'checkStatus')
               setDatePickerVisibility={setDatePickerVisibility}
             />: 
             <TouchableOpacity onPress={()=>setShowDate(!showDate)}>
-              <Text>{date !== ''&& month !=="" && year !==""?fullDate:"날짜 선택"}</Text>
+              <Text style={{fontSize:18}}>{date !== ''&& month !=="" && year !==""?fullDate:"날짜 선택"}</Text>
             </TouchableOpacity>
             
             
@@ -284,60 +284,66 @@ console.log(checkStatus,'checkStatus')
 
           <View style={{width:width,alignItems:'center'}}>
             <TextInput
-              style={{ width: width - 48, height: 60, backgroundColor: 'white', padding: 10, borderRadius: 10, marginVertical: 10 }}
+              style={{ width: width - 48, height: 60, backgroundColor: 'white', padding: 10, borderRadius: 10, marginVertical: 10 ,fontSize:18}}
               placeholder="Title"
               value={title}
               onChangeText={setTitle}
               multiline={true}
             />
           </View>
-
-          <View style={category === 'thanks' || category === 'source' ? { display: 'none' } : { width: width , flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-            <View style={{  flexDirection: 'row', backgroundColor: '#E8751A', width: 80, height: 60, justifyContent: 'center', marginLeft: 5, alignItems: 'center', borderRadius: 10 }}>
-              <ShowBible ref={fromPageRef} Ref2={fromVerseRef} setChange={setPage} value={page} lang={lang} theBible={theBible} />
-              <Text style={{ fontSize: 16 }}>{lang === 'Kr' ? '장' : 'ch'}</Text>
-            </View>
-            <View style={{ flexDirection: 'row', backgroundColor: '#E8751A', width: 80, height: 60, justifyContent: 'center', marginLeft: 3, alignItems: 'center', borderRadius: 10 }}>
-              <ShowBible ref={fromVerseRef} Ref2={toPageRef} setChange={setVerse} value={verse} lang={lang} theBible={theBible} />
-              <Text style={{ fontSize: 16 }}>{lang === 'Kr' ? '절' : 'vs'}</Text>
-            </View>
-            <Text> ~</Text>
-            <View style={lang === 'En' ? { display: 'none' } : {  flexDirection: 'row', backgroundColor: '#E8751A', width: 80, height: 60, justifyContent: 'center', marginLeft: 3, alignItems: 'center', borderRadius: 10 }}>
-              <ShowBible ref={toPageRef} Ref2={toVerseRef} setChange={setToPage} value={toPage} lang={lang} theBible={theBible} />
-              <Text style={{ fontSize: 16 }}>{lang === 'Kr' ? '장' : 'ch'}</Text>
-            </View>
-            <View style={lang === 'En' ? { display: 'none' } : {  flexDirection: 'row', backgroundColor: '#E8751A', width: 80, height: 60, justifyContent: 'center', marginLeft: 3, alignItems: 'center', borderRadius: 10 }}>
-              <ShowBible ref={toVerseRef} Ref2={null} setChange={setToVerse} value={toVerse} lang={lang} theBible={theBible} />
-              <Text style={{ fontSize: 16 }}>{lang === 'Kr' ? '절' : 'vs'}</Text>
-            </View>
-          </View>
-         <View style={{width:width,justifyContent:'center',alignItems:'center'}}>
+          <View style={{width:width,justifyContent:'center',alignItems:'center'}}>
           <TouchableOpacity style={category === 'thanks' || category === 'source' ? { display: 'none' } : { width: width - 48, marginBottom: 10, backgroundColor: 'white', height: 40, borderRadius: 10, justifyContent: 'center', alignItems: 'center', marginLeft: 3 }} onPress={name === "목록" ? handleShowListener :handleShowContent}>
-            <Text style={{ fontFamily: 'LineSeedKr-Bd', fontSize: 16 }}>{lang === 'En' ? 'Show Bible' : !visible ? `${name} 보기` : '말씀 닫기'}</Text>
+            <Text style={{ fontFamily: 'LineSeedKr-Bd', fontSize: 18 }}>{lang === 'En' ? 'Show Bible' : !visible ? `${name} 보기` : '말씀 닫기'}</Text>
           </TouchableOpacity>
           </View>
+          {/* <BibleForm 
+          category={category}
+          fromPageRef={fromPageRef}
+          fromVerseRef={fromVerseRef}
+          toPageRef={toPageRef}
+          toVerseRef={toVerseRef}
+          name={name}
+          setPage={setPage}
+          lang={lang}
+          page={page}
+          theBible={theBible}
+          setVerse={setVerse}
+          verse={verse}
+          setToPage={setToPage}
+          toPage={toPage}
+          setToVerse={setToVerse}
+          toVerse={toVerse}
+          handleShowListener={handleShowListener}
+          handleShowContent={handleShowContent}
+          visible={visible}
+          setVisible={setVisible}
+          showContent={showContent}
+          
+          /> */}
+
+        
 
           {category === 'sundayQt' || category === 'thanks' || category === 'source' ? (
             <SundayForm note={note} setNote={setNote} photo={photo} setPhoto={setPhoto} showDone={showDone} category={category} />
           ) : (
-            <DailyForm setMeditation={setMeditation} setApplication={setApplication} setPray={setPray} meditation={meditation} application={application} pray={pray} lang={lang} medRef={medRef} appRef={appRef} prayRef={prayRef} scrollToInput={scrollToInput} />
+            <DailyForm  setMeditation={setMeditation} setApplication={setApplication} setPray={setPray} meditation={meditation} application={application} pray={pray} lang={lang} medRef={medRef} appRef={appRef} prayRef={prayRef} scrollToInput={scrollToInput} />
           )}
          <View>
-          <StatusCheck checkStatus={checkStatus} setCheckStatus={setCheckStatus} />
+          {meditation!=="" && application !=="" && pray !==""? <StatusCheck checkStatus={checkStatus} setCheckStatus={setCheckStatus} />:null}
          </View>
           <View style={{width:width,alignItems:'center'}}>
           <TouchableOpacity onPress={handleSaveBtn} style={styles.saveBtn}>
-            <Text>Save</Text>
+            <Text style={{fontSize:18}}>Save</Text>
           </TouchableOpacity>
           </View>
         </KeyboardAvoidingView>
       </ScrollView>
 
-      {visible && (
+      {/* {visible && (
         <>
           <Animated.ScrollView entering={SlideInDown.springify().damping(15)} exiting={SlideOutDown} style={[styles.sheet, translateY]}>
             <TouchableOpacity onPress={() => setVisible(false)}>
-              <Text style={{ color: 'red' }}>X</Text>
+              <Text style={{ color: 'red' ,fontSize:18}}>X</Text>
             </TouchableOpacity>
             {showContent?.map((line: any, index: any) => (
               <View key={index} style={{ marginBottom: 10 }}>
@@ -349,7 +355,7 @@ console.log(checkStatus,'checkStatus')
             <View style={{ marginBottom: 50 }} />
           </Animated.ScrollView>
         </>
-      )}
+      )} */}
 
 {showDate && (
        <>
@@ -402,7 +408,7 @@ console.log(checkStatus,'checkStatus')
 
 
 
-      {showList && <CustomBottomSheet showContent={showContent} name={name} setChange={setName} setInit={setInit} title="Bottom Sheet" ref={bottomSheetRef} />}
+      {visible&& <CustomBottomSheet  showContent={showContent} name={name} setChange={setName} setInit={setInit} title="Bottom Sheet" ref={bottomSheetRef} />}
     </View>
     </>
   );
@@ -418,7 +424,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#E8751A',
     flexDirection: 'column',
     height: height,
-    paddingBottom: 50
+    //  paddingBottom: 30
   },
   containerWithKeyboard: {
     flex: 1,
@@ -441,7 +447,7 @@ const styles = StyleSheet.create({
     marginVertical: 12
   },
   saveBtn: {
-    marginBottom: 20,
+    marginBottom: 50,
     marginTop: 10,
     borderRadius: 10,
     height: 50,

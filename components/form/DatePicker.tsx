@@ -43,7 +43,7 @@ const DatePicker = ({
     <View style={{width:width-48}}>
       
      <TouchableOpacity style={{backgroundColor:'white',paddingVertical:10,paddingHorizontal:10,borderRadius:10,alignItems:'center'}} onPress={showDatePicker}>
-      <Text style={{fontFamily:"LineSeedKr-Bd",fontSize:16}}>{fullDate !==""?dateKr : title}</Text>
+      <Text style={{fontFamily:"LineSeedKr-Bd",fontSize:18}}>{fullDate !==""?dateKr : title}</Text>
      </TouchableOpacity>
       <DateTimePickerModal
           isVisible={isDatePickerVisible}

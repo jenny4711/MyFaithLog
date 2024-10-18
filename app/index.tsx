@@ -298,6 +298,7 @@ const Page = () => {
           localStorage.setItem('email', email);
           localStorage.setItem('profileImg', photoURL);
           localStorage.setItem('uid', uid);
+          console.log(email, 'email');
           setEmail(email);
         } else {
           await AsyncStorage.setItem('token', token);

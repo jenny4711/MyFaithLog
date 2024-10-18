@@ -6,7 +6,7 @@ const {width,height} = Dimensions.get('window')
 const SundayForm = ({note,setNote,photo,setPhoto,showDone,lang,category}:any) => {
 console.log(category)
   return (
-    <View style={{flex:1}}>
+    <View style={{flex:1,width:width,justifyContent:'center',alignItems:'center'}}>
      <AddPhoto photo={photo} setPhoto={setPhoto} showDone={showDone}/>
      <Animated.View style={[category==="source"?{display:'none'}:styles.inputView,{marginTop:10}]} exiting={FadeInLeft.duration(500).easing(Easing.ease)} entering={FadeInRight.duration(500).easing(Easing.ease)} >
   <TextInput

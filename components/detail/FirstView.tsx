@@ -6,11 +6,13 @@ const FirstView = ({date,showDone,fnBtn}:any) => {
   
 
   return (
-    <View style={[styles.container,{ backgroundColor: '#E8751A',}]}>
-      <Text style={{fontWeight:700,color:'white',fontFamily:'LineSeedBd'}}>{date}</Text>
+    <View style={[{width:width-48, backgroundColor: '#E8751A',alignItems:'flex-end'}]}>
+      <View style={[styles.container]}>
+      <Text style={{fontSize:18,fontWeight:700,color:'white',fontFamily:'LineSeedBd'}}>{date}</Text>
       <TouchableOpacity onPress={fnBtn}>
-        <Text style={{fontWeight:700,color:'white',fontFamily:"LineSeedBd"}}>{showDone?'Done':'Edit'}</Text>
+        <Text style={{fontSize:18,fontWeight:700,color:'white',fontFamily:"LineSeedBd"}}>{showDone?'Done':'Edit'}</Text>
       </TouchableOpacity>
+      </View>
     </View>
   )
 }
@@ -18,16 +20,17 @@ const FirstView = ({date,showDone,fnBtn}:any) => {
 export default FirstView
 const styles=StyleSheet.create({
   container: {
-   
+
     justifyContent: 'space-between',
     flexDirection: 'row',
     width:width/2,
     height:height/19,
-    marginTop: 16,
+    marginVertical: 16,
     // alignItems: 'flex-start',
     // paddingHorizontal: 24,
-   marginLeft:150,
-    paddingTop:15,
+  //  marginLeft:140,
+    // paddingTop:15,
+    backgroundColor: '#E8751A',
     
     
     

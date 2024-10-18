@@ -31,15 +31,15 @@ const CreateGroupForm = ({
   
   return (
     <View style={styles.eachView}>
-        <Text style={{marginTop:16}}>Create Group</Text>
+        <Text style={{marginTop:18,fontFamily:'LineSeedKr-Bd'}}>그룹 만들기</Text>
 
         <View style={styles.eachSecView}>
-          <TextInput value={groupName} onChangeText={(value)=>setGroupName(value)} placeholder="Group Name" style={{borderWidth:1,borderColor:'black',width:width-96,margin:8}}/>
+          <TextInput value={groupName} onChangeText={(value)=>setGroupName(value)} placeholder="그룹 이름" style={{borderBottomWidth:1,borderColor:'gray',width:width-96,margin:8,fontSize:18}}/>
 
-          <TextInput value={creator} onChangeText={(value)=>setCreator(value)} style={{borderWidth:1,borderColor:'black',width:width-96,margin:8}}/>
-          <TextInput value={memo} onChangeText={(value)=>setMemo(value)} placeholder="Memo" style={{borderWidth:1,borderColor:'black',width:width-96,margin:8}} multiline={true}/>
-          <TextInput value={password} onChangeText={(value)=>setPassword(value)} placeholder="Password-[option]" style={{borderWidth:1,borderColor:'black',width:width-96,margin:8}}/>
-          <TouchableOpacity activeOpacity={1} onPress={createGroup} style={{width:width-96,backgroundColor:'#E8751A',height:40,justifyContent:'center',alignItems:'center',margin:8}}>
+          <TextInput value={creator} placeholder="이메일" onChangeText={(value)=>setCreator(value)} style={{borderBottomWidth:1,borderColor:'gray',width:width-96,margin:8,fontSize:18}}/>
+          <TextInput value={memo} placeholder="공지 및 글남기기" onChangeText={(value)=>setMemo(value)}  style={{borderBottomWidth:1,borderColor:'gray',width:width-96,margin:8,fontSize:18}} multiline={true}/>
+          <TextInput value={password} onChangeText={(value)=>setPassword(value)} placeholder="패스워드(옵션)" style={{borderBottomWidth:1,borderColor:'gray',width:width-96,margin:8,fontSize:18}}/>
+          <TouchableOpacity activeOpacity={1} onPress={createGroup} style={{width:width-96,backgroundColor:'#E8751A',height:40,justifyContent:'center',alignItems:'center',margin:8,borderRadius:24}}>
             <Text style={{color:'white'}}>Create</Text>
           </TouchableOpacity>
 

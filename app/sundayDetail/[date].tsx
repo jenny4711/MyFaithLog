@@ -28,7 +28,7 @@ const conRef=useRef(null)
 const noteRef=useRef(null)
 const photoRef=useRef(null)
 const dateRef=useRef(null)
-
+console.log(content,'content')
 
 useEffect(() => {
   const keyboardDidShowListener = Keyboard.addListener(
@@ -95,7 +95,11 @@ const handleDone=()=>{
       {/* <Text style={{fontFamily:"LineSeedKR-Rg",fontSize:15}}>{content}</Text> */}
     </Animated.ScrollView>
     :
-    <DetailWithEdit sizeH={100} text="Content" value={edContent}  setChange={setEdContent} />
+
+    <TouchableOpacity onPress={()=>(navigation as any).navigate('chooseBibleSec')}>
+      목록보기
+</TouchableOpacity>
+    // <DetailWithEdit sizeH={100} text="Content" value={edContent}  setChange={setEdContent} />
     }
 
 

@@ -1,3 +1,17 @@
+
+
+
+// qt list 에서 위에 제목 수정하기
+// qt detail 말씀 란 가리고 말씀보기 누르면 나오게 하기
+// edit 에 말씀 찾기 추가하기
+// 성경리스트에세있는것만검은색으로 하고 안되는것 disable 색깔주기
+// group detail 리스트 누르면 detail 로 가게 하기.
+// group 삭제하기
+
+
+
+
+
 import React,{useState,useEffect,useRef} from 'react';
 
 import { Text,TouchableOpacity ,Platform,View} from 'react-native';
@@ -32,11 +46,13 @@ const Layout = () => {
      <Stack.Screen name="source" options={{headerShown:false,presentation:'modal'}} />
      <Stack.Screen name="thanks" options={{headerShown:false,presentation:'modal'}} />
      <Stack.Screen name="form" options={{headerShown:false,presentation:'modal'}} />
-      <Stack.Screen name="myGroup" options={{headerShown:false,presentation:'modal'}} />
+     <Stack.Screen name="chooseBibleSec" options={{headerShown:false}} />
+    <Stack.Screen name="myGroup" options={{headerShown:false,presentation:'modal'}} />
      <Stack.Screen name="dailyqtDetail/[date]" options={{headerShown:false,presentation:'modal'}} />
      <Stack.Screen name="sundayDetail/[date]" options={{headerShown:false,presentation:'modal'}} />
      <Stack.Screen name="sourceDetail/[date]" options={{headerShown:false,presentation:'modal'}} />
      <Stack.Screen name="groupDetail/[groupName]" options={{headerShown:false,presentation:'modal'}} />
+
  
      </Stack>
  
@@ -107,7 +123,7 @@ if(Platform.OS==='web'){
       <StorageProvider>
     <QueryClientProvider client={queryClient}>
       <Layout />
-      {/* <CustomBottomSheet ref={bottomSheetRef} title="Bottom Sheet Title" /> */}
+     
     </QueryClientProvider>
     </StorageProvider>
   </GestureHandlerRootView>

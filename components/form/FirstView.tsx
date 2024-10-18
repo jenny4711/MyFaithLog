@@ -4,6 +4,7 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import Selection from './Selection';
 import { langArr ,bibleArrEn,bibleArrKr,categoryEnArr,categoryKrArr} from '~/utils/selectionArray';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { useNavigation ,useRouter} from 'expo-router';
 const {width,height}=Dimensions.get('window')
 const FirstView = ({lang,setLang,setTheBible,theBible,category,setCategory}:any) => {
@@ -13,6 +14,10 @@ const FirstView = ({lang,setLang,setTheBible,theBible,category,setCategory}:any)
     router.back(); // 모달 닫기
     router.push('/setting')
   }
+  const goToHome=()=>{
+    router.back(); // 모달 닫기
+    router.push('/home')
+  }
   return (
     <View style={styles.container}>
       <View style={{flexDirection:'row'}}>
@@ -20,9 +25,15 @@ const FirstView = ({lang,setLang,setTheBible,theBible,category,setCategory}:any)
      {/* <Selection arr={lang !== "En"?bibleArrKr:bibleArrEn} setChange={setTheBible} placeHolder={lang ==="Kr"?"성경":"The Bible"} btnWidth={width-345}/> */}
      <Selection arr={lang !== "En"?categoryKrArr:categoryEnArr} setChange={setCategory} placeHolder={lang ==="Kr"?"카테고리":"Category"} btnWidth={width*.23}/>
      </View>
-     <TouchableOpacity onPress={goToSetting}>
-     <AntDesign name="setting" size={24} color="black" />
+     <View style={{flexDirection:'row'}}>
+     <TouchableOpacity onPress={goToHome} style={{marginRight:8}}>
+     <Ionicons name="home-outline" size={24} color="#fff" />
      </TouchableOpacity>
+
+      <TouchableOpacity onPress={goToSetting}>
+      <Ionicons name="settings-outline" size={24} color="#fff" />
+     </TouchableOpacity>
+     </View>
     </View>
   )
 }

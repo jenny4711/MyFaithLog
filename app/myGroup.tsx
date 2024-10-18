@@ -2,6 +2,7 @@ import { View, Text,Dimensions,TextInput,TouchableOpacity ,StyleSheet,ScrollView
 import React,{useState,useEffect} from 'react'
 import { saveGroup } from '~/utils/fireStoreFn'
 import FirstGroupView from '~/components/myGroup/FirstGroupView'
+import FirstSecGroupListView from '~/components/myGroup/FirstSecGroupListView'
 import { useGroupListData } from '~/hooks/useFormData'
 import CreateGroupForm from '~/components/myGroup/CreateGroupForm'
 import GroupListItemBtn from '~/components/myGroup/GroupListItemBtn'
@@ -84,7 +85,7 @@ if (isError) {
       <meta name="description" content="My Faith Log" />
    </Head>
     <View style={{flex:1,backgroundColor:'#E8751A',alignItems:'center'}}>
-      <FirstGroupView onChange={isCreateGp} setOnChange={setIsCreateGp} title={'그룹만들기'}/>
+      <FirstSecGroupListView  onChange={isCreateGp} setOnChange={setIsCreateGp} title={'그룹만들기'}/>
 
      {isCreateGp && <CreateGroupForm blockMember={blockMember} groupName={groupName} creator={creator} memo={memo} member={member} setMemo={setMemo} password={password} setPassword={setPassword} setGroupName={setGroupName} setBlockMember={setBlockMember}setMember={setMember} setCreator={setCreator}/>}
 

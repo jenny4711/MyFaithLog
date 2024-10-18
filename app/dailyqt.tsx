@@ -4,39 +4,45 @@ import { useData } from '~/hooks/useFormData';
 import DailyQtList from '~/components/list/DailyQtList';
 import Animated, { Easing, FadeInLeft } from 'react-native-reanimated';
 import Head from 'expo-router/head';
-
+import { useRouter } from 'expo-router';
 const { width } = Dimensions.get('window');
 
 const DailyQt = () => {
   const [category, setCategory] = useState('dailyQt');
   const [formData, setFormData] = useState<any>([]);
+  const [move, setMove] = useState<boolean>(false);
   const { data } = useData(category); // 데이터 가져오기
-  console.log('Loaded data:', data); // 데이터 로드 확인
+ const router = useRouter();
+// useEffect(()=>{
+//   if(move){
+// router.back()
+// setMove(false)
+//   }
+// },[move])
 
   useEffect(() => {
     if (data) {
       const sortedList = data.sort((a, b) => {
-        const [dayA, monthA, yearA] = a.date.split('-');
-        const [dayB, monthB, yearB] = b.date.split('-');
-
-        if (yearA !== yearB) {
-          return parseInt(yearB) - parseInt(yearA);
-        }
-
-        if (monthA !== monthB) {
-          return parseInt(monthB) - parseInt(monthA);
-        }
-
-        return parseInt(dayB) - parseInt(dayA);
+        // '10-16-2024' 같은 형식을 'MM-DD-YYYY'로 Date 객체로 변환
+        const dateA:any = new Date(`${a.date.split('-')[2]}-${a.date.split('-')[0]}-${a.date.split('-')[1]}`);
+        const dateB:any = new Date(`${b.date.split('-')[2]}-${b.date.split('-')[0]}-${b.date.split('-')[1]}`);
+        
+        // 최신순으로 정렬
+        return dateB - dateA;
       });
-
-      console.log('Sorted List:', sortedList); // 정렬된 리스트 확인
-
+  
+      // 정렬된 리스트 확인
+      console.log('Sorted List:', sortedList);
+  
+      // 정렬된 데이터가 기존 formData와 다를 경우에만 업데이트
       if (JSON.stringify(sortedList) !== JSON.stringify(formData)) {
         setFormData(sortedList);
       }
     }
   }, [data]);
+  
+
+
 
   return (
     <>
@@ -45,9 +51,11 @@ const DailyQt = () => {
         <meta name="description" content="My Faith Log" />
       </Head>
       <View style={{ flex: 1, backgroundColor: '#E8751A', justifyContent: 'center', alignItems: 'center', paddingTop: 16 }}>
-        <Text>Faith Log List!</Text>
+        <Text style={{fontSize:20,fontFamily: 'LotteBd'}}>묵상 리스트</Text>
         {formData.length > 0 ? (
-          <ScrollView>
+          <ScrollView 
+          showsVerticalScrollIndicator={false}
+          >
             {
               formData.map((item: any, index: any) => (
                 // 플랫폼에 따라 Reanimated.View를 대체
@@ -56,11 +64,11 @@ const DailyQt = () => {
                     key={index}
                     entering={FadeInLeft.duration(500).easing(Easing.ease)}
                     style={styles.itemView}>
-                    <DailyQtList key={item.id} item={item} />
+                    <DailyQtList key={item.id} item={item} move={move} setMove={setMove} />
                   </Animated.View>
                 ) : (
                   <View key={index} style={styles.itemView}>
-                    <DailyQtList key={item.id} item={item} />
+                    <DailyQtList key={item.id} item={item} move={move} setMove={setMove}  />
                   </View>
                 )
               ))

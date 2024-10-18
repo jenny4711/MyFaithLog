@@ -1,12 +1,14 @@
 import React, { forwardRef } from 'react';
 import { View, Text,StyleSheet,TouchableOpacity,Dimensions,KeyboardAvoidingView,Keyboard,TextInput,Platform,ScrollView,Alert } from 'react-native'
+
 const {width,height} = Dimensions.get('window')
 export type Ref=TextInput;
-const ShowBible = forwardRef<Ref,any>(({ setChange, value, lang, theBible, Ref2 } ,ref) => {
+const ShowBible = forwardRef<Ref,any>(({ setChange, value, lang,  Ref2 } ,ref) => {
   return (
     <>
       <TextInput
         placeholderTextColor={'gray'}
+        keyboardType='numeric'
         multiline={false}
         style={{ justifyContent: 'center', alignItems: 'center', fontSize: 18 ,width:40}}
         placeholder=''

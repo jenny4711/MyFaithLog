@@ -4,7 +4,7 @@ import Animated,{Easing,FadeInLeft} from 'react-native-reanimated'
 import { useNavigation } from '@react-navigation/native'
 import Head from 'expo-router/head';
 const {width,height} = Dimensions.get('window')
-const DailyQtList = ({item,key}:any) => {
+const DailyQtList = ({item,key,move,setMove}:any) => {
   const navigation = useNavigation()
 const [date,setDate]=useState('')
 
@@ -21,9 +21,9 @@ useEffect(()=>{
   
 
 const goToDetail=()=>{
- 
+//  setMove(true)
 
-  (navigation as any).navigate('dailyqtDetail/[date]',{
+  return (navigation as any).navigate('dailyqtDetail/[date]',{
     date:date,
     meditation:item.meditation,
     pray:item.pray,
@@ -45,8 +45,8 @@ const goToDetail=()=>{
       {Platform.OS==='web'?
       <TouchableOpacity onPress={goToDetail}>
 
-      <Text style={{fontSize:16,fontWeight:'bold'}}>{item.title}</Text>
-          <Text style={{color:'gray',opacity:0.9}}>{date}</Text>
+      <Text style={{fontSize:20,fontFamily:'LineSeedKr-Bd'}}>{item.title}</Text>
+          <Text style={{color:'gray',fontFamily:'LineSeedKR-Th'}}>{date}</Text>
     
     </TouchableOpacity>
       

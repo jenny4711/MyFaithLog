@@ -23,14 +23,14 @@ setCheckStatus(checkStatus.concat(value))
  }
   return (
     <View style={styles.container}>
-      <Text>Select your choose</Text>
-      <View style={{flexDirection:'row'}}>
+      <Text style={{fontSize:18,marginBottom:16,fontFamily:'LineSeedKr-Bd'}}>내그룹 공유하기</Text>
+      <View style={{flexDirection:'row',justifyContent:'space-around'}}>
         {data?.map((item:any,index:any)=>(
-          <View key={index} style={{flexDirection:'row',justifyContent:'center',marginRight:10}}>
-          <TouchableOpacity onPress={()=>handleCheck(item?.groupName)} style={{width:15,height:15,borderWidth:2,borderColor:'red',marginRight:5,justifyContent:'center',alignItems:'center'}}>
+          <View key={index} style={{flexDirection:'row',justifyContent:'center',marginRight:10,alignItems:'center'}}>
+          <TouchableOpacity onPress={()=>handleCheck(item?.groupName)} style={{width:15,height:15,borderWidth:2,borderColor:'black',marginRight:5,justifyContent:'center',alignItems:'center'}}>
             {checkStatus.includes(item?.groupName) && <Ionicons name={'checkmark'} size={15} color={'black'}/>}
           </TouchableOpacity>
-          <Text>{item?.groupName}</Text>
+          <Text style={{fontSize:18,fontFamily:'LineSeed-Rg'}}>{item?.groupName}</Text>
           </View>
         ))}
       </View>
@@ -42,10 +42,14 @@ setCheckStatus(checkStatus.concat(value))
 export default StatusCheck
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    
     marginHorizontal: 24,
     marginVertical: 32,
-    width:width-48
+    padding:16,
+    width:width-48,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    
   },
   section: {
     flexDirection: 'row',

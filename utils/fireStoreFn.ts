@@ -299,7 +299,9 @@ export const getMyGroupListByEmail=async()=>{
 
 // 이메일 그룹 member 에서 제거하기
 export const removeUserFromGroup = async (groupName: string) => {
+  console.log(groupName,'groupName-fn')
   try {
+    console.log(groupName,'groupName-fn')
     let email;
     if (Platform.OS === 'web') {
       email = localStorage.getItem('email');

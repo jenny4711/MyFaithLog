@@ -22,7 +22,7 @@ const Home = () => {
       <MenuBtns title="감사일기" address="thanks"/> */}
       </View>
     <View style={styles.btnView}>
-<TouchableOpacity style={styles.btn} onPress={()=>(navigation as any).navigate('form')}>
+<TouchableOpacity style={styles.btn} onPress={()=>(navigation as any).navigate('chooseBibleSec')}>
 <Fontisto name="plus-a" size={18} color={"black"} />
 </TouchableOpacity>
     </View>

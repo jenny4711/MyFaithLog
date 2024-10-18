@@ -38,10 +38,10 @@ const Selection = ({arr,setChange,setInit,placeHolder,btnWidth}:any) => {
          
           
           
-          <Text style={[styles.dropdownButtonTxtStyle]}>
+          <Text style={[styles.dropdownButtonTxtStyle,{color:'white',fontSize:18}]}>
             {(selectedItem && selectedItem.title) || placeHolder}
           </Text>
-          <Ionicons size={12} name={'chevron-expand-outline'} style={[styles.dropdownButtonArrowStyle]} />
+          <Ionicons size={12} name={'chevron-expand-outline'} style={[styles.dropdownButtonArrowStyle]} color={'white'} />
 
         </View>
       );
@@ -51,9 +51,9 @@ const Selection = ({arr,setChange,setInit,placeHolder,btnWidth}:any) => {
         <View style={{...styles.dropdownItemStyle, ...( {backgroundColor: 'white'})}}>
 
 <View style={{width: 15}}> 
-    {isSelected ? <Ionicons name={'checkmark'} style={styles.dropdownItemIconStyle} color={"black"}/> : null}
+    {isSelected ? <Ionicons name={'checkmark'} style={styles.dropdownItemIconStyle} color={"white"}/> : null}
   </View>
-         <Text style={[styles.dropdownItemTxtStyle,{color:"black"}]}>{item.title}</Text>
+         <Text style={[styles.dropdownItemTxtStyle,{color:"black",fontSize:18}]}>{item.title}</Text>
          
         </View>
       );
@@ -95,7 +95,9 @@ const styles = StyleSheet.create({
     // marginRight: 8,
   },
   dropdownMenuStyle: {
+    color: 'black',
     // backgroundColor:colors.text,
+    
     borderRadius: 8,
     // width:400,
     
@@ -111,7 +113,7 @@ const styles = StyleSheet.create({
   },
   dropdownItemTxtStyle: {
     flex: 1,
-    fontSize: 12,
+    fontSize: 18,
     fontWeight: '500',
     color: '#151E26',
   },

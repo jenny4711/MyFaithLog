@@ -3,11 +3,15 @@ import React from 'react'
 const {width,height} = Dimensions.get('window')
 import Animated,{Easing,FadeInLeft} from 'react-native-reanimated'
 const DailyForm = ({
+  
   setMeditation,
   setApplication,
-  setPray,meditation,
-  application,pray,
-  lang,medRef,
+  setPray,
+  meditation,
+  application,
+  pray,
+  lang,
+  medRef,
   appRef,
   prayRef,
   scrollToInput
@@ -23,11 +27,11 @@ const DailyForm = ({
     onChangeText={setMeditation}
     multiline={true}
     ref={medRef}
-    onFocus={()=>scrollToInput(prayRef)}
+    onFocus={meditation !==""?()=>scrollToInput(prayRef):()=>console.log('no')}
   />
 </Animated.View>
 
-<Animated.View style={[styles.inputView,{marginVertical:10}]} entering={FadeInLeft.duration(500).easing(Easing.ease)}>
+{ meditation !=="" && <Animated.View style={[styles.inputView,{marginVertical:10}]} entering={FadeInLeft.duration(500).easing(Easing.ease)}>
   <TextInput
     ref={appRef}
     style={[styles.inputText,{marginVertical:10}]}
@@ -35,11 +39,11 @@ const DailyForm = ({
     value={application}
     onChangeText={setApplication}
     multiline={true}
-    onFocus={()=>scrollToInput(prayRef)}
+    onFocus={application !==""?()=>scrollToInput(prayRef):()=>console.log('no')}
   />
-</Animated.View>
+</Animated.View>}
 
-<Animated.View style={[styles.inputView]} entering={FadeInLeft.duration(500).easing(Easing.ease)}>
+{application !=="" && <Animated.View style={[styles.inputView]} entering={FadeInLeft.duration(500).easing(Easing.ease)}>
   <TextInput
     ref={prayRef}
    style={styles.inputText}
@@ -47,9 +51,9 @@ const DailyForm = ({
     value={pray}
     onChangeText={setPray}
     multiline={true}
-    onFocus={()=>scrollToInput(prayRef)}
+    onFocus={pray !==""?()=>scrollToInput(prayRef):()=>console.log('no')}
   />
-</Animated.View>
+</Animated.View>}
 
     </View>
   )
