@@ -19,6 +19,8 @@ interface StorageContextType {
   setName:(name:any)=>void;
   init:any;
   setInit:(init:any)=>void;
+  img:any;
+  setImg:(img:any)=>void;
 
 
 
@@ -35,13 +37,13 @@ export const StorageProvider=({children}:{children:React.ReactNode})=>{
   const [toPage, setToPage] = useState<any>('');
   const [name,setName]=useState<any>('목록')
   const [init,setInit]=useState<any>('')
-
+ const [img,setImg]=useState<any>('')
 
   useEffect(()=>{
   console.log(init,'init!StorageContext!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
   },[name])
   return (
-    <StorageContext.Provider value={{init,setInit,name,setName,showContent,setShowContent,verse,setVerse,toVerse,setToVerse,page,setPage,setToPage,toPage,email,setEmail,dateF,setDateF}}>
+    <StorageContext.Provider value={{setImg,img,init,setInit,name,setName,showContent,setShowContent,verse,setVerse,toVerse,setToVerse,page,setPage,setToPage,toPage,email,setEmail,dateF,setDateF}}>
       {children}
     </StorageContext.Provider>
   )

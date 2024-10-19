@@ -117,7 +117,7 @@ const handleDone=()=>{
 }
   return (
     <>
-    <View style={{backgroundColor: '#E8751A'}}>
+    <View style={{backgroundColor: '#E8751A',alignItems:'center'}}>
       <FirstView date={date} showDone={showDone} fnBtn={showDone?handleDone:editHanlder} />
       </View>
     <View style={keyboardVisible?styles.keyWithContainer:styles.container}>

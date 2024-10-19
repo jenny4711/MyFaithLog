@@ -1,4 +1,4 @@
-import { Platform,View, Text ,ScrollView,StyleSheet,Dimensions,TouchableOpacity,Keyboard,KeyboardAvoidingView,Image} from 'react-native'
+import {Pressable,Platform,View, Text ,ScrollView,StyleSheet,Dimensions,TouchableOpacity,Keyboard,KeyboardAvoidingView,Image} from 'react-native'
 import React,{useState,useRef,useEffect} from 'react'
 import Animated,{Easing,FadeInLeft,FadeInUp,FadeInDown} from 'react-native-reanimated'
 import { useLocalSearchParams ,useNavigation} from 'expo-router'
@@ -6,8 +6,10 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import { useQueryClient } from '@tanstack/react-query';
 import { useDeletedData } from '~/hooks/useFormData';
 import { useSaveData } from '~/hooks/useFormData';
+import { useStorageContext } from '~/context/StorageContext';
 import DetailWithEdit from '~/components/detail/DetailWithEdit'
 import FirstView from '~/components/detail/FirstView'
+import { useRouter } from 'expo-router';
 const {width} = Dimensions.get('window')
 const SundayDetail = () => {
   const { date, content, title, photo, orgDate, note } = useLocalSearchParams()
@@ -21,14 +23,16 @@ const [edContent,setEdContent]=useState<any>(content)
 const [edTitle,setEdTitle]=useState<any>(title)
 const [edPhoto,setEdPhoto]=useState<any>(photo)
 const [keyboardVisible, setKeyboardVisible] = useState<boolean>(false);
+const [showBible,setShowBible]=useState(false)
 const [edNote,setEdNote]=useState<any>(note)
-
+const {img}=useStorageContext()
 const titleRef=useRef(null)
 const conRef=useRef(null)
 const noteRef=useRef(null)
 const photoRef=useRef(null)
 const dateRef=useRef(null)
-console.log(content,'content')
+const router = useRouter();
+console.log(photo,'content')
 
 useEffect(() => {
   const keyboardDidShowListener = Keyboard.addListener(
@@ -58,7 +62,7 @@ const handleDeleted=async()=>{
     {
       onSuccess: ()=>{
         queryClient.invalidateQueries({queryKey:['data','sundayQt']})
-        return (navigation as any).navigate('sundayQt')
+        return (navigation as any).navigate('sunday')
       }
     }
   )
@@ -87,28 +91,28 @@ const handleDone=()=>{
  
 
 
-      <Text style={{fontFamily:"LineSeedKR-Bd",fontSize:14,color:'white',marginLeft:7,fontWeight:700,opacity:0.8,}}>말씀</Text>
+<Pressable style={{ backgroundColor: '#E8751A',}} onPress={()=>setShowBible(!showBible)}>
+          
+          <Text  style={styles.resultTitle}>{!showBible?'말씀 보기':'말씀 닫기'}</Text>
+          </Pressable>
     
-    {!showDone?
-      <Animated.ScrollView entering={FadeInUp.duration(500).easing(Easing.ease)} style={styles.itemView} exiting={FadeInDown.duration(100).easing(Easing.ease)}>
-        {edContent&&edContent.map((item:any,index:number)=><Text style={{marginVertical:10,fontSize:16,lineHeight:24}} key={index}>{JSON.stringify(item)}</Text>)}
+   
+      <Animated.ScrollView entering={FadeInUp.duration(500).easing(Easing.ease)} style={!showBible?{display:'none'}:styles.itemView} exiting={FadeInDown.duration(100).easing(Easing.ease)}>
+
+
+
+        {showBible&&edContent&&edContent.map((item:any,index:number)=><Text style={{marginVertical:10,fontSize:16,lineHeight:24}} key={index}>{JSON.stringify(item)}</Text>)}
       {/* <Text style={{fontFamily:"LineSeedKR-Rg",fontSize:15}}>{content}</Text> */}
     </Animated.ScrollView>
-    :
-
-    <TouchableOpacity onPress={()=>(navigation as any).navigate('chooseBibleSec')}>
-      목록보기
-</TouchableOpacity>
-    // <DetailWithEdit sizeH={100} text="Content" value={edContent}  setChange={setEdContent} />
-    }
+   
 
 
-<Text style={{fontFamily:"LineSeedKR-Bd",fontSize:14,color:'white',marginLeft:7,fontWeight:700,opacity:0.8}}>제목</Text>
+<Text style={styles.resultTitle}>제목</Text>
     {!showDone? 
 
 
 <Animated.View entering={FadeInUp.duration(500).easing(Easing.ease)} style={styles.itemView} exiting={FadeInDown.duration(100).easing(Easing.ease)}>
-     <Text style={{fontFamily:"LineSeed-Rg"}}>{title}</Text>
+     <Text style={styles.resultText}>{title}</Text>
      </Animated.View>
      
      :
@@ -118,20 +122,24 @@ const handleDone=()=>{
     }
    
     
-   <Text style={{fontFamily:"LineSeedKR-Bd",fontSize:14,color:'white',marginLeft:7,fontWeight:700,opacity:0.8,}}>묵상</Text>
+   <Text style={[styles.resultTitle,{marginBottom:10}]}>자료</Text>
      {!showDone?
-      <Animated.View entering={FadeInUp.duration(500).easing(Easing.ease)} style={styles.itemView} exiting={FadeInDown.duration(100).easing(Easing.ease)}>
-      <Text>{photo}</Text>
+      <Animated.View entering={FadeInUp.duration(500).easing(Easing.ease)} exiting={FadeInDown.duration(100).easing(Easing.ease)}>
+     {img && typeof img === 'string' ? (
+  <Image source={{ uri: img }} style={{ width: width - 48, height: width-48, borderRadius: 10 }} />
+) : photo && Array.isArray(img) && img.length > 0 ? (
+  <Image source={{ uri: img[0] }} style={{ width: width - 48, height: 200, borderRadius: 10 }} />
+) : null}
     </Animated.View>
     :
     <DetailWithEdit sizeH={100} text="Meditation" value={edPhoto} setChange={setEdPhoto} />
     
     }
 
-<Text style={{fontFamily:"LineSeedKR-Bd",fontSize:14,color:'white',marginLeft:7,fontWeight:700,opacity:0.8,}}>적용</Text>
+<Text style={styles.resultTitle}>노트</Text>
    { !showDone?
     <Animated.View entering={FadeInUp.duration(500).easing(Easing.ease)} style={styles.itemView} exiting={FadeInDown.duration(100).easing(Easing.ease)}>
-      <Text>{note}</Text>
+      <Text style={styles.resultText}>{note}</Text>
     </Animated.View>
     :
     <DetailWithEdit sizeH={100} text="Application"  value={edNote} setChange={setEdNote} />
@@ -188,5 +196,19 @@ const styles=StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     
+  },
+  resultText:{
+    fontFamily:"LineSeed-Rg",
+    fontSize:18,
+    padding:10
+  },
+  resultTitle:{
+    fontFamily:"LineSeedKR-Bd",
+    fontSize:20,
+    color:'white',
+    marginLeft:7,
+    fontWeight:700,
+    opacity:0.8,
+    paddingTop:12
   }
 })

@@ -353,21 +353,30 @@ export const removeUserFromGroup = async (groupName: string) => {
 
 
 //image uploading
-export const uploadImageStorage = async (uri: any, fileType: any) => {
+export const uploadImageStorage = async (uri: any, fileType: any,onProgress:(progress:any)=>void) => {
   try {
+ 
     const res = await fetch(uri);
     const blob = await res.blob();
-    // const email = await AsyncStorage.getItem('email');
-    const {email}=useStorageContext()
+    let email;
+    if (Platform.OS === 'web') {
+      email = localStorage.getItem('email');
+    } else {
+      email = await AsyncStorage.getItem('email');
+    }
+    
     const storageRef = ref(FIREBASE_STORAGE, `users/${email}/img/${Date.now()}`);
     const uploadTask = uploadBytesResumable(storageRef, blob);
-    
+    console.log(email,'email-uploadImage')
     return new Promise((resolve, reject) => {
       uploadTask.on(
         "state_changed",
         (snapshot: any) => {
           const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log("Upload is " + progress + "% done");
+          if (onProgress) {
+           onProgress(progress); // 진행률 콜백 호출
+         }
         },
         (error: any) => {
           console.log(error, 'error');
@@ -385,4 +394,48 @@ export const uploadImageStorage = async (uri: any, fileType: any) => {
     console.log(error, 'uploadImage');
     throw error;
   }
-};
+ };
+
+
+
+
+
+
+// export const uploadImageStorage = async (uri: any, fileType: any) => {
+//   try {
+//     const res = await fetch(uri);
+//     const blob = await res.blob();
+//     // const email = await AsyncStorage.getItem('email');
+//     let email;
+//     if (Platform.OS === 'web') {
+//       email = localStorage.getItem('email');
+//     } else {
+//       email = await AsyncStorage.getItem('email');
+//     }
+//     const storageRef = ref(FIREBASE_STORAGE, `users/${email}/img/${Date.now()}`);
+//     const uploadTask = uploadBytesResumable(storageRef, blob);
+    
+//     return new Promise((resolve, reject) => {
+//       uploadTask.on(
+//         "state_changed",
+//         (snapshot: any) => {
+//           const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+//           console.log("Upload is " + progress + "% done");
+//         },
+//         (error: any) => {
+//           console.log(error, 'error');
+//           reject(error);
+//         },
+//         () => {
+//           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadUrl) => {
+//             console.log('File available at', downloadUrl);
+//             resolve(downloadUrl); // Resolve the promise with the download URL
+//           });
+//         }
+//       );
+//     });
+//   } catch (error) {
+//     console.log(error, 'uploadImage');
+//     throw error;
+//   }
+// };
