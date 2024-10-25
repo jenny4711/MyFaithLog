@@ -132,7 +132,7 @@ interface Props {
 }
 
 const CustomBottomSheet = forwardRef<Ref, Props>(({ setInit, title, setChange, showContent }, ref) => {
-  const snapPoints = useMemo(() => ['25%', '50%', '75%'], []);
+  const snapPoints = useMemo(() => ['25%', '50%'], []);
 
   // 데이터가 배열인지 확인하고 렌더링
   // if (!Array.isArray(showContent)) {

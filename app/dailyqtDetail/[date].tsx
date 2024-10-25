@@ -133,7 +133,7 @@ const handleDone=()=>{
           </Pressable>
       
       
-        <Animated.ScrollView entering={FadeInUp.duration(500).easing(Easing.ease)} style={!showBible?{display:'none'}:styles.itemView} exiting={FadeInDown.duration(100).easing(Easing.ease)}>
+        <Animated.ScrollView entering={FadeInUp.duration(500).easing(Easing.ease)} style={!showBible?{display:'none'}:[styles.itemView,{alignItems:'center',}]} exiting={FadeInDown.duration(100).easing(Easing.ease)}>
           {showBible&&edContent&&edContent.map((item:any,index:number)=><Text style={!showBible?{display:'none'}:{marginVertical:10,fontSize:18,lineHeight:24}} key={index}>{JSON.stringify(item)}</Text>)}
         {/* <Text style={{fontFamily:"LineSeedKR-Rg",fontSize:15}}>{content}</Text> */}
       </Animated.ScrollView>

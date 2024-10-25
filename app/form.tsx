@@ -25,6 +25,7 @@ import Head from 'expo-router/head';
 import DataPickerW from '~/components/web/DataPickerW';
 import StatusCheck from '~/components/form/StatusCheck';
 import { useStorageContext } from '~/context/StorageContext';
+import DailyFormIOS from '~/components/form/dailyFormIOS';
 const { width, height } = Dimensions.get('window');
 
 const Form = () => {
@@ -305,7 +306,7 @@ saveDate()
           {category === 'sundayQt' || category === 'thanks' || category === 'source' ? (
             <SundayForm note={note} setNote={setNote} photo={photo} setPhoto={setPhoto} showDone={showDone} category={category} />
           ) : (
-            <DailyForm  setMeditation={setMeditation} setApplication={setApplication} setPray={setPray} meditation={meditation} application={application} pray={pray} lang={lang} medRef={medRef} appRef={appRef} prayRef={prayRef} scrollToInput={scrollToInput} />
+            <DailyFormIOS  setMeditation={setMeditation} setApplication={setApplication} setPray={setPray} meditation={meditation} application={application} pray={pray} lang={lang} medRef={medRef} appRef={appRef} prayRef={prayRef} scrollToInput={scrollToInput} />
           )}
          <View>
           {meditation!=="" && application !=="" && pray !==""? <StatusCheck checkStatus={checkStatus} setCheckStatus={setCheckStatus} />:null}
