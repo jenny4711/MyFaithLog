@@ -43,7 +43,7 @@ const goToDetail=()=>{
    </Head>
     <View key={key} >
       {Platform.OS==='web'?
-      <TouchableOpacity onPress={goToDetail}>
+      <TouchableOpacity key={key} onPress={goToDetail}>
 
       <Text style={{fontSize:20,fontFamily:'LineSeedKr-Bd'}}>{item.title}</Text>
           <Text style={{color:'gray',fontFamily:'LineSeedKR-Th'}}>{date}</Text>

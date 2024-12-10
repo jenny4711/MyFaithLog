@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Platform, ScrollView,SafeAreaView } from 'react-native';
-import React,{useEffect,useState} from 'react'
+import React,{useEffect,useState,useRef} from 'react'
 import { useNavigation } from '@react-navigation/native';
 import { currentAvailableBible,bibleKrBc } from '~/utils/selectionArray';
 import { useBibleFromChToCh } from '~/hooks/useFormData';
@@ -21,6 +21,9 @@ const [showVerse,setShowVerse]=useState(false)
 const [itemGroup,setItemGroup]=useState<any>(null)
 const [pg,setPg]=useState(0)
 const [vs,setVs]=useState(0)
+const verseRef=useRef(null)
+const chapterRef=useRef(null)
+const scrollViewRef=useRef(null) as any
 const { data }: any = useBibleFromChToCh(name !=='목록' && page !=='' && verse !=='' && toPage !=='' && toVerse !==''  ? { title: name, bible: init, fromCh: page, fromVs: verse, toCh: toPage, toVs: toVerse } : []);
 useEffect(()=>{
   if(data){
@@ -51,6 +54,34 @@ useEffect(()=>{
 },[showVerse])
 
 
+
+// const scrollToInput = (inputRef: any,amt:any) => {
+//   if (scrollViewRef.current) {
+//     inputRef.current.measureLayout(
+//       scrollViewRef.current,
+//       (x: any, y: any) => {
+//         scrollViewRef.current.scrollTo({ y: y - amt, animated: true });
+//       },
+//       (error: any) => console.log(error)
+//     );
+//   }
+// };
+
+const scrollToInput = (inputRef: any, amt: any) => {
+  if (scrollViewRef.current) {
+    inputRef.current.measureLayout(
+      scrollViewRef.current,
+      (x: any, y: any) => {
+        console.log("Scroll target y:", y, "amt:", amt);
+        const targetY = y + amt;
+        console.log("Scrolling to:", targetY);
+        scrollViewRef.current.scrollTo({ y: targetY, animated: true });
+      },
+      (error: any) => console.log(error)
+    );
+  }
+};
+
 const handleSetName = (item:any) => {
   setName(item?.title)
   setPg(item.pg)
@@ -61,7 +92,7 @@ const handleSetName = (item:any) => {
 }
 
 const handleSetPage=(item:any)=>{
-  console.log(item,'item')
+  scrollToInput(chapterRef,200)
   if(page ===''){
     setPage(item.toString())
   }else if(page !=='' && toPage !==''){
@@ -78,6 +109,7 @@ const handleSetPage=(item:any)=>{
 
 
 const handleSetVerse=(item:any)=>{
+  scrollToInput(verseRef,-2011)
   if(verse ===''){
     setVerse(item.toString())
   }else if(verse !=='' && toVerse !==''){
@@ -103,7 +135,7 @@ const handleSetVerse=(item:any)=>{
   setInit('')
  
  }
-
+console.log(page,'page')
 
   return (
     <SafeAreaView style={{flex:1,backgroundColor: '#E8751A',alignItems:'center'}}>
@@ -114,7 +146,7 @@ const handleSetVerse=(item:any)=>{
 
 {name !=="목록"? <Text style={{color:'white',fontSize:24,fontFamily:'LineSeedKr-Rg'}}>{name} {page} : {verse} 부터 {toPage}:{toVerse} 까지</Text>:<Text style={{fontSize:20,fontFamily:'LineSeedKr-Bd',color:'white',marginVertical:16}}>말씀 선택</Text>}
 </View>
-      <ScrollView style={{width:width-48,marginTop:16}}>
+      <ScrollView ref={scrollViewRef} style={{width:width-48,marginTop:16}}>
         {!closeName &&currentAvailableBible.map((item,index)=>
           <View key={`bible=${index}`}>
           <TouchableOpacity  style={styles.bibleBox} onPress={()=>handleSetName(item)}>
@@ -135,13 +167,13 @@ const handleSetVerse=(item:any)=>{
         {closeName && new Array(pg).fill(0).map((item,index)=>(
          <View key={`chapter-${index+1}`}>
          
-          <TouchableOpacity  style={{alignItems:'center',justifyContent:'center',width:(width-48)/6-8,height:(width-48)/6-8,backgroundColor:'#fff',margin:8,borderRadius:24}} onPress={()=>handleSetPage(index+1)}>
-            <Text style={{fontSize:20,fontFamily:'LineSeedKr-Bd'}}>{index+1}</Text>
+          <TouchableOpacity ref={chapterRef}  style={[{alignItems:'center',justifyContent:'center',width:(width-48)/6-8,height:(width-48)/6-8,margin:8,borderRadius:24},Number(toPage)=== index+1||Number(page) === index+1.?{backgroundColor:'#E8751A'}:{backgroundColor:'#fff'}]} onPress={()=>handleSetPage(index+1)}>
+            <Text style={[{fontSize:20,fontFamily:'LineSeedKr-Bd'},Number(toPage)===index+1||Number(page) === index+1?{color:'white'}:{color:'#000000'}]}>{index+1}</Text>
           </TouchableOpacity>
           </View>
          
         ))}
-       {closeName&& <TouchableOpacity key={`bible-${vs}`}  style={{alignItems:'center',justifyContent:'center',width:(width-48)/6-8,height:(width-48)/6-8,backgroundColor:'#fff',margin:8,borderRadius:24}} onPress={()=>resetBtn()}>
+       {closeName&& <TouchableOpacity ref={verseRef} key={`bible-${vs}`}  style={{alignItems:'center',justifyContent:'center',width:(width-48)/6-8,height:(width-48)/6-8,backgroundColor:'#fff',margin:8,borderRadius:24}} onPress={()=>resetBtn()}>
             <Text style={{fontSize:16,fontFamily:'LineSeedKr-Bd'}}>초기화</Text>
           </TouchableOpacity>}
          </View>
@@ -153,8 +185,8 @@ const handleSetVerse=(item:any)=>{
          {showVerse && new Array(vs).fill(0).map((item,index)=>(
           <View key={`verse-${index+3}`}>
           
-            <TouchableOpacity  style={{justifyContent:'center',alignItems:'center',width:(width-48)/6-8,height:(width-48)/6-8,backgroundColor:'#fff',margin:8,borderRadius:24}} onPress={()=>handleSetVerse(index+1)}>
-              <Text style={{fontSize:20,fontFamily:'LineSeedKr-Bd'}}>{index+1}</Text>
+            <TouchableOpacity  style={[{justifyContent:'center',alignItems:'center',width:(width-48)/6-8,height:(width-48)/6-8,margin:8,borderRadius:24},Number(verse)===index+1 || Number(toVerse)===index+1?{backgroundColor:'#E8751A'}:{backgroundColor:'#fff'}]} onPress={()=>handleSetVerse(index+1)}>
+              <Text style={[{fontSize:20,fontFamily:'LineSeedKr-Bd'},Number(toVerse)===index+1||Number(verse) === index+1?{color:'white'}:{color:'#000000'}]}>{index+1}</Text>
             </TouchableOpacity>
             </View>
          ))}

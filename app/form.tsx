@@ -14,7 +14,7 @@ import DailyForm from '~/components/form/DailyForm';
 import SundayForm from '~/components/form/SundayForm';
 import ShowBible from '~/components/form/ShowBible';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { getAIResponse } from '~/utils/ai';
 import { useSaveData ,useGroupListData} from '~/hooks/useFormData';
 import Animated, { FadeIn, FadeOut, SlideInDown, SlideOutDown, useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 
@@ -39,11 +39,8 @@ const Form = () => {
   const [summary, setSummary] = useState('');
   const [pray, setPray] = useState('');
   const [application, setApplication] = useState('');
-  const [lang, setLang] = useState('');
- 
-  const [toName, setToName] = useState('');
   const [theBible, setTheBible] = useState('The New Testament');
- 
+  const [showAi,setShowAi]=useState(false)
   const [category, setCategory] = useState<any>('');
   const [photo, setPhoto] = useState('');
   const [showDone, setShowDone] = useState(true);
@@ -57,10 +54,7 @@ const Form = () => {
   const medRef = useRef<TextInput>(null);
   const appRef = useRef<TextInput>(null);
   const prayRef = useRef<TextInput>(null);
-  const toVerseRef = useRef<TextInput>(null);
-  const toPageRef = useRef<TextInput>(null);
-  const fromVerseRef = useRef<TextInput>(null);
-  const fromPageRef = useRef<TextInput>(null);
+
   const navigation = useNavigation();
   const addMutation = useSaveData({ date, category });
   const bottomSheetRef = useRef<BottomSheet>(null);
@@ -70,7 +64,7 @@ const [showDate,setShowDate]=useState(false)
   const translateY = useAnimatedStyle(() => ({
     transform: [{ translateY: offset.value }]
   }));
-  const {init,setInit,name,setName,verse,setVerse,toVerse,setToVerse,page,setPage,toPage,setToPage,showContent,setShowContent}=useStorageContext()
+  const {setLang,lang,init,setInit,name,setName,verse,setVerse,toVerse,setToVerse,page,setPage,toPage,setToPage,showContent,setShowContent,setAiAnswer,aiAnswer}=useStorageContext()
   const { data }: any = useBibleFromChToCh(visible ? { title: name, bible: init, fromCh: page, fromVs: verse, toCh: toPage, toVs: toVerse } : []);
 
 
@@ -142,10 +136,7 @@ saveDate()
     getLang();
   }, []);
 
-  // useEffect(() => {
-  //   console.log(photo, 'photo');
-  //   console.log(content, 'content');
-  // }, [photo, content]);
+ 
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
@@ -160,6 +151,20 @@ saveDate()
       keyboardDidShowListener.remove();
     };
   }, []);
+
+
+  const handleStoryFromAI=async()=>{
+if(aiAnswer !==""){
+setShowAi(!showAi)
+}
+
+const result = await getAIResponse(lang,page,verse,name,toPage,toVerse)
+setAiAnswer(result)
+
+
+  }
+
+  
 
   const handleShowListener = () => {
     if (name === '목록' ) {
@@ -299,6 +304,12 @@ saveDate()
             <Text style={{ fontFamily: 'LineSeedKr-Bd', fontSize: 18 }}>{lang === 'En' ? 'Show Bible' : !visible ? `${name} 보기` : '말씀 닫기'}</Text>
           </TouchableOpacity>
           </View>
+
+          {/* <View style={{width:width,justifyContent:'center',alignItems:'center'}}>
+            <TouchableOpacity style={{ width: width - 48, marginBottom: 10, backgroundColor: 'white', height: 40, borderRadius: 10, justifyContent: 'center', alignItems: 'center', marginLeft: 3 }} onPress={handleStoryFromAI}>
+              <Text>{aiAnswer ===""?"AI 말씀요약":(showAi?"요약 닫기":"요약 보기")}</Text>
+            </TouchableOpacity>
+          </View> */}
         
 
         

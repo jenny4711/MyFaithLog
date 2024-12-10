@@ -15,16 +15,21 @@ const ListFirstView = ({title}:any) => {
     router.push('/home')
   }
 
-
-
-
   return (
     <View style={{width:width-48,alignItems:'flex-end',paddingVertical:16}}>
       <View style={{flexDirection:'row',width:(width)*.56, justifyContent: 'space-between'}}>
-      <Text style={{fontSize:20,fontFamily: 'LotteBd'}}>{title}</Text>
+      <Text style={{fontSize:20,fontFamily: 'LotteBd',color:'#fff'}}>{title}</Text>
+
+      <View style={{flexDirection:'row'}}>
       <TouchableOpacity onPress={goToHome} style={{marginRight:8}}>
       <Ionicons name="home-outline" size={24} color="#fff" />
       </TouchableOpacity>
+
+      <TouchableOpacity onPress={goToSetting}>
+      <Ionicons name="settings-outline" size={24} color="#fff" />
+      </TouchableOpacity>
+      </View>
+
         </View>
     </View>
   )

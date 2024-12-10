@@ -7,8 +7,10 @@ const DailyFormIOS = ({
   setMeditation,
   setApplication,
   setPray,meditation,
-  application,pray,
-  lang,medRef,
+  application,
+  pray,
+  lang,
+  medRef,
   appRef,
   prayRef,
   scrollToInput
@@ -82,12 +84,12 @@ const handleContentSizeChangePray = (contentSize: { height: number }) => {
     onChangeText={setMeditation}
     multiline={true}
     ref={medRef}
-    onFocus={()=>scrollToInput(prayRef)}
+    // onFocus={()=>scrollToInput(prayRef)}
     onContentSizeChange={(e) => handleContentSizeChangeMed(e.nativeEvent.contentSize)}
   />
 </Animated.View>
 
-<Animated.View style={[styles.inputView,{marginVertical:10}]} entering={FadeInLeft.duration(500).easing(Easing.ease)}>
+{meditation !=="" && <Animated.View style={[styles.inputView,{marginVertical:10}]} entering={FadeInLeft.duration(500).easing(Easing.ease)}>
   <TextInput
     ref={appRef}
     style={[styles.inputText,{marginVertical:10,height:inputHeightApp}]}
@@ -95,12 +97,12 @@ const handleContentSizeChangePray = (contentSize: { height: number }) => {
     value={application}
     onChangeText={setApplication}
     multiline={true}
-    onFocus={()=>scrollToInput(prayRef)}
+    // onFocus={()=>scrollToInput(prayRef)}
     onContentSizeChange={(e) => handleContentSizeChangeApp(e.nativeEvent.contentSize)}
   />
-</Animated.View>
+</Animated.View>}
 
-<Animated.View style={[styles.inputView]} entering={FadeInLeft.duration(500).easing(Easing.ease)}>
+{application !=="" && <Animated.View style={[styles.inputView]} entering={FadeInLeft.duration(500).easing(Easing.ease)}>
   <TextInput
     ref={prayRef}
    style={[styles.inputText,{height:inputHeightPray}]}
@@ -108,10 +110,10 @@ const handleContentSizeChangePray = (contentSize: { height: number }) => {
     value={pray}
     onChangeText={setPray}
     multiline={true}
-    onFocus={()=>scrollToInput(prayRef)}
+    // onFocus={()=>scrollToInput(prayRef)}
     onContentSizeChange={(e) => handleContentSizeChangePray(e.nativeEvent.contentSize)}
   />
-</Animated.View>
+</Animated.View>}
 
 
     </View>

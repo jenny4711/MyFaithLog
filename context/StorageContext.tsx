@@ -21,6 +21,15 @@ interface StorageContextType {
   setInit:(init:any)=>void;
   img:any;
   setImg:(img:any)=>void;
+  titleFont:any;
+  setTitleFont:(titleFont:any)=>void;
+  contentFont:any;
+  setContentFont:(contentFont:any)=>void;
+  aiAnswer:any;
+  setAiAnswer:(aiAnswer:any)=>void;
+  lang:any;
+  setLang:(lang:any)=>void;
+  
 
 
 
@@ -38,12 +47,15 @@ export const StorageProvider=({children}:{children:React.ReactNode})=>{
   const [name,setName]=useState<any>('목록')
   const [init,setInit]=useState<any>('')
  const [img,setImg]=useState<any>('')
-
+ const [titleFont,setTitleFont]=useState<any>(20)
+ const [contentFont,setContentFont]=useState<any>(16)
+ const [aiAnswer,setAiAnswer]=useState<any>('')
+const [lang,setLang]=useState<any>('Kr')
   useEffect(()=>{
   console.log(init,'init!StorageContext!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
   },[name])
   return (
-    <StorageContext.Provider value={{setImg,img,init,setInit,name,setName,showContent,setShowContent,verse,setVerse,toVerse,setToVerse,page,setPage,setToPage,toPage,email,setEmail,dateF,setDateF}}>
+    <StorageContext.Provider value={{lang,setLang,aiAnswer,setAiAnswer,titleFont,setTitleFont,contentFont,setContentFont,setImg,img,init,setInit,name,setName,showContent,setShowContent,verse,setVerse,toVerse,setToVerse,page,setPage,setToPage,toPage,email,setEmail,dateF,setDateF}}>
       {children}
     </StorageContext.Provider>
   )

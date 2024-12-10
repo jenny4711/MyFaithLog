@@ -23,7 +23,8 @@ console.log(email,'email')
         date,
         note,
         address,
-        group,
+        group: group || [],
+        reply:[],
       }
 
     }else if(category === 'dailyQt'){
@@ -36,7 +37,7 @@ console.log(email,'email')
         application,
         pray,
         address,
-        group,
+        group:group || [],
     }
     }else if(category ==='thanks'){
       data={
@@ -94,6 +95,31 @@ console.log(email,'email')
   }
 };
 
+export const deleteAllItem=async()=>{
+  try{
+    const email = await AsyncStorage.getItem('email')
+    if(!email)return;
+    const categoryArr=['dailyQt','sundayQt','thanks','source']
+    categoryArr.map(async(cat)=>{
+      const qtCollection=collection(FIRESTORE_DB,`users/${email}/${cat}`)
+      const qtQuery=query(qtCollection)
+      const qtSnapshot=await getDocs(qtQuery)
+      qtSnapshot.forEach(async(doc)=>{
+        await deleteDoc(doc.ref)
+      })
+    })
+
+    console.log("All documents successfully deleted");
+
+
+
+  }catch(error){
+    console.log(error,'error-deleteAllItem')
+  }
+}
+
+
+
 
 
 export const deleteItem=async(category:any,date:any)=>{
@@ -139,6 +165,7 @@ export const saveGroup=async({groupName,creator,memo,member,blockMember,list,pas
     let docRef;
     docRef = doc(FIRESTORE_DB, `groups/qt/list/${groupName}`);
     await setDoc(docRef, data);
+    console.log('Group successfully saved!')
   }catch(err){
     console.log(err,'error-saveGroup')
   }
@@ -343,7 +370,24 @@ export const removeUserFromGroup = async (groupName: string) => {
 // ----------------------------------------------
 
 
+export const saveReply = async(reply:any,date:any)=>{
+  try{
+    console.log(reply,'reply')
+    
+    console.log(date,'date')
+    const email = await AsyncStorage.getItem('email')
+    if(!email)return;
+const docRef = doc(FIRESTORE_DB, `users/${email}/dailyQt/${date}`);
+await updateDoc(docRef,{
+  reply:reply,
+})
+console.log('Reply successfully saved!')
 
+
+  }catch(error){
+    console.log(error,'error-saveReply')
+  }
+}
 
 
 

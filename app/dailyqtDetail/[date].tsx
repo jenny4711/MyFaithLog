@@ -106,6 +106,8 @@ const handleDeleted=async()=>{
 }
 
 const handleDone=()=>{
+  console.log(orgDate,'orgDate')
+  console.log(edTitle,'edTitle')
   saveMutation.mutate({category:'dailyQt',date:orgDate,title:edTitle,content:edContent,meditation:edMeditation,application:edApplication,pray:edPray,address,name:''})
   setShowDone(false)
   queryClient.invalidateQueries({queryKey:['data','dailyQt']})
@@ -116,7 +118,7 @@ const handleDone=()=>{
 
 }
   return (
-    <>
+    <View style={{flex:1,width:width,alignItems:'center',backgroundColor:'#E8751A'}}>
     <View style={{backgroundColor: '#E8751A',alignItems:'center'}}>
       <FirstView date={date} showDone={showDone} fnBtn={showDone?handleDone:editHanlder} />
       </View>
@@ -132,11 +134,12 @@ const handleDone=()=>{
           <Text  style={styles.resultTitle}>{!showBible?'말씀 보기':'말씀 닫기'}</Text>
           </Pressable>
       
-      
-        <Animated.ScrollView entering={FadeInUp.duration(500).easing(Easing.ease)} style={!showBible?{display:'none'}:[styles.itemView,{alignItems:'center',}]} exiting={FadeInDown.duration(100).easing(Easing.ease)}>
+
+        <Animated.ScrollView entering={FadeInUp.duration(500).easing(Easing.ease)} style={!showBible?{display:'none'}:[styles.itemView]} exiting={FadeInDown.duration(100).easing(Easing.ease)}>
           {showBible&&edContent&&edContent.map((item:any,index:number)=><Text style={!showBible?{display:'none'}:{marginVertical:10,fontSize:18,lineHeight:24}} key={index}>{JSON.stringify(item)}</Text>)}
         {/* <Text style={{fontFamily:"LineSeedKR-Rg",fontSize:15}}>{content}</Text> */}
       </Animated.ScrollView>
+     
       
 
 
@@ -201,7 +204,7 @@ const handleDone=()=>{
       </Animated.View>
 
     </View>
-    </>
+    </View>
   )
 }
 

@@ -33,9 +33,9 @@ export default Login;
 const styles = StyleSheet.create({
   googleBtn: { 
     marginTop:6,
-    // backgroundColor: 'black', 
+     backgroundColor: 'black', 
     width:200,
-    height: 60,
+    // height: 60,
     borderRadius: 24, 
     flexDirection: 'row', 
     alignItems: 'center', 

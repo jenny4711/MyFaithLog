@@ -21,15 +21,15 @@ const goToHome=()=>{
   return (
     <View style={{flexDirection:'row',width:width-48,paddingVertical:16,justifyContent:'space-between'}}>
     <TouchableOpacity onPress={()=>setOnChange(!onChange)}>
-      <Text style={{fontSize:16,fontFamily:"LineSeedKr-Bd"}}>{title}</Text>
+      <Text style={{fontSize:16,fontFamily:"LineSeedKr-Bd",color:'#fff'}}>{title}</Text>
     </TouchableOpacity>
     <View style={{flexDirection:'row'}}>
-    <TouchableOpacity onPress={goToHome} style={{marginRight:8}}>
-         <Ionicons name="home-outline" size={20} color="black" />
+    <TouchableOpacity onPress={goToHome} style={{marginRight:8,}}>
+         <Ionicons name="home-outline" size={20} color="#fff" />
          </TouchableOpacity>
     
           <TouchableOpacity onPress={goToSetting}>
-          <Ionicons name="settings-outline" size={20} color="black" />
+          <Ionicons name="settings-outline" size={20} color="#fff" />
          </TouchableOpacity>
         
          </View>

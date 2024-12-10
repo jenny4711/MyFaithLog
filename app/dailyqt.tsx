@@ -51,7 +51,7 @@ const DailyQt = () => {
         <title>My Faith Log</title>
         <meta name="description" content="My Faith Log" />
       </Head>
-      <View style={{ flex: 1, backgroundColor: '#E8751A', justifyContent: 'center', alignItems: 'center', paddingTop: 16 }}>
+      <View style={{ flex: 1, backgroundColor: '#E8751A', alignItems: 'center', paddingTop: 16 }}>
 
         <ListFirstView title={'묵상 리스트'} />
         {/* <Text style={{fontSize:20,fontFamily: 'LotteBd'}}>묵상 리스트</Text> */}

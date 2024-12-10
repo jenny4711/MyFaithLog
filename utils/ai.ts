@@ -103,14 +103,14 @@ export const getAIResponse = async (
   name: any,
   toPage: any,
   toVerse: any,
-  toName: any
+  
 ) => {
-  console.log(lang, 'EXPO_GEMINI_API_KEY'); // Log for debugging
-console.log(verse,page,toVerse,toPage,name,'verse,page,toVerse,toPage,name,toName')
+ 
+
   try {
     let msg;
     if (lang === "Kr") {
-      msg = `새번역 성경전서 에서 ${name} ${page}장 ${verse}절 부터 ${name} ${toPage}장 ${toVerse} 구절만 알려주세요.`;
+      msg = `새번역 성경전서 에서 ${name} ${page}장 전체 줄거리 만 요약해서 중학생 이 해할수있게 알려주세요.`;
     } else {
       msg = `Please provide the following Bible passage in NIV format:
       ${name} chapter ${page}, verses ${verse}.`;
@@ -150,17 +150,18 @@ console.log(msg,'msg')
     if (res.data && res.data.candidates) {
       const firstCandidate = res.data.candidates[0];
       if (firstCandidate.content && firstCandidate.content.parts) {
+      console.log(firstCandidate.content.parts[0].text, 'First Candidate'); // Log for debugging
         return firstCandidate.content.parts[0].text;
       } else {
-        console.error('Unexpected response format:', res.data);
+        console.log('Unexpected response format:', res.data);
         return "응답 형식이 예상과 다릅니다.";
       }
     } else {
-      console.error('No candidates found in response:', res.data);
+      console.log('No candidates found in response:', res.data);
       return "응답에서 후보 텍스트를 찾을 수 없습니다.";
     }
   } catch (error: any) {
-    console.error('Error in getAIResponse:', error.response ? error.response.data : error.message);
+    console.log('Error in getAIResponse:', error.response ? error.response.data : error.message);
     throw error;
   }
 };

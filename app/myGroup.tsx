@@ -91,7 +91,7 @@ if (isError) {
 
 
 <View style={[styles.eachView,{backgroundColor:'#E8751A'}]}>
-<Text style={{marginTop:8,fontSize:16,fontFamily:'LineSeedKr-Bd'}}>그룹 리스트</Text>
+<Text style={{marginTop:8,fontSize:20,fontFamily:'LotteBd',color:'#fff'}}>그룹 리스트</Text>
 <View style={styles.eachSecView}>
   <ScrollView style={{paddingBottom:50,backgroundColor:'#E8751A'}}>
 {
