@@ -153,16 +153,16 @@ saveDate()
   }, []);
 
 
-  const handleStoryFromAI=async()=>{
-if(aiAnswer !==""){
-setShowAi(!showAi)
-}
+//   const handleStoryFromAI=async()=>{
+// if(aiAnswer !==""){
+// setShowAi(!showAi)
+// }
 
-const result = await getAIResponse(lang,page,verse,name,toPage,toVerse)
-setAiAnswer(result)
+// const result = await getAIResponse(lang,page,verse,name,toPage,toVerse)
+// setAiAnswer(result)
 
 
-  }
+//   }
 
   
 

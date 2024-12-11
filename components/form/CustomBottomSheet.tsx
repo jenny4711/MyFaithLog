@@ -1,5 +1,5 @@
 import { View, StyleSheet, Text, Dimensions, TouchableOpacity } from 'react-native';
-import React, { useCallback, forwardRef, useMemo, useState } from 'react';
+import React, { useCallback, forwardRef, useMemo, useState,useEffect} from 'react';
 import { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import BottomSheet from '@gorhom/bottom-sheet';
 const { width } = Dimensions.get('window');
@@ -19,6 +19,8 @@ const CustomBottomSheet = forwardRef<Ref, Props>(({ setInit, title, setChange, s
   const snapPoints = useMemo(() => ['25%', '50%'], []);
 const {name,verse,page,toPage,toVerse,aiAnswer,setAiAnswer,lang,setLang}=useStorageContext()
 const [showAi,setShowAi]=useState(false)
+
+
 const handleStoryFromAI=async()=>{
   if(aiAnswer !==""){
   setShowAi(!showAi)

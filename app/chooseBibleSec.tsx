@@ -15,7 +15,7 @@ const {width,height} = Dimensions.get('window')
 
 const ChooseBibleSec = () => {
 const navigation = useNavigation()
-const {init,setInit,verse,setVerse,toVerse,setToVerse,page,setPage,toPage,setToPage,showContent,setShowContent,setName,name}=useStorageContext()
+const {setAiAnswer,init,setInit,verse,setVerse,toVerse,setToVerse,page,setPage,toPage,setToPage,showContent,setShowContent,setName,name}=useStorageContext()
 const [closeName,setCloseName]=useState(false)
 const [showVerse,setShowVerse]=useState(false)
 const [itemGroup,setItemGroup]=useState<any>(null)
@@ -133,6 +133,8 @@ const handleSetVerse=(item:any)=>{
   setPg(0)
   setVs(0)
   setInit('')
+  setAiAnswer('')
+  
  
  }
 console.log(page,'page')

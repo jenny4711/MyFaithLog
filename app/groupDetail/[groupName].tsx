@@ -1,5 +1,5 @@
-import { View, Text,Alert,ScrollView ,TouchableOpacity,Dimensions,TextInput,Button} from 'react-native'
-import React ,{useEffect,useState}from 'react'
+import {Platform,Keyboard, View, Text,Alert,ScrollView ,TouchableOpacity,Dimensions,TextInput,Button,KeyboardAvoidingView} from 'react-native'
+import React ,{useEffect,useState,useRef}from 'react'
 import { useLocalSearchParams } from 'expo-router'
 import { useGroupDataByGroupName } from '~/hooks/useFormData'
 import { useNavigation } from 'expo-router'
@@ -35,8 +35,28 @@ const [reply,setReply]=useState('')
 const [myStatus,setMyStatus]=useState(false)
 const [open,setOpen]=useState(false)
 const [selectedItem,setSelectedItem]=useState<any>(null)
+const [keyboardVisible, setKeyboardVisible] = useState<boolean>(false);
+const selectRef=useRef(null) as any
+const scrollViewRef=useRef(null) as any
+useEffect(() => {
+  const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
+    setKeyboardVisible(true);
+  });
+  const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
+    setKeyboardVisible(false);
+  });
+
+  return () => {
+    keyboardDidHideListener.remove();
+    keyboardDidShowListener.remove();
+  };
+}, []);
+
+
+
+
 useEffect(()=>{
-  console.log(groupData,'groupData')
+
   if(groupData){
     if(groupData.member.includes(email)){
       setMyStatus(true)
@@ -50,7 +70,7 @@ useEffect(()=>{
 useEffect(()=>{
   if(reply){
     handleReply()
-    console.log(reply,'reply')
+    
   }
 },[reply])
 
@@ -68,18 +88,24 @@ useEffect(() => {
   async function fetchData() {
     // item이 배열인지 확인 후 generateStaticParams 호출
     const params = await generateStaticParams(gpNameArray);
-    console.log(params);
+    
   }
   fetchData();
 }, [gpNameArray]);
 
-console.log(email,'email')
+
  useEffect(()=>{
     if(data){
       setGroupData(data[0])
     }
  },[data])
 
+
+useEffect(()=>{
+  if(keyboardVisible){
+   scrollToInput(selectRef,200)
+  }
+},[keyboardVisible])
 
 
 const handleRemoveGroup=async(groupName:any)=>{
@@ -102,11 +128,13 @@ const handleAddGroup=async(groupName:any)=>{
 
 
 const handleReply=()=>{
+
   setAddReply([...addReply,reply])
 }
 
 const handleSaveReply=async(date:any)=>{
   try{
+    console.log(date,addReply,'reply!!!')
     await saveReply(addReply,date)
    
   }catch(error){
@@ -120,12 +148,31 @@ const toggleOpen=(index:any)=>{
 
 }
 
+const scrollToInput = (inputRef: any, amt: any) => {
+  if (scrollViewRef.current) {
+    inputRef.current.measureLayout(
+      scrollViewRef.current,
+      (x: any, y: any) => {
+        console.log("Scroll target y:", y, "amt:", amt);
+        const targetY = y + amt;
+        console.log("Scrolling to:", targetY);
+        scrollViewRef.current.scrollTo({ y: targetY, animated: true });
+      },
+      (error: any) => console.log(error)
+    );
+  }
+};
+
+
+
+
+
   return (
-    <View style={{flex:1,alignItems:'center',backgroundColor:'#E8751A'}}>
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} keyboardVerticalOffset={Platform.select({ ios: -500, android: 80 })} style={{flex:1,alignItems:'center',backgroundColor:'#E8751A',marginBottom:keyboardVisible?340:null}}>
       <FirstGroupView setAddOnChange={handleAddGroup} myStatus={myStatus} groupName={groupData?.groupName}  setOnChange={handleRemoveGroup} onChange={addMyGroup} title={myStatus?'탈퇴하기':'나의그룹에넣기'}/>
       <Text style={{fontFamily:'LotteBd',fontSize:20,color:'#fff'}}> {groupData?.groupName}</Text>
 
-      <ScrollView>
+      <ScrollView ref={scrollViewRef}>
         {
         groupData?.list.map((item:any,index:any)=>(
           <View style={{backgroundColor:'white',width:width-48,padding:16,borderRadius:24,marginVertical:8}}>
@@ -152,11 +199,13 @@ const toggleOpen=(index:any)=>{
               <Text style={{fontSize:18,fontFamily:'LineSeedKR-Rg'}}>{selectedItem.pray}</Text>
               </View>
 
-              <View>
+              <View >
             <Text style={{fontSize:18,fontFamily:'LineSeedKr-Bd'}}>댓글</Text>
             <View style={{flexDirection:'row'}}>
-            <TextInput style={{marginHorizontal:8,width:width-150}} onChangeText={setReply} value={reply} placeholder='댓글을 입력해주세요' />
+            
+            <TextInput ref={selectRef} style={{marginHorizontal:8,width:width-150}} onChangeText={setReply} value={reply} placeholder='댓글을 입력해주세요' />
             <Button title='입력' onPress={()=>handleSaveReply(selectedItem.date)} />
+         
             </View>
           </View>
              
@@ -168,7 +217,7 @@ const toggleOpen=(index:any)=>{
         ))
         }
       </ScrollView>
-    </View>
+    </KeyboardAvoidingView>
   )
 }
 
