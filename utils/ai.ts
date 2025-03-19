@@ -73,7 +73,7 @@ export const getBibleFromTo=async({title,bible,chapter,to,from}:any)=>{
   try{
     console.log(bible,'bible')
     const response=await api.get(`${bible}/fromTo/${title}/${chapter}/${from}/${to}`);
-    console.log(response.data.result,'response-bible')
+    console.log(response.data.result,'getBibleFromTo')
     return response.data?.result;
   }catch(error){
     console.log(error,'bibleapi-error')
@@ -82,10 +82,10 @@ export const getBibleFromTo=async({title,bible,chapter,to,from}:any)=>{
 
 
 export const findFromChToCh=async({title,bible,fromCh,fromVs,toCh,toVs}:any)=>{
+  console.log(title,bible,fromCh,fromVs,toCh,toVs,'findFromChToCh')
   try{
     const response=await api.get(`${bible}/findCh/${title}/${fromCh}/${fromVs}/${toCh}/${toVs}`);
-    console.log(response.data.result,'response-bible')
-    console.log(title,bible,fromCh,fromVs,toCh,toVs,'title,bible,fromCh,fromVs,toCh,toVs')
+    console.log(response.data.result,'findFromChToCh')
     return response.data?.result;
   }catch(error){
     console.log(error,'bibleapi-error')

@@ -20,11 +20,10 @@ const FirstView = ({lang,setLang,setTheBible,theBible,category,setCategory}:any)
   }
   return (
     <View style={styles.container}>
-      <View style={{flexDirection:'row'}}>
-     {/* <Selection arr={langArr} setChange={setLang} placeHolder={<MaterialIcons name="language" size={24} color="black" />} btnWidth={width-360}/> */}
-     {/* <Selection arr={lang !== "En"?bibleArrKr:bibleArrEn} setChange={setTheBible} placeHolder={lang ==="Kr"?"성경":"The Bible"} btnWidth={width-345}/> */}
+      {/* <View style={{flexDirection:'row'}}>
+
      <Selection arr={lang !== "En"?categoryKrArr:categoryEnArr} setChange={setCategory} placeHolder={lang ==="Kr"?"카테고리":"Category"} btnWidth={width*.23}/>
-     </View>
+     </View> */}
      <View style={{flexDirection:'row'}}>
      <TouchableOpacity onPress={goToHome} style={{marginRight:8}}>
      <Ionicons name="home-outline" size={24} color="#fff" />

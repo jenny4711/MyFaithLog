@@ -29,7 +29,7 @@ const goToDetail=()=>{
 })
 }
 
-console.log(item.photo,'photo')
+
 
 
 

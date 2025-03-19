@@ -1,12 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
 
-const SourceDetail = () => {
+const SavedBible = () => {
   return (
     <View>
-      <Text>SourceDetail</Text>
+      <Text>SavedBible</Text>
     </View>
   )
 }
 
-export default SourceDetail
+export default SavedBible

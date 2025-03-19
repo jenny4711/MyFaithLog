@@ -33,6 +33,7 @@ const handleLogOut=async()=>{
       {text:'로그아웃',style:'destructive',onPress:async()=>{
         await signOut(FIREBASE_AUTH)
         AsyncStorage.removeItem('token')
+        setUserEmail("")
         await AsyncStorage.removeItem('email').then(()=>{
           (navigation as any).replace('index')
         }).catch((error)=>{
@@ -50,7 +51,7 @@ const handleLogOut=async()=>{
 
 
   return(
-    <TouchableOpacity activeOpacity={1} onPress={handleLogOut} style={{justifyContent:'center',alignItems:'center',paddingVertical:24,width:width-48,backgroundColor:'#ffffff',borderRadius:24,marginTop:16}}>
+    <TouchableOpacity activeOpacity={1} onPress={handleLogOut} style={{justifyContent:'center',alignItems:'center',paddingVertical:24,width:width/1.5,backgroundColor:'#ffffff',borderRadius:24,marginTop:16}}>
     <Text style={[styles.TextStyle,{color:'black'}]}>로그 아웃 </Text>
   </TouchableOpacity>
   )

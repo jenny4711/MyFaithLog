@@ -3,6 +3,7 @@ import React from 'react'
 import { useNavigation } from '@react-navigation/native';
 const {width,height} = Dimensions.get('window')
 const MenuBtns = ({title,address}:any) => {
+
   const navigation = useNavigation();
   return (
     <View >
@@ -21,10 +22,11 @@ const styles=StyleSheet.create({
     justifyContent:'center',
     alignItems:'center',
     backgroundColor:'white',
-    height:height/12,
-    width:width-48,
-    marginBottom:10,
+    height:width/4,
+    width:width/4,
+    marginVertical:6,
     borderRadius:10,
+    marginHorizontal:6
   },
   SecContainer:{
     width:width-48,

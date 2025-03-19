@@ -1,7 +1,8 @@
-
+//cd android
+//./gradlew signingReport
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Platform ,Button,Image} from 'react-native';
-import Login from '~/components/auth/Login';
+import * as AuthSession from 'expo-auth-session';
 import { FIREBASE_AUTH } from '../config/firebase';
 import * as Google from 'expo-auth-session/providers/google';
 import { useStorageContext } from '~/context/StorageContext';
@@ -12,7 +13,8 @@ import { GoogleAuthProvider, onAuthStateChanged, signInWithCredential } from 'fi
 import Head from 'expo-router/head';
 import * as WebBrowser from 'expo-web-browser';
 import { GoogleLogin } from '@react-oauth/google'; // 웹에서 사용하는 GoogleLogin
-import AppleLogin from '~/components/auth/AppleLogin';
+
+import { TouchableOpacity } from '@gorhom/bottom-sheet';
 
 if (Platform.OS !== 'web') {
   WebBrowser.maybeCompleteAuthSession();
@@ -22,22 +24,38 @@ const Page = () => {
   const [open, setOpen] = useState<boolean>(false);
   const [userInfo, setUserInfo] = useState<any>();
   const { email, setEmail } = useStorageContext();
-  const logo = require('../assets/logo.png');
+  const logo = require('../assets/logomt.png');
   const clientID =
     Platform.OS === 'ios'
       ? process.env.EXPO_PUBLIC_IOS_CLIENT_ID
       : process.env.EXPO_PUBLIC_WEB_CLIENT_ID;
 
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    androidClientId:process.env.EXPO_PUBLIC_ANDROID_CLIENT_ID,
-    iosClientId:process.env.EXPO_PUBLIC_IOS_CLIENT_ID,
-    clientId: process.env.EXPO_PUBLIC_WEB_CLIENT_ID,
-    // redirectUri: Platform.OS === 'web' ? window.location.origin : undefined,
-  });
+     
+
+      const redirectUri =
+      Platform.OS === 'web'
+        ? window.location.origin
+        : AuthSession.makeRedirectUri({
+            native: `com.googleusercontent.apps.${process.env.EXPO_PUBLIC_ANDROID_CLIENT_ID}:/oauth2redirect/google`,
+          });
+    
+    const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
+      iosClientId: process.env.EXPO_PUBLIC_IOS_CLIENT_ID,
+      androidClientId: process.env.EXPO_PUBLIC_ANDROID_CLIENT_ID,
+      clientId: process.env.EXPO_PUBLIC_WEB_CLIENT_ID,
+      redirectUri,  // ✅ 올바른 Redirect URI 설정
+    });
   const navigation = useNavigation<any>();
+
+  useEffect(() => {
+    console.log("Google OAuth Response:", response);
+  }, [response]);
+
+  
 
   // 앱 환경에서 Google 로그인이 성공했을 때 처리
   useEffect(() => {
+    console.log(response,'response@@@@@@@')
     if (response?.type === 'success') {
       const { id_token } = response.params;
       const credential = GoogleAuthProvider.credential(id_token);
@@ -71,13 +89,13 @@ const Page = () => {
   
     // id_token을 해독하여 사용자 정보 추출
     const userInfo = parseJwt(token);
-  console.log(userInfo,'userInfo')
+
     // 추출된 사용자 정보
     const email = userInfo?.email;
     const displayName = userInfo?.name;
     const photoURL = userInfo?.picture;
   
-    console.log(userInfo, 'userInfo'); // 해독된 사용자 정보 로그
+
   
     // 웹 환경에서는 localStorage에 사용자 정보 저장
     if (email) {
@@ -153,13 +171,16 @@ const Page = () => {
         <meta name="description" content="My Faith Log" />
       </Head>
       <GestureHandlerRootView style={{ flex: 1 }}>
-        <View style={[styles.container, { backgroundColor: '#E8751A' }]}>
-          <View style={[styles.loginContainer, { backgroundColor: '#E8751A' }]}>
+        <View style={[styles.container, { backgroundColor: '#D7A31F' }]}>
+          <View style={[styles.loginContainer, { backgroundColor: '#D7A31F' }]}>
           
             <View style={{flexDirection:'column',alignItems:'center',justifyContent:'center'}}>
             
             <Image source={logo} style={{height:100,marginBottom:20}}/>
-              <Text style={[styles.title]}>Faith Log</Text>
+            <TouchableOpacity onPress={()=>(navigation as any).navigate('home')}>
+                  <Text style={[styles.title]}>Get Start</Text>
+                </TouchableOpacity>
+              {/* <Text style={[styles.title]}>Faith Log</Text> */}
             </View>
 
             {Platform.OS === 'web' ? (
@@ -174,12 +195,13 @@ const Page = () => {
               </View>
             ) : (
               <View style={open ? { display: 'none' } : {}}>
-                <Login promptAsync={promptAsync} />
+               
+                {/* <Login promptAsync={promptAsync} /> */}
               </View>
             )}
           </View>
           <View>
-            <AppleLogin />
+            {/* <AppleLogin /> */}
           </View>
         </View>
       </GestureHandlerRootView>

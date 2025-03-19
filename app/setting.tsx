@@ -6,16 +6,20 @@ import Selection from '~/components/form/Selection';
 import { langArr } from '~/utils/selectionArray';
 import { useNavigation } from 'expo-router';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { useStorageContext } from '~/context/StorageContext';
 import LogOutSec from '~/components/setting/LogOutSec';
 import {deleteAllItem} from '~/utils/fireStoreFn'
+import Login from '~/components/auth/Login';
+import AppleLogin from '~/components/auth/AppleLogin';
+import { clearAllData } from '~/utils/localStorageFn';
 const {width,height}=Dimensions.get('window')
 const Setting = () => {
   const [lang,setLang]=useState('Kr')
   const navigation = useNavigation()
-
+const {email}=useStorageContext()
 
 const handleAllDelete=async()=>{
-  await deleteAllItem()
+  await clearAllData()
   console.log('deleteAllItem')
   return (navigation as any).replace('home')
 }
@@ -23,7 +27,7 @@ const handleAllDelete=async()=>{
 
 
 
-
+useEffect(()=>{console.log(email,'email')},[email])
   useEffect(()=>{
     const getLang=async()=>{
    
@@ -34,7 +38,7 @@ const handleAllDelete=async()=>{
     getLang()
   },[lang])
   return (
-    <SafeAreaView style={{alignItems:'center',backgroundColor:'#E8751A',height:height}}>
+    <SafeAreaView style={{alignItems:'center',backgroundColor:'#D7A31F',height:height}}>
 <View style={{width:width-48}}>
   <TouchableOpacity  onPress={()=>navigation.goBack()}>
     <MaterialIcons name="arrow-back" size={24} color="black"/>
@@ -42,28 +46,36 @@ const handleAllDelete=async()=>{
 </View>
 
 <View style={{justifyContent:'center',alignItems:'center',marginVertical:16}}>
-  <Text style={{fontSize:16,fontFamily:'LineSeedKr-Bd',color:'white'}}>Setting</Text>
+  <Text style={{fontSize:24,fontFamily:'LineSeedKr-Bd',color:'white'}}>Setting</Text>
 </View>
-<View style={{width:width-48}}>
-  <Text style={{fontSize:14,fontFamily:'LineSeedKr-Bd',color:'white'}}>Account</Text>
-  <View>
-<LogOutSec/>
+<View style={{width:width-48,}}>
+  <Text style={{fontSize:20,fontFamily:'LineSeedKr-Bd',color:'white'}}>Account</Text>
+  <View style={{alignItems:'center'}}>
+    
+    {email !== "" &&  <LogOutSec/>}
+      
+
+   {email === "" && <Login/>}
+    {email === "" &&  <AppleLogin/>}
+    
+   
+
   </View>
-  <View>
-    <TouchableOpacity onPress={handleAllDelete} activeOpacity={1}  style={{justifyContent:'center',alignItems:'center',paddingVertical:24,width:width-48,backgroundColor:'#ffffff',borderRadius:24,marginTop:16}} >
+  <View style={{alignItems:'center'}}>
+    <TouchableOpacity onPress={handleAllDelete} activeOpacity={1}  style={{justifyContent:'center',alignItems:'center',paddingVertical:24,width:width/1.5,backgroundColor:'#ffffff',borderRadius:24,marginTop:16}} >
       <Text>모든 데이터 삭제</Text>
     </TouchableOpacity>
   </View>
 </View>
 
 
-<View style={{width:width-48,marginVertical:16}}>
-<Text style={{fontSize:14,fontFamily:'LineSeedKr-Bd',color:'white'}}>Style</Text>
+{/* <View style={{width:width-48,marginVertical:16}}>
+<Text style={{fontSize:20,fontFamily:'LineSeedKr-Bd',color:'white'}}>Style</Text>
 <View>
  
 </View>
 
-</View>
+</View> */}
 
    
     </SafeAreaView>

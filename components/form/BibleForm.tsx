@@ -35,9 +35,7 @@ const BibleForm =
     transform: [{ translateY: offset.value }]
   }));
 
-useEffect(()=>{
-  console.log('name',name)
-},[name])
+
 
 
   return (

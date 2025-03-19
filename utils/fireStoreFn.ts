@@ -402,16 +402,12 @@ export const uploadImageStorage = async (uri: any, fileType: any,onProgress:(pro
  
     const res = await fetch(uri);
     const blob = await res.blob();
-    let email;
-    if (Platform.OS === 'web') {
-      email = localStorage.getItem('email');
-    } else {
-      email = await AsyncStorage.getItem('email');
-    }
+     const email = await AsyncStorage.getItem('email');
+    
     
     const storageRef = ref(FIREBASE_STORAGE, `users/${email}/img/${Date.now()}`);
     const uploadTask = uploadBytesResumable(storageRef, blob);
-    console.log(email,'email-uploadImage')
+    
     return new Promise((resolve, reject) => {
       uploadTask.on(
         "state_changed",
@@ -426,8 +422,9 @@ export const uploadImageStorage = async (uri: any, fileType: any,onProgress:(pro
           console.log(error, 'error');
           reject(error);
         },
-        () => {
-          getDownloadURL(uploadTask.snapshot.ref).then(async (downloadUrl) => {
+        async() => {
+        
+         await getDownloadURL(uploadTask.snapshot.ref).then(async (downloadUrl) => {
             console.log('File available at', downloadUrl);
             resolve(downloadUrl); // Resolve the promise with the download URL
           });
@@ -439,6 +436,7 @@ export const uploadImageStorage = async (uri: any, fileType: any,onProgress:(pro
     throw error;
   }
  };
+ 
 
 
 

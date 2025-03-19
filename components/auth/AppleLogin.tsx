@@ -1,4 +1,4 @@
-import { View, Text ,StyleSheet,TouchableOpacity} from 'react-native'
+import { View, Text ,StyleSheet,TouchableOpacity,Dimensions} from 'react-native'
 import React, { useState, useEffect } from 'react';
 import { OAuthProvider } from 'firebase/auth';
 import * as AppleAuthentication from 'expo-apple-authentication';
@@ -8,6 +8,7 @@ import { signInWithCredential } from 'firebase/auth';
 import { useNavigation } from 'expo-router';
 import { AppleIcon } from '~/utils/Icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+const {width,height}=Dimensions.get('window')
 const AppleLogin = () => {
   const [appleAuthAvailable, setAppleAuthAvailable] = useState(false);
   const [userToken, setUserToken] = useState(null);
@@ -130,12 +131,12 @@ const navigation=useNavigation()
 
 
   return (
-    <View>
+    <View style={{justifyContent:'center',alignItems:'center',paddingVertical:24,width:width/1.5,backgroundColor:'#ffffff',borderRadius:24,marginTop:16}}>
     {appleAuthAvailable ? (
       // 커스텀 버튼을 사용하여 Apple 로그인 처리
       <TouchableOpacity style={[styles.btn]} onPress={()=>login()}>
-        <AppleIcon size={24} color={'white'}/>
-        <Text style={[styles.customButtonText,{fontFamily:"SFCompactRoundedBD",color:'white',fontSize:16,marginLeft:8}]}>Sign in with Apple</Text>
+        <AppleIcon size={24} color={'black'}/>
+        <Text style={[styles.customButtonText,{fontFamily:"SFCompactRoundedBD",color:'#000000',fontSize:16,marginLeft:8}]}>Sign in with Apple</Text>
       </TouchableOpacity>
     ) : (
       <Text>Apple Login is not available</Text>

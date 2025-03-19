@@ -2,7 +2,7 @@ import { View, Text ,StyleSheet} from 'react-native'
 import React,{useState,useEffect} from 'react'
 import Selection from './Selection'
 import { Dimensions } from 'react-native'
-import { bibleEnAc,bibleEnBc,bibleKrAc,bibleKrBc,langArr,bibleArrEn,bibleArrKr } from '~/utils/selectionArray'
+import { bibleEnAc,bibleEnBc,bibleKrBc,langArr,bibleArrEn,bibleArrKr } from '~/utils/selectionArray'
 
 const {width,height}=Dimensions.get('window')
 
@@ -16,7 +16,7 @@ const [pgArr, setPgArr] = useState<any>(arr);
 
 useEffect(() => {
   setPgArr(arr);
-  console.log(pgValue,'pgValue')
+ 
 }, [pgValue]); // pgValue가 변경될 때만 us
 
 

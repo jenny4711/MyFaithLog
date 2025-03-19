@@ -9,7 +9,7 @@ const DetailWithEdit = ({sizeH,text,value,setChange}:any) => {
     {
      <Animated.ScrollView entering={FadeInUp.duration(200).easing(Easing.ease)} style={[styles.itemView]}>
       <TextInput
-          style={{width:width-60,height:sizeH+15,backgroundColor:'white',padding:10,borderRadius:10,marginVertical:10,fontSize:18,alignItems:'center',justifyContent:'center'}}
+          style={{width:width-100,height:sizeH+15,padding:10,borderRadius:10,fontSize:18,alignItems:'center',justifyContent:'center',lineHeight:33}}
           placeholder={text}
           value={value}
           onChangeText={setChange}
@@ -27,20 +27,18 @@ const DetailWithEdit = ({sizeH,text,value,setChange}:any) => {
 export default DetailWithEdit
 const styles=StyleSheet.create({
   itemView:{
-  
+
+
    marginHorizontal:24,
-    backgroundColor:'white',
-    width:width-48,
+   
+    width:width-90,
+   borderWidth:1,
+    borderColor:'black',
     marginVertical:8,
    padding:16,
     borderRadius:10,
     shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+  
     
   }
 })

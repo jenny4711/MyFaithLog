@@ -30,6 +30,18 @@ interface StorageContextType {
   lang:any;
   setLang:(lang:any)=>void;
   
+category:any;
+setCategory:(category:any)=>void;
+findBible:any;
+setFindBible:(findBible:any)=>void;
+preImages:any
+setPreImages:(images:any)=>void
+progress:any
+setProgress:(progress:any)=>void
+imges:any
+setImges:(imges:any)=>void
+isLoadingImages:any
+setIsLoadingImages:(isloadingImages:any)=>void
 
 
 
@@ -50,12 +62,18 @@ export const StorageProvider=({children}:{children:React.ReactNode})=>{
  const [titleFont,setTitleFont]=useState<any>(20)
  const [contentFont,setContentFont]=useState<any>(16)
  const [aiAnswer,setAiAnswer]=useState<any>('')
+ const [findBible,setFindBible]=useState<any>(false)
 const [lang,setLang]=useState<any>('Kr')
+  const [category, setCategory] = useState<any>('');
+  const [progress,setProgress]=useState<any>(0)
+  const [preImages,setPreImages]=useState([] as any)
+  const [imges,setImges]=useState([] as any)
+  const [isLoadingImages,setIsLoadingImages]=useState([] as any)
   useEffect(()=>{
   console.log(init,'init!StorageContext!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
   },[name])
   return (
-    <StorageContext.Provider value={{lang,setLang,aiAnswer,setAiAnswer,titleFont,setTitleFont,contentFont,setContentFont,setImg,img,init,setInit,name,setName,showContent,setShowContent,verse,setVerse,toVerse,setToVerse,page,setPage,setToPage,toPage,email,setEmail,dateF,setDateF}}>
+    <StorageContext.Provider value={{imges,setImges,isLoadingImages,setIsLoadingImages,progress,setProgress,preImages,setPreImages,findBible,setFindBible,category,setCategory,lang,setLang,aiAnswer,setAiAnswer,titleFont,setTitleFont,contentFont,setContentFont,setImg,img,init,setInit,name,setName,showContent,setShowContent,verse,setVerse,toVerse,setToVerse,page,setPage,setToPage,toPage,email,setEmail,dateF,setDateF}}>
       {children}
     </StorageContext.Provider>
   )

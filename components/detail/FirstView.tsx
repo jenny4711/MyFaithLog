@@ -13,12 +13,12 @@ const FirstView = ({date,showDone,fnBtn}:any) => {
   }
 
   return (
-    <View style={[{width:width-48, backgroundColor: '#E8751A',alignItems:'flex-end',justifyContent:'center'}]}>
+    <View style={[{width:width-48, backgroundColor:'#D7A31F',alignItems:'flex-end',justifyContent:'center'}]}>
       <View style={[styles.container]}>
       <TouchableOpacity onPress={goToHome} style={{marginRight:8}}>
       <Ionicons name="close" size={24} color="black" />
       </TouchableOpacity>
-      <Text style={{fontSize:18,fontWeight:700,color:'white',fontFamily:'LineSeedBd'}}>{date}</Text>
+      {/* <Text style={{fontSize:18,fontWeight:700,color:'white',fontFamily:'LineSeedBd'}}>{date}</Text> */}
       <TouchableOpacity onPress={fnBtn}>
         <Text style={{fontSize:18,fontWeight:700,color:'white',fontFamily:"LineSeedBd"}}>{showDone?'Done':'Edit'}</Text>
       </TouchableOpacity>

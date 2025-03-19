@@ -40,17 +40,17 @@ const Layout = () => {
      <Stack.Screen name="index" options={{headerShown:false}} />
      <Stack.Screen name="home" options={{headerShown:false}} />
      <Stack.Screen name="setting" options={{headerShown:false}} />
-     <Stack.Screen name="dailyqt" options={{headerShown:false,presentation:'modal'}} />
-     <Stack.Screen name="sunday" options={{headerShown:false,presentation:'modal'}} />
-     <Stack.Screen name="source" options={{headerShown:false,presentation:'modal'}} />
+     <Stack.Screen name="dailyqt" options={{headerShown:false}} />
+     <Stack.Screen name="sunday" options={{headerShown:false}} />
+     <Stack.Screen name="savedBible" options={{headerShown:false}} />
+     <Stack.Screen name="dailyListPg" options={{headerShown:false,presentation:'modal'}}/>
+     <Stack.Screen name="sundayListPg" options={{headerShown:false,presentation:'modal'}}/>
      <Stack.Screen name="thanks" options={{headerShown:false,presentation:'modal'}} />
-     <Stack.Screen name="form" options={{headerShown:false,presentation:'modal'}} />
-     <Stack.Screen name="chooseBibleSec" options={{headerShown:false}} />
-    <Stack.Screen name="myGroup" options={{headerShown:false,presentation:'modal'}} />
+     <Stack.Screen name="form" options={{headerShown:false}} />
+     <Stack.Screen name="chooseBibleSec" options={{headerShown:false,presentation:'card'}} />
      <Stack.Screen name="dailyqtDetail/[date]" options={{headerShown:false,presentation:'modal'}} />
      <Stack.Screen name="sundayDetail/[date]" options={{headerShown:false,presentation:'modal'}} />
-     <Stack.Screen name="sourceDetail/[date]" options={{headerShown:false,presentation:'modal'}} />
-     <Stack.Screen name="groupDetail/[groupName]" options={{headerShown:false,presentation:'modal'}} />
+
 
  
      </Stack>

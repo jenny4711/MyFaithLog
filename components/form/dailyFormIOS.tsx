@@ -28,7 +28,7 @@ const handleContentSizeChangeApp = (contentSize: { height: number }) => {
 
   // 두 번째 줄부터 높이를 조정
   if (numberOfLines > 2) {
-   console.log('numberOfLines',numberOfLines)
+  
      newHeight = Math.max(67, numberOfLines * lineHeight+paddingVertical+paddingVertical); // 두 번째 줄부터 높이를 조정
   } else {
     newHeight = 67; // 첫 번째 줄일 때는 기본 높이 유지
@@ -84,12 +84,12 @@ const handleContentSizeChangePray = (contentSize: { height: number }) => {
     onChangeText={setMeditation}
     multiline={true}
     ref={medRef}
-    // onFocus={()=>scrollToInput(prayRef)}
+    //  onFocus={()=>scrollToInput(prayRef)}
     onContentSizeChange={(e) => handleContentSizeChangeMed(e.nativeEvent.contentSize)}
   />
 </Animated.View>
 
-{meditation !=="" && <Animated.View style={[styles.inputView,{marginVertical:10}]} entering={FadeInLeft.duration(500).easing(Easing.ease)}>
+{meditation !=="" && <Animated.View style={[styles.inputView,{marginVertical:16}]} entering={FadeInLeft.duration(500).easing(Easing.ease)}>
   <TextInput
     ref={appRef}
     style={[styles.inputText,{marginVertical:10,height:inputHeightApp}]}
@@ -97,7 +97,7 @@ const handleContentSizeChangePray = (contentSize: { height: number }) => {
     value={application}
     onChangeText={setApplication}
     multiline={true}
-    // onFocus={()=>scrollToInput(prayRef)}
+    //  onFocus={()=>scrollToInput(prayRef)}
     onContentSizeChange={(e) => handleContentSizeChangeApp(e.nativeEvent.contentSize)}
   />
 </Animated.View>}
@@ -110,7 +110,7 @@ const handleContentSizeChangePray = (contentSize: { height: number }) => {
     value={pray}
     onChangeText={setPray}
     multiline={true}
-    // onFocus={()=>scrollToInput(prayRef)}
+    //  onFocus={()=>scrollToInput(prayRef)}
     onContentSizeChange={(e) => handleContentSizeChangePray(e.nativeEvent.contentSize)}
   />
 </Animated.View>}
@@ -123,7 +123,7 @@ const handleContentSizeChangePray = (contentSize: { height: number }) => {
 export default DailyFormIOS
 const styles=StyleSheet.create({
   inputText: {
-    width:width-48,
+    width: width -96,
     
     backgroundColor:'white',
     padding:10,

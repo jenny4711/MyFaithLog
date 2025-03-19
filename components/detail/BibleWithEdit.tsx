@@ -8,12 +8,12 @@ const {width} = Dimensions.get('window')
 const BibleWithEdit = ({setOnChange,onChange}:any) => {
   const [visible,setVisible]=useState(false)
   const {init,setInit,name,setName,verse,setVerse,toVerse,setToVerse,page,setPage,toPage,setToPage,showContent,setShowContent}=useStorageContext()
-  const { data }: any = useBibleFromChToCh(visible ? { title: name, bible: init, fromCh: page, fromVs: verse, toCh: toPage, toVs: toVerse } : []);
+  // const { data }: any = useBibleFromChToCh(visible ? { title: name, bible: init, fromCh: page, fromVs: verse, toCh: toPage, toVs: toVerse } : []);
 const navigation = useNavigation()
 const router = useRouter();
   useEffect(()=>{
     if(showContent.length >0){
-      console.log('showContent-BibleWithEdit',showContent)
+      
       setOnChange(showContent)
     }
   },[showContent])
@@ -21,7 +21,7 @@ const router = useRouter();
 
 
 const goToChooseBibleSec=()=>{
-  console.log('goToChooseBibleSec')
+
   router.back();
   setTimeout(()=>{
     return (navigation as any).navigate('chooseBibleSec')

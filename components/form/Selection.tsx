@@ -19,17 +19,16 @@ const Selection = ({arr,setChange,setInit,placeHolder,btnWidth}:any) => {
   
     data={arr?arr:[]}
     onSelect={(selectedItem, index) => {
-      console.log(selectedItem,'selectedItem')
-      console.log(selectedItem.init,'init~~~~~~~~~~~~~~~~~~~~')
+   
     setChange(selectedItem.value)
     if (selectedItem && selectedItem.init) {
-      console.log(selectedItem.init, 'init~~~~~~~~~~~~~~~~~~~~');
+      
       setInit && setInit(selectedItem.init);
     } else {
       console.log('No init value in selectedItem');
     }
     
-   console.log(selectedItem,'selectedItem')
+   
     
     }}
     renderButton={(selectedItem, isOpened) => {

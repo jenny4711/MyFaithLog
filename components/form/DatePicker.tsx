@@ -35,12 +35,12 @@ const DatePicker = ({
     setFullDate(newDate)
     setDateKr(`${getMonth}.${getDate}.${getFullYear}`)
     
-    console.log(newDate)
+ 
     hideDatePicker();
   };
 
   return (
-    <View style={{width:width-48}}>
+    <View style={{width: width -96}}>
       
      <TouchableOpacity style={{backgroundColor:'white',paddingVertical:10,paddingHorizontal:10,borderRadius:10,alignItems:'center'}} onPress={showDatePicker}>
       <Text style={{fontFamily:"LineSeedKr-Bd",fontSize:18}}>{fullDate !==""?dateKr : title}</Text>

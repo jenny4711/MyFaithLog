@@ -1,29 +1,25 @@
-import { View, Text ,ScrollView,Dimensions,StyleSheet} from 'react-native'
+import { View, Text ,Dimensions,SafeAreaView, StyleSheet,TouchableOpacity,Platform,Image} from 'react-native'
 import React,{useState,useEffect} from 'react'
-import { useData } from '~/hooks/useFormData'
+import MenuList from '~/components/home/MenuList'
 import Animated,{Easing,FadeInLeft} from 'react-native-reanimated'
 import SundayListItem from '~/components/list/SundayListItem'
 import ListFirstView from '~/components/list/ListFirstView'
+import { useStorageContext } from '~/context/StorageContext';
 const {width} = Dimensions.get('window')
 
 const Sunday = () => {
-  const [category,setCategory]=useState('sundayQt')
-  const [formData,setFormData]=useState([])
-const {data}=useData(category)
-console.log(data,'data')
+  
+   const {setCategory,category}=useStorageContext()
+    useEffect(()=>{
+      setCategory('sundayQt')
+        },[])
+
+
   return (
-    <View style={{flex:1,backgroundColor:'#E8751A',justifyContent:'center',alignItems:'center',paddingTop:16}}>
-      <ListFirstView title={'주일말씀'} />
-     <ScrollView>
-      {
-        data?.map((item:any,index:any) => (
-          <Animated.View entering={FadeInLeft.duration(500).easing(Easing.ease)} style={styles.itemView} key={index}>
-          <SundayListItem key={item.id} item={item} />
-          </Animated.View>
-        ))
-      }
-     </ScrollView>
-    </View>
+    <SafeAreaView style={{flex:1,backgroundColor:'#D7A31F',alignItems:'center'}}>
+
+    <MenuList address={"sundayListPg"}/>
+   </SafeAreaView>
   )
 }
 

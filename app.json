@@ -3,7 +3,7 @@
     "name": "MyFaithLog",
     "slug": "MyFaithLog",
     "version": "1.0.0",
-    "scheme": "MyFaithLog",
+    "scheme": ["myfaithlog"],
     "web": {
       "bundler": "metro",
       "output": "static",
@@ -55,5 +55,6 @@
         "projectId": "bce1bfc6-31e3-4ba1-bf7e-7e83240dae55"
       }
     }
+    
   }
 }
